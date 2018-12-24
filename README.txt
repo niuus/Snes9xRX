@@ -977,7 +977,7 @@ changes to the emulator settings again and save them.
                       Menu artwork                              the3seashells
                       Menu sound                                 Peter de Man
                       Extra coding    Zopenko, Burnt Lasagna, Askot, emukidid
-											   NiuuS, Bladeoner, libertyernie
+					       Bladeoner, libertyernie, NiuuS
 
                       ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
                       Snes9x GX GameCube                    SoftDev, crunchy2,
@@ -1006,6 +1006,6 @@ changes to the emulator settings again and save them.
                       Cheat Codes
                       www.cheatzilla.com
 
-×—–­—–­—–­—–­ –­—–­—–­—–­—–­—–­—–­—–­—–­—–­— ­—–­—–­—–­—–­—–­—–­—–­—-­—–­-–•¬
+•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 |0O×øo·                                                               ·oø×O0|
-`¨•¨¨¨¨¨ ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ ¨¨¨¨¨¨¨¨¨¨¨¨¨'
+•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
