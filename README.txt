@@ -1,6 +1,6 @@
 _____________________________________________________________________________
 |0O×øo·                         Snes9x RX                             ·oø×O0|
-|                   https://github.com/niuus/Snes9xRX                       |
+|                   https://github.com/niuus/snes9xrx                       |
 |                           Based/forked from:                              |
 |                   https://github.com/dborth/snes9xgx                      |
 |                          (Under GPL License)                              |
@@ -35,13 +35,18 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
+[2.6.0 - December 28, 2018]
+* Settings saving fix. (thanks, Askot!)
+* New video filters / Fix for HQ2X-Scanlines change. [Tantric]
+* Minor menu optimizations. [Tantric]
+
 [2.5.0 - December 24, 2018]
 * Remove some debugger code in cpuexec.
 * Fix Mario's Time Machine. [bearoso]
 * Fix tile selection in mosaic offset-per-tile mode. Fixes first Contra 3 boss. [bearoso]
 
 [2.4.0 - December 22, 2018]
-* Use a license stub everywhere [bladeoner]
+* Use a license stub everywhere. [bladeoner]
 
 [2.3.0 - December 20, 2018]
 * Remove some debugger code.
@@ -139,7 +144,7 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                            INSTALLATION  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
-To install Snes9x RX you will need to copy over the "apps" and "snes9xrx" 
+To install Snes9x RX you will need to copy over the "apps" and "snes9xgx" 
 folders (directories) from this archive to your SD Card. It comes 
 pre-packaged in the Homebrew Channel format (which you will use to launch 
 the emulator). Once you've copied the directories to your SD Card you will 
@@ -296,7 +301,9 @@ Filtering under the Rendering setting.
 
 • Rendering - Unfiltered
             - Original
-            - Filtered
+            - Filtered (Sharp)
+			- Filtered (Soft)
+			- Filtered
           
 • Scaling 	- Default
 				  	- 16:9 Correction
@@ -305,6 +312,7 @@ Filtering under the Rendering setting.
 				  	- hq2x
 					  - hq2x Soft
 					  - hq2x Bold
+					  - Scanlines
 					
 Screen Zoom will bring up a menu where you can adjust the Zoom level by using
 the left and right arrows that you can click on. The default setting is 100%.
@@ -369,18 +377,21 @@ clicking on "Up One Level".
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
 Once you load a game you can access another option menu by pressing the 
-"Home" button. This will bring up the Save, Load, Reset, Controller and 
-Cheats options. From this menu you can also return to the File Browser by
-selecting "Main Menu". To leave the menu and resume game play select "Close".
+Wii controller's "Home" button / Gamecube controller's C-stick left.
+This will bring up the Save, Load, Reset, Controller and Cheats options.
+From this menu you can also return to the File Browser by selecting
+"Main Menu". To leave the menu and resume game play select "Close".
 
 The Save option will allow you to save either your SRAM or a Snapshot. Once
 you've selected Save two options will appear named "New SRAM" and "New 
 Snapshot". Clicking on these will create a new save. Once you have a save
 you can save over it by selecting it instead of a "New" option. The Load
-option will allow you to load your saved SRAM or Snapshot. Reset will reset
-the game. If you pick Controller you can toggle between which controller you
-wish to use to control your game with. The last option, Cheats, will allow you
-to toggle your cheat codes (see below). 
+option will allow you to load your saved SRAM or Snapshot. The Delete option
+allows you to delete any of your snapshots or SRAM saves. Reset will reset
+the game. If you pick Controller you can toggle between which compatible
+SNES peripheral you wish to use your game with, be it a two controllers,
+Multitap (4 players), Mouse, Superscope, or the Konami's Justifier lightgun.
+Finally, the option Cheats will allow you to toggle your cheat codes.
 
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 |                                                                  CHEATS  |
@@ -398,7 +409,7 @@ NES cheat codes in the Links section (below).
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
 TurboMode increases the playback speed of the game by about 2x. To use it,
-simply press and hold right on the c-stick (yellow control stick on the
+simply press and hold right on the C-stick (yellow control stick on the
 Gamecube controller) or the right analog stick (Wii Classic Controller/Pro,
 and Wii U Pro Controller) for as long as you want playback to be faster.
 Release the stick when you want normal playback speed to resume.
@@ -977,7 +988,7 @@ changes to the emulator settings again and save them.
                       Menu artwork                              the3seashells
                       Menu sound                                 Peter de Man
                       Extra coding    Zopenko, Burnt Lasagna, Askot, emukidid
-					       Bladeoner, libertyernie, NiuuS
+											   NiuuS, Bladeoner, libertyernie
 
                       ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
                       Snes9x GX GameCube                    SoftDev, crunchy2,
@@ -1006,6 +1017,6 @@ changes to the emulator settings again and save them.
                       Cheat Codes
                       www.cheatzilla.com
 
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+×—–­—–­—–­—–­ –­—–­—–­—–­—–­—–­—–­—–­—–­—–­— ­—–­—–­—–­—–­—–­—–­—–­—-­—–­-–•¬
 |0O×øo·                                                               ·oø×O0|
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+`¨•¨¨¨¨¨ ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ ¨¨¨¨¨¨¨¨¨¨¨¨¨'
