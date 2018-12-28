@@ -290,9 +290,9 @@ decodePrefsData ()
 					verMinor >= 0 && verMinor <= 9 &&
 					verPoint >= 0 && verPoint <= 9))
 					result = false;
-				else if(verMajor < 4) // less than version 4.0.0
+				else if(verMajor < 2) // less than version 2.0.0 for Snes9xRX
 					result = false; // reset settings
-				else if(verMajor == 4 && verMinor == 0 && verPoint < 2)	// anything less than 4.0.2
+				else if(verMajor == 2 && verMinor == 5 && verPoint < 0)	// anything less than 2.0.5 for Snes9xRX
 					result = false; // reset settings
 				else
 					result = true;
