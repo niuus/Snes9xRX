@@ -19,8 +19,8 @@
 #include "filter.h"
 #include "filelist.h"
 
-#define APPNAME 			"Snes9x GX"
-#define APPVERSION 			"2.5.0"
+#define APPNAME 			"Snes9x RX"
+#define APPVERSION 			"2.6.0"
 #define APPFOLDER 			"snes9xgx"
 #define PREF_FILE_NAME		"settings.xml"
 
