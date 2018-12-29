@@ -39,6 +39,7 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 * Settings saving fix. (thanks, Askot!)
 * New video filters / Fix for HQ2X-Scanlines change. [Tantric]
 * Minor menu optimizations. [Tantric]
+* Rollback graphic fix that broke StarFox graphics.
 
 [2.5.0 - December 24, 2018]
 * Remove some debugger code in cpuexec.
