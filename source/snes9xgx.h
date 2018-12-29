@@ -114,8 +114,6 @@ struct SGCSettings{
 	int		yshift;
 	int		WiimoteOrientation;
 	int		ExitAction;
-	int		MusicVolume;
-	int		SFXVolume;
 	int		Rumble;
 	int		language;
 	int		PreviewImage;

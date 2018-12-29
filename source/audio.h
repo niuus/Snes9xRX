@@ -12,5 +12,5 @@
 
 void InitAudio ();
 void AudioStart ();
-void SwitchAudioMode(int mode);
+void AudioMode(int mode);
 void ShutdownAudio();

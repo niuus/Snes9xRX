@@ -524,7 +524,7 @@ int main(int argc, char *argv[])
 		// since we're entering the menu
 		ResumeDeviceThread();
 
-		SwitchAudioMode(1);
+		AudioMode(1);
 
 		if(!autoboot)
 		{
@@ -546,7 +546,7 @@ int main(int argc, char *argv[])
 #endif
 		ConfigRequested = 0;
 		ScreenshotRequested = 0;
-		SwitchAudioMode(0);
+		AudioMode(0);
 
 		Settings.MultiPlayer5Master = (GCSettings.Controller == CTRL_PAD4 ? true : false);
 		Settings.SuperScopeMaster = (GCSettings.Controller == CTRL_SCOPE ? true : false);

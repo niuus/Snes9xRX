@@ -391,14 +391,8 @@ msgstr "Menu"
 msgid "Menu artwork"
 msgstr "Desenho do Menu"
 
-msgid "Menu sound"
-msgstr "Som do Menu"
-
 msgid "MINUS"
 msgstr "MENOS"
-
-msgid "Music Volume"
-msgstr "Volume da Música"
 
 msgid "Mute"
 msgstr "Silenciar"
@@ -729,9 +723,6 @@ msgstr "Mouse SNES - Wiimote"
 
 msgid "Snes9x - Copyright (c) Snes9x Team 1996 - 2006"
 msgstr "Snes9x - Copyright (c) Snes9x Team 1996 - 2006"
-
-msgid "Sound Effects Volume"
-msgstr "Volume dos Efeitos Sonoros"
 
 msgid "Spanish"
 msgstr "Espanhol"

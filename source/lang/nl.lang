@@ -391,12 +391,6 @@ msgstr "Menu"
 msgid "Menu artwork"
 msgstr "Menu artwork"
 
-msgid "Menu sound"
-msgstr "Menu geluid"
-
-msgid "Music Volume"
-msgstr "Muziek volume"
-
 msgid "MINUS"
 msgstr "MIN"
 
@@ -727,9 +721,6 @@ msgstr "SNES Muis - Wiimote"
 
 msgid "Snes9x - Copyright (c) Snes9x Team 1996 - 2006"
 msgstr "Snes9x - Copyright (c) Snes9x Team 1996 - 2006"
-
-msgid "Sound Effects Volume"
-msgstr "Volume Geluidseffecten"
 
 msgid "Spanish"
 msgstr "Spaans"

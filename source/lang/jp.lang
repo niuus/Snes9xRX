@@ -397,14 +397,8 @@ msgstr "メニュー"
 msgid "Menu artwork"
 msgstr "メニュー画像"
 
-msgid "Menu sound"
-msgstr "メニュー音楽"
-
 msgid "MINUS"
 msgstr "マイナス"
-
-msgid "Music Volume"
-msgstr "音楽の音量"
 
 msgid "Mute"
 msgstr "消音"
@@ -735,9 +729,6 @@ msgstr "マウス - Wiiリモコン"
 
 msgid "Snes9x - Copyright (c) Snes9x Team 1996 - 2006"
 msgstr "Snes9x - 著作権(c) Snes9xチーム1996-2006"
-
-msgid "Sound Effects Volume"
-msgstr "効果音の音量"
 
 msgid "Spanish"
 msgstr "スペイン語"

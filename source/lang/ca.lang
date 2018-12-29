@@ -391,14 +391,8 @@ msgstr "Menú"
 msgid "Menu artwork"
 msgstr "Artwork menú"
 
-msgid "Menu sound"
-msgstr "So del menú"
-
 msgid "MINUS"
 msgstr "MENYS"
-
-msgid "Music Volume"
-msgstr "Volum música"
 
 msgid "Mute"
 msgstr "Silenci"
@@ -726,9 +720,6 @@ msgstr "Ratolí SNES - Wiimote"
 
 msgid "Snes9x - Copyright (c) Snes9x Team 1996 - 2006"
 msgstr "Snes9x - Copyright (c) Snes9x Team 1996 - 2006"
-
-msgid "Sound Effects Volume"
-msgstr "Volum d'efectes sonors"
 
 msgid "Spanish"
 msgstr "Castellà"
