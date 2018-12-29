@@ -397,14 +397,8 @@ msgstr "메뉴"
 msgid "Menu artwork"
 msgstr "이미지 메뉴"
 
-msgid "Menu sound"
-msgstr "사운드 메뉴"
-
 msgid "MINUS"
 msgstr "마이너스"
-
-msgid "Music Volume"
-msgstr "음악 볼륨"
 
 msgid "Mute"
 msgstr "무음"
@@ -735,9 +729,6 @@ msgstr "SNES 마우스 - 위모트"
 
 msgid "Snes9x - Copyright (c) Snes9x Team 1996 - 2006"
 msgstr "Snes9x - 제작 (c) Snes9x 팀 1996-2006"
-
-msgid "Sound Effects Volume"
-msgstr "사운드 효과 볼륨"
 
 msgid "Spanish"
 msgstr "스페인어"

@@ -364,12 +364,6 @@ msgstr "Menú Principal"
 msgid "Menu"
 msgstr "Menú"
 
-msgid "Menu sound"
-msgstr "Sonido del menú"
-
-msgid "Music Volume"
-msgstr "Música del menú"
-
 msgid "Mute"
 msgstr "Silenciar"
 
@@ -549,9 +543,6 @@ msgstr "Controles de SNES"
 
 msgid "SNES Mouse"
 msgstr "Ratón de SNES"
-
-msgid "Sound Effects Volume"
-msgstr "Volumen de Efectos"
 
 msgid "SuperFX Overclock"
 msgstr "Overclock SuperFX"

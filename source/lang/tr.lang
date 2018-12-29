@@ -397,14 +397,8 @@ msgstr "Menü"
 msgid "Menu artwork"
 msgstr "Menü Görselleri"
 
-msgid "Menu sound"
-msgstr "Menü Sesleri"
-
 msgid "MINUS"
 msgstr "EKSİ"
-
-msgid "Music Volume"
-msgstr "Müzik Sesleri"
 
 msgid "Mute"
 msgstr "Sessiz"
@@ -735,9 +729,6 @@ msgstr "SNES Faresi - Wii Kumanda"
 
 msgid "Snes9x - Copyright (c) Snes9x Team 1996 - 2006"
 msgstr "Snes9x - Telif Hakkı (c) Snes9x Team 1996-2006"
-
-msgid "Sound Effects Volume"
-msgstr "Efekt Sesleri"
 
 msgid "Spanish"
 msgstr "İspanyolca"

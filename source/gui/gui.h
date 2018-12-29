@@ -86,12 +86,6 @@ enum
 
 enum
 {
-	SOUND_PCM,
-	SOUND_OGG
-};
-
-enum
-{
 	IMAGE_TEXTURE,
 	IMAGE_COLOR,
 	IMAGE_DATA
@@ -142,43 +136,6 @@ typedef struct _wupcfulldata {
 #define EFFECT_FADE					64
 #define EFFECT_SCALE				128
 #define EFFECT_COLOR_TRANSITION		256
-
-//!Sound conversion and playback. A wrapper for other sound libraries - ASND, libmad, ltremor, etc
-class GuiSound
-{
-	public:
-		//!Constructor
-		//!\param s Pointer to the sound data
-		//!\param l Length of sound data
-		//!\param t Sound format type (SOUND_PCM or SOUND_OGG)
-		GuiSound(const u8 * s, s32 l, int t);
-		//!Destructor
-		~GuiSound();
-		//!Start sound playback
-		void Play();
-		//!Stop sound playback
-		void Stop();
-		//!Pause sound playback
-		void Pause();
-		//!Resume sound playback
-		void Resume();
-		//!Checks if the sound is currently playing
-		//!\return true if sound is playing, false otherwise
-		bool IsPlaying();
-		//!Set sound volume
-		//!\param v Sound volume (0-100)
-		void SetVolume(int v);
-		//!Set the sound to loop playback (only applies to OGG)
-		//!\param l Loop (true to loop)
-		void SetLoop(bool l);
-	protected:
-		const u8 * sound; //!< Pointer to the sound data
-		int type; //!< Sound format type (SOUND_PCM or SOUND_OGG)
-		s32 length; //!< Length of sound data
-		s32 voice; //!< Currently assigned ASND voice channel
-		s32 volume; //!< Sound volume (0-100)
-		bool loop; //!< Loop sound playback
-};
 
 //!Menu input trigger management. Determine if action is neccessary based on input data by comparing controller input data to a specific trigger element.
 class GuiTrigger
@@ -743,7 +700,7 @@ class GuiTooltip : public GuiElement
 		GuiText *text; //!< Tooltip text
 };
 
-//!Display, manage, and manipulate buttons in the GUI. Buttons can have images, icons, text, and sound set (all of which are optional)
+//!Display, manage, and manipulate buttons in the GUI. Buttons can have images, icons, and text set (all of which are optional)
 class GuiButton : public GuiElement
 {
 	public:
@@ -793,15 +750,6 @@ class GuiButton : public GuiElement
 		//!\param t Pointer to GuiText object
 		//!\param n Index of label to set (optional, default is 0)
 		void SetLabelClick(GuiText* t, int n = 0);
-		//!Sets the sound to play on over
-		//!\param s Pointer to GuiSound object
-		void SetSoundOver(GuiSound * s);
-		//!Sets the sound to play on hold
-		//!\param s Pointer to GuiSound object
-		void SetSoundHold(GuiSound * s);
-		//!Sets the sound to play on click
-		//!\param s Pointer to GuiSound object
-		void SetSoundClick(GuiSound * s);
 		//!Sets the tooltip for the button
 		//!\param t Tooltip
 		void SetTooltip(GuiTooltip * t);
@@ -827,9 +775,6 @@ class GuiButton : public GuiElement
 		GuiText * labelOver[3]; //!< Label(s) to display for STATE_SELECTED
 		GuiText * labelHold[3]; //!< Label(s) to display for STATE_HELD
 		GuiText * labelClick[3]; //!< Label(s) to display for STATE_CLICKED
-		GuiSound * soundOver; //!< Sound to play for STATE_SELECTED
-		GuiSound * soundHold; //!< Sound to play for STATE_HELD
-		GuiSound * soundClick; //!< Sound to play for STATE_CLICKED
 		GuiTooltip * tooltip; //!< Tooltip to display on over
 };
 
@@ -877,8 +822,6 @@ class GuiKeyboard : public GuiWindow
 		GuiImageData * keyMediumOver;
 		GuiImageData * keyLarge;
 		GuiImageData * keyLargeOver;
-		GuiSound * keySoundOver;
-		GuiSound * keySoundClick;
 		GuiTrigger * trigA;
 		GuiTrigger * trig2;
 		Key keys[4][11]; // two chars = less space than one pointer
@@ -935,8 +878,6 @@ class GuiOptionBrowser : public GuiElement
 		GuiImageData * arrowUp;
 		GuiImageData * arrowUpOver;
 
-		GuiSound * btnSoundOver;
-		GuiSound * btnSoundClick;
 		GuiTrigger * trigA;
 		GuiTrigger * trig2;
 
@@ -996,8 +937,6 @@ class GuiSaveBrowser : public GuiElement
 		GuiImageData * arrowUp;
 		GuiImageData * arrowUpOver;
 
-		GuiSound * btnSoundOver;
-		GuiSound * btnSoundClick;
 		GuiTrigger * trigA;
 		GuiTrigger * trig2;
 
@@ -1050,8 +989,6 @@ class GuiFileBrowser : public GuiElement
 		GuiImageData * scrollbarBox;
 		GuiImageData * scrollbarBoxOver;
 
-		GuiSound * btnSoundOver;
-		GuiSound * btnSoundClick;
 		GuiTrigger * trigA;
 		GuiTrigger * trig2;
 		GuiTrigger * trigHeldA;

@@ -391,14 +391,8 @@ msgstr "Menù"
 msgid "Menu artwork"
 msgstr "Menù Artwork"
 
-msgid "Menu sound"
-msgstr "Menù Audio"
-
 msgid "MINUS"
 msgstr "MENO"
-
-msgid "Music Volume"
-msgstr "Volume Musica"
 
 msgid "Mute"
 msgstr "Muto"
@@ -726,9 +720,6 @@ msgstr ""
 
 msgid "Snes9x - Copyright (c) Snes9x Team 1996 - 2006"
 msgstr ""
-
-msgid "Sound Effects Volume"
-msgstr "Volume Effetti Sonori"
 
 msgid "Spanish"
 msgstr "Spagnolo"

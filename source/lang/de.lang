@@ -391,14 +391,8 @@ msgstr "Menü"
 msgid "Menu artwork"
 msgstr "Menü Artwork"
 
-msgid "Menu sound"
-msgstr "Menü Sound"
-
 msgid "MINUS"
 msgstr ""
-
-msgid "Music Volume"
-msgstr "Musik Lautstärke"
 
 msgid "Mute"
 msgstr "Stumm"
@@ -726,9 +720,6 @@ msgstr "SNES Maus - Wii-FB"
 
 msgid "Snes9x - Copyright (c) Snes9x Team 1996 - 2006"
 msgstr ""
-
-msgid "Sound Effects Volume"
-msgstr "SFX Lautstärke"
 
 msgid "Spanish"
 msgstr "Spanisch"
