@@ -34,12 +34,7 @@
 #include "snes9x/memmap.h"
 #include "snes9x/controls.h"
 
-int rumbleRequest[4] = {0,0,0,0};
 GuiTrigger userInput[4];
-
-#ifdef HW_RVL
-static int rumbleCount[4] = {0,0,0,0};
-#endif
 
 // hold superscope/mouse/justifier cursor positions
 static int cursor_x[5] = {0,0,0,0,0};
@@ -256,49 +251,6 @@ SetupPads()
 		#endif
 	}
 }
-
-#ifdef HW_RVL
-/****************************************************************************
- * ShutoffRumble
- ***************************************************************************/
-void ShutoffRumble()
-{
-	if(CONF_GetPadMotorMode() == 0)
-		return;
-
-	for(int i=0;i<4;i++)
-	{
-		WPAD_Rumble(i, 0);
-		rumbleCount[i] = 0;
-		rumbleRequest[i] = 0;
-	}
-}
-
-/****************************************************************************
- * DoRumble
- ***************************************************************************/
-void DoRumble(int i)
-{
-	if(CONF_GetPadMotorMode() == 0 || !GCSettings.Rumble) return;
-
-	if(rumbleRequest[i] && rumbleCount[i] < 3)
-	{
-		WPAD_Rumble(i, 1); // rumble on
-		rumbleCount[i]++;
-	}
-	else if(rumbleRequest[i])
-	{
-		rumbleCount[i] = 12;
-		rumbleRequest[i] = 0;
-	}
-	else
-	{
-		if(rumbleCount[i])
-			rumbleCount[i]--;
-		WPAD_Rumble(i, 0); // rumble off
-	}
-}
-#endif
 
 /****************************************************************************
  * UpdateCursorPosition
