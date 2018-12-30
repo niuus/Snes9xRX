@@ -92,7 +92,6 @@ void ExitCleanup()
 
 void ExitToWiiflow()
 {
-	ShutoffRumble();
 	SavePrefs(SILENT);
 	if (SNESROMSize > 0 && !ConfigRequested && GCSettings.AutoSave == 1)
 		SaveSRAMAuto(SILENT);
@@ -112,10 +111,6 @@ void ExitToWiiflow()
 
 void ExitApp()
 {
-#ifdef HW_RVL
-	ShutoffRumble();
-#endif
-
 	SavePrefs(SILENT);
 
 	if (SNESROMSize > 0 && !ConfigRequested && GCSettings.AutoSave == 1)

@@ -320,12 +320,6 @@ class GuiElement
 		//!\param i Index of trigger array to set
 		//!\param t Pointer to GuiTrigger
 		void SetTrigger(u8 i, GuiTrigger * t);
-		//!Checks whether rumble was requested by the element
-		//!\return true is rumble was requested, false otherwise
-		bool Rumble();
-		//!Sets whether or not the element is requesting a rumble event
-		//!\param r true if requesting rumble, false if not
-		void SetRumble(bool r);
 		//!Set an effect for the element
 		//!\param e Effect to enable
 		//!\param a Amount of the effect (usage varies on effect)
@@ -421,7 +415,6 @@ class GuiElement
 		bool clickable; //!< Whether or not this element is clickable (can change to CLICKED state)
 		bool holdable; //!< Whether or not this element is holdable (can change to HELD state)
 		bool visible; //!< Visibility of the element. If false, Draw() is skipped
-		bool rumble; //!< Wiimote rumble (on/off) - set to on when this element requests a rumble event
 };
 
 //!Allows GuiElements to be grouped together into a "window"
