@@ -423,7 +423,7 @@ DefaultSettings ()
 	GCSettings.Controller = CTRL_PAD2;
 
 	GCSettings.videomode = 0; // automatic video mode detection
-	GCSettings.render = 2; // Unfiltered
+	GCSettings.render = 3; // Filtered (sharp) 
 	GCSettings.FilterMethod = FILTER_NONE;	// no hq2x
 
 	GCSettings.widescreen = 0; // no aspect ratio correction
