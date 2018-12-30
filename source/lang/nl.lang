@@ -298,8 +298,8 @@ msgstr "Verkeerde bestandsgrootte!"
 msgid "Invalid game file!"
 msgstr "Verkeerd spelbestand!"
 
-msgid "Invalid network settings - Check settings.xml."
-msgstr "Verkeerde netwerk instellingen - Controleer settings.xml."
+msgid "Invalid network settings - Check settingsRX.xml."
+msgstr "Verkeerde netwerk instellingen - Controleer settingsRX.xml."
 
 msgid "Invalid network settings - Share IP is blank."
 msgstr "Verkeerde netwerk instellingen - Gedeeld ip adres is niet opgegeven."

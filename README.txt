@@ -157,7 +157,7 @@ done you can proceed to run the emulator via the Homebrew Channel.
 |                                                           INITIAL SETUP  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
-The first time you run Snes9x RX it will create a new "settings.xml" file on
+The first time you run Snes9x RX it will create a new "settingsRX.xml" file on
 the SD Card which stores the configuration of the emulator. So when you run
 Snes9x RX it will automatically detect your storage medium and will bring you
 to the ROM selection screen. If you want to run a game with the default 
@@ -767,8 +767,8 @@ file to be what that version of snes9x expects it to be.
 * added: Qoob modchip support (thanks emukidid!)
 * added: Added console/remote power button support (Wii only)
 * added: Added reset button support - resets game (Wii only)
-* changed: Settings file is now named settings.xml and is stored in the same
-           folder as the DOL - eg: apps/Snes9xGX/settings.xml (Wii only)
+* changed: Settings file is now named settingsRX.xml and is stored in the same
+           folder as the DOL - eg: apps/Snes9xGX/settingsRX.xml (Wii only)
 * fixed: swc, sfc file support
 * fixed: inverted sound channels
 * fixed: some game crashes

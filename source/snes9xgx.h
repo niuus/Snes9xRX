@@ -22,7 +22,7 @@
 #define APPNAME 			"Snes9x RX"
 #define APPVERSION 			"2.6.0"
 #define APPFOLDER 			"snes9xgx"
-#define PREF_FILE_NAME		"settings.xml"
+#define PREF_FILE_NAME		"settingsRX.xml"
 
 #define NOTSILENT 0
 #define SILENT 1

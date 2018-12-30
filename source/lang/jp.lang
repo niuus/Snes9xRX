@@ -304,8 +304,8 @@ msgstr "不正なサイズです"
 msgid "Invalid game file!"
 msgstr "不正なサイズです"
 
-msgid "Invalid network settings - Check settings.xml."
-msgstr "エラー:settings.xmlを確認してください"
+msgid "Invalid network settings - Check settingsRX.xml."
+msgstr "エラー:settingsRX.xmlを確認してください"
 
 msgid "Invalid network settings - Share IP is blank."
 msgstr "共有IPが空白です"

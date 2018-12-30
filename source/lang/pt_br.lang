@@ -298,8 +298,8 @@ msgstr "Tamanho de arquivo inválido!"
 msgid "Invalid game file!"
 msgstr "Arquivo de jogo inválido!"
 
-msgid "Invalid network settings - Check settings.xml."
-msgstr "Configuração de rede inválida - Verifique o arquivo settings.xml."
+msgid "Invalid network settings - Check settingsRX.xml."
+msgstr "Configuração de rede inválida - Verifique o arquivo settingsRX.xml."
 
 msgid "Invalid network settings - Share IP is blank."
 msgstr "Configuração de rede inválida - IP em branco."

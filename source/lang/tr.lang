@@ -304,8 +304,8 @@ msgstr "Geçersiz dosya boyutu!"
 msgid "Invalid game file!"
 msgstr "Geçersiz oyun dosyası!"
 
-msgid "Invalid network settings - Check settings.xml."
-msgstr "Geçersiz ağ bağlantısı ayarları - settings.xml dosyasını kontrol ediniz."
+msgid "Invalid network settings - Check settingsRX.xml."
+msgstr "Geçersiz ağ bağlantısı ayarları - settingsRX.xml dosyasını kontrol ediniz."
 
 msgid "Invalid network settings - Share IP is blank."
 msgstr "Geçersiz ağ bağlantısı ayarları - IP paylaşımı boş."
