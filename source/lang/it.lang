@@ -301,8 +301,8 @@ msgstr "Dimensione del file non valida!"
 msgid "Invalid game file!"
 msgstr "File di gioco non valido!"
 
-msgid "Invalid network settings - Check settings.xml."
-msgstr "Impostazioni di rete non valide - Verificare settings.xml."
+msgid "Invalid network settings - Check settingsRX.xml."
+msgstr "Impostazioni di rete non valide - Verificare settingsRX.xml."
 
 msgid "Invalid network settings - Share IP is blank."
 msgstr "Impostazioni di rete non valide - Campo IP Condivisione vuoto."
