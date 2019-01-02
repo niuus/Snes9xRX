@@ -25,7 +25,6 @@
 extern u32 btnmap[4][4][12];
 
 void ResetControls(int cc = -1, int wc = -1);
-void ShutoffRumble();
 void ReportButtons ();
 void SetControllers ();
 void SetDefaultButtonMap ();
