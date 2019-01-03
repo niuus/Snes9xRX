@@ -35,6 +35,14 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
+[2.7.0 - January 03, 2019]
+* Remove GUI Sounds and BG Music. [bladeoner]
+* Change settings.xml to settingsRX.xml [bladeoner]
+* Remove rumble function. [bladeoner]
+* Rollback scanline filter fix. Makes it crash when loading a ROM on the GCN port.
+* Backport fix GC build with scanline filter. [Tantric/bladeoner]
+* Forgotten cleanup for remove rumble function. [bladeoner]
+
 [2.6.0 - December 28, 2018]
 * Settings saving fix. (thanks, Askot!)
 * New video filters / Fix for HQ2X-Scanlines change. [Tantric]
