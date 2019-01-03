@@ -739,21 +739,22 @@ static void WindowCredits(void * ptr)
 	txt[i] = new GuiText("Official Site: https://github.com/niuus/Snes9xRX", 20, (GXColor){0, 0, 0, 255});
 	txt[i]->SetAlignment(ALIGN_CENTRE, ALIGN_TOP); txt[i]->SetPosition(0,y); i++; y+=40;
 
-	txt[i]->SetPresets(20, (GXColor){0, 0, 0, 255}, 0,
+	txt[i]->SetPresets(18, (GXColor){0, 0, 0, 255}, 0,
 			FTGX_JUSTIFY_LEFT | FTGX_ALIGN_TOP, ALIGN_LEFT, ALIGN_TOP);
-
 	txt[i] = new GuiText("Coding & menu design");
 	txt[i]->SetPosition(60,y); i++;
 	txt[i] = new GuiText("Tantric");
 	txt[i]->SetPosition(350,y); i++; y+=24;
 	txt[i] = new GuiText("Additional improvements");
 	txt[i]->SetPosition(60,y); i++;
-	txt[i] = new GuiText("NiuuS");
+	txt[i] = new GuiText("NiuuS, bladeoner, Zopenko");
 	txt[i]->SetPosition(350,y); i++; y+=24;
 	txt[i] = new GuiText("Menu artwork");
 	txt[i]->SetPosition(60,y); i++;
 	txt[i] = new GuiText("the3seashells");
 	txt[i]->SetPosition(350,y); i++; y+=24;
+	txt[i] = new GuiText("Menu sound");
+	txt[i]->SetPosition(60,y); i++;
 	txt[i] = new GuiText("Peter de Man");
 	txt[i]->SetPosition(350,y); i++; y+=48;
 
@@ -782,7 +783,7 @@ static void WindowCredits(void * ptr)
 
 	txt[i] = new GuiText("Snes9x - Copyright (c) Snes9x Team 1996 - 2006");
 	txt[i]->SetPosition(0,y); i++; y+=20;
-	txt[i] = new GuiText("This software is open source and may be copied, distributed, or modified ");
+	txt[i] = new GuiText("This software is open source and may be copied, distributed, or modified");
 	txt[i]->SetPosition(0,y); i++; y+=20;
 	txt[i] = new GuiText("under the terms of the GNU General Public License (GPL) Version 2.");
 	txt[i]->SetPosition(0,y); i++; y+=20;
