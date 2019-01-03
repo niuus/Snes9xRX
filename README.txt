@@ -36,9 +36,9 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
 [2.7.0 - January 03, 2019]
-* Remove GUI Sounds and BG Music. [bladeoner]
+* Remove GUI Sounds and BG Music. A bit more resources available now. [bladeoner]
 * Change settings.xml to settingsRX.xml [bladeoner]
-* Remove rumble function. [bladeoner]
+* Remove rumble in GUI function. [bladeoner]
 * Rollback scanline filter fix. Makes it crash when loading a ROM on the GCN port.
 * Backport fix GC build with scanline filter. [Tantric/bladeoner]
 * Forgotten cleanup for remove rumble function. [bladeoner]
