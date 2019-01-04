@@ -24,6 +24,7 @@
 #define APPFOLDER 			"snes9xgx"
 #define PREF_FILE_NAME		"settingsRX.xml"
 
+#define MAXPATHLEN 1024
 #define NOTSILENT 0
 #define SILENT 1
 
