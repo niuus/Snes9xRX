@@ -19,9 +19,10 @@
 
 #define PI 				3.14159265f
 #define PADCAL			50
+#define WUPCCAL			400
 #define MAXJP 			12 // # of mappable controller buttons
 
-extern u32 btnmap[4][5][12];
+extern u32 btnmap[4][4][12];
 
 void ResetControls(int cc = -1, int wc = -1);
 void ReportButtons ();

@@ -18,6 +18,7 @@
 #ifdef HW_RVL
 #include <di/di.h>
 #include <wiiuse/wpad.h>
+#include <wupc/wupc.h>
 #endif
 
 #include "snes9x/port.h"
@@ -73,6 +74,7 @@ static GuiWindow * mainWindow = NULL;
 static GuiText * settingText = NULL;
 static GuiText * settingText2 = NULL;
 static int lastMenu = MENU_NONE;
+static int wiiuproCtrl = 0;
 static int mapMenuCtrl = 0;
 static int mapMenuCtrlSNES = 0;
 
@@ -260,9 +262,9 @@ UpdateGUI (void *arg)
 		i = 3;
 		do
 		{
-			if(userInput[i].wpad->ir.valid) {
-					Menu_DrawImg(userInput[i].wpad->ir.x-48, userInput[i].wpad->ir.y-48, 96, 96, pointer[i]->GetImage(), userInput[i].wpad->ir.angle, 1, 1, 255);
-			}
+			if(userInput[i].wpad->ir.valid)
+				Menu_DrawImg(userInput[i].wpad->ir.x-48, userInput[i].wpad->ir.y-48,
+					96, 96, pointer[i]->GetImage(), userInput[i].wpad->ir.angle, 1, 1, 255);
 			--i;
 		} while(i>=0);
 		#endif
@@ -813,19 +815,19 @@ static void WindowCredits(void * ptr)
 		#ifdef HW_RVL
 		i = 3;
 		do {	
-		if(userInput[i].wpad->ir.valid) {
-				Menu_DrawImg(userInput[i].wpad->ir.x-48, userInput[i].wpad->ir.y-48, 96, 96, pointer[i]->GetImage(), userInput[i].wpad->ir.angle, 1, 1, 255);
-			}
+		if(userInput[i].wpad->ir.valid)
+			Menu_DrawImg(userInput[i].wpad->ir.x-48, userInput[i].wpad->ir.y-48,
+				96, 96, pointer[i]->GetImage(), userInput[i].wpad->ir.angle, 1, 1, 255);
 			--i;
 		} while(i >= 0);
 		#endif
 
 		Menu_Render();
 
-		if((userInput[0].wpad->btns_d || userInput[0].pad.btns_d) ||
-		   (userInput[1].wpad->btns_d || userInput[1].pad.btns_d) ||
-		   (userInput[2].wpad->btns_d || userInput[2].pad.btns_d) ||
-		   (userInput[3].wpad->btns_d || userInput[3].pad.btns_d))
+		if((userInput[0].wpad->btns_d || userInput[0].pad.btns_d || userInput[0].wupcdata.btns_d) ||
+		   (userInput[1].wpad->btns_d || userInput[1].pad.btns_d || userInput[1].wupcdata.btns_d) ||
+		   (userInput[2].wpad->btns_d || userInput[2].pad.btns_d || userInput[2].wupcdata.btns_d) ||
+		   (userInput[3].wpad->btns_d || userInput[3].pad.btns_d || userInput[3].wupcdata.btns_d))
 		{
 			exit = true;
 		}
@@ -835,6 +837,7 @@ static void WindowCredits(void * ptr)
 	// clear buttons pressed
 	for(i=0; i < 4; i++)
 	{
+		userInput[i].wupcdata.btns_d = 0;
 		userInput[i].wpad->btns_d = 0;
 		userInput[i].pad.btns_d = 0;
 	}
@@ -1364,10 +1367,19 @@ static int MenuGame()
 			}
 			else
 			{
+				struct WUPCData *data = WUPC_Data(i);
+				if(data != NULL)
+				{
+					newStatus = true;
+					newLevel = data->battery;
+				}
+				else
+				{
 					newStatus = false;
 					newLevel = 0;
+				}
 			}
-
+			
 			if(status[i] != newStatus || level[i] != newLevel)
 			{
 				if(newStatus == true) // controller connected
@@ -2256,22 +2268,6 @@ static int MenuSettingsMappingsController()
 	gamecubeBtn.SetTrigger(trig2);
 	gamecubeBtn.SetEffectGrow();
 
-	GuiText wiiuproBtnTxt("Wii U Pro Controller", 22, (GXColor){0, 0, 0, 255});
-	wiiuproBtnTxt.SetWrap(true, btnLargeOutline.GetWidth()-20);
-	GuiImage wiiuproBtnImg(&btnLargeOutline);
-	GuiImage wiiuproBtnImgOver(&btnLargeOutlineOver);
-	GuiImage wiiuproBtnIcon(&iconWiiupro);
-	GuiButton wiiuproBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
-	wiiuproBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
-	wiiuproBtn.SetPosition(0, 250);
-	wiiuproBtn.SetLabel(&wiiuproBtnTxt);
-	wiiuproBtn.SetImage(&wiiuproBtnImg);
-	wiiuproBtn.SetImageOver(&wiiuproBtnImgOver);
-	wiiuproBtn.SetIcon(&wiiuproBtnIcon);
-	wiiuproBtn.SetTrigger(trigA);
-	wiiuproBtn.SetTrigger(trig2);
-	wiiuproBtn.SetEffectGrow();
-
 	GuiText wiimoteBtnTxt("Wiimote", 22, (GXColor){0, 0, 0, 255});
 	GuiImage wiimoteBtnImg(&btnLargeOutline);
 	GuiImage wiimoteBtnImgOver(&btnLargeOutlineOver);
@@ -2302,6 +2298,22 @@ static int MenuSettingsMappingsController()
 	classicBtn.SetTrigger(trigA);
 	classicBtn.SetTrigger(trig2);
 	classicBtn.SetEffectGrow();
+	
+	GuiText wiiuproBtnTxt("Wii U Pro Controller", 22, (GXColor){0, 0, 0, 255});
+	wiiuproBtnTxt.SetWrap(true, btnLargeOutline.GetWidth()-20);
+	GuiImage wiiuproBtnImg(&btnLargeOutline);
+	GuiImage wiiuproBtnImgOver(&btnLargeOutlineOver);
+	GuiImage wiiuproBtnIcon(&iconWiiupro);
+	GuiButton wiiuproBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
+	wiiuproBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
+	wiiuproBtn.SetPosition(0, 250);
+	wiiuproBtn.SetLabel(&wiiuproBtnTxt);
+	wiiuproBtn.SetImage(&wiiuproBtnImg);
+	wiiuproBtn.SetImageOver(&wiiuproBtnImgOver);
+	wiiuproBtn.SetIcon(&wiiuproBtnIcon);
+	wiiuproBtn.SetTrigger(trigA);
+	wiiuproBtn.SetTrigger(trig2);
+	wiiuproBtn.SetEffectGrow();
 
 	GuiText nunchukBtnTxt1("Wiimote", 22, (GXColor){0, 0, 0, 255});
 	GuiText nunchukBtnTxt2("&", 18, (GXColor){0, 0, 0, 255});
@@ -2375,13 +2387,15 @@ static int MenuSettingsMappingsController()
 		}
 		else if(classicBtn.GetState() == STATE_CLICKED)
 		{
+			wiiuproCtrl = 0;
 			menu = MENU_GAMESETTINGS_MAPPINGS_MAP;
 			mapMenuCtrl = CTRLR_CLASSIC;
 		}
 		else if(wiiuproBtn.GetState() == STATE_CLICKED)
 		{
+			wiiuproCtrl = 1;
 			menu = MENU_GAMESETTINGS_MAPPINGS_MAP;
-			mapMenuCtrl = CTRLR_WUPC;
+			mapMenuCtrl = CTRLR_CLASSIC;
 		}
 		else if(gamecubeBtn.GetState() == STATE_CLICKED)
 		{
@@ -2433,10 +2447,14 @@ ButtonMappingWindow()
 			sprintf(msg, "Press any button on the Wiimote now. Press Home to clear the existing mapping.");
 			break;
 		case CTRLR_CLASSIC:
-			sprintf(msg, "Press any button on the Classic Controller now. Press Home to clear the existing mapping.");
-			break;
-		case CTRLR_WUPC:
-			sprintf(msg, "Press any button on the Wii U Pro Controller now. Press Home to clear the existing mapping.");
+			if(wiiuproCtrl == 1)
+			{
+				sprintf(msg, "Press any button on the Wii U Pro Controller now. Press Home to clear the existing mapping.");
+			}
+			else
+			{
+				sprintf(msg, "Press any button on the Classic Controller now. Press Home to clear the existing mapping.");
+			}
 			break;
 		case CTRLR_NUNCHUK:
 			sprintf(msg, "Press any button on the Wiimote or Nunchuk now. Press Home to clear the existing mapping.");
@@ -2492,16 +2510,10 @@ ButtonMappingWindow()
 						break;
 
 					case CTRLR_CLASSIC:
-						if(userInput[0].wpad->exp.type != WPAD_EXP_CLASSIC && userInput[0].wpad->exp.classic.type < 2)
+						if(userInput[0].wpad->exp.type != WPAD_EXP_CLASSIC)
 							pressed = 0; // not a valid input
 						else if(pressed <= 0x1000)
-							pressed = 0;
-						break;
-					case CTRLR_WUPC:
-						if(userInput[0].wpad->exp.type != WPAD_EXP_CLASSIC && userInput[0].wpad->exp.classic.type == 2)
 							pressed = 0; // not a valid input
-						else if(pressed <= 0x1000)
-							pressed = 0;
 						break;
 
 					case CTRLR_NUNCHUK:
@@ -2510,10 +2522,13 @@ ButtonMappingWindow()
 						break;
 				}
 			}
+			if(pressed == 0)
+			pressed = userInput[0].wupcdata.btns_d;
 		}
 	}
 
-	if(pressed == WPAD_BUTTON_HOME || pressed == WPAD_CLASSIC_BUTTON_HOME)
+	if(pressed == WPAD_BUTTON_HOME
+		|| pressed == WPAD_CLASSIC_BUTTON_HOME)
 		pressed = 0;
 
 	HaltGui();
@@ -2539,7 +2554,15 @@ static int MenuSettingsMappingsMap()
 	titleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
 	titleTxt.SetPosition(50,30);
 
-	sprintf(menuSubtitle, "%s - %s", gettext(ctrlName[mapMenuCtrlSNES]), gettext(ctrlrName[mapMenuCtrl]));
+	if(wiiuproCtrl == 1)
+	{
+		sprintf(menuSubtitle, "%s - %s", gettext(ctrlName[mapMenuCtrlSNES]),"Wii U Pro Controller");
+	}
+	else
+	{
+		sprintf(menuSubtitle, "%s - %s", gettext(ctrlName[mapMenuCtrlSNES]), gettext(ctrlrName[mapMenuCtrl]));
+	}
+		
 	GuiText subtitleTxt(menuSubtitle, 20, (GXColor){255, 255, 255, 255});
 	subtitleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
 	subtitleTxt.SetPosition(50,60);
@@ -2691,7 +2714,7 @@ static int MenuSettingsMappingsMap()
 			optionBrowser.TriggerUpdate();
 		}
 	}
-
+	wiiuproCtrl = 0;
 	HaltGui();
 	mainWindow->Remove(&optionBrowser);
 	mainWindow->Remove(&w);

@@ -18,6 +18,8 @@
 #include <string>
 #include <ogcsys.h>
 #include <unistd.h>
+#include <wiiuse/wpad.h>
+#include <wupc/wupc.h>
 #include <fat.h>
 #include <debug.h>
 #include <sys/iosupport.h>
@@ -25,6 +27,7 @@
 #ifdef HW_RVL
 #include <di/di.h>
 #include <wiiuse/wpad.h>
+#include <wupc/wupc.h>
 #endif
 
 #include "snes9xgx.h"
@@ -412,6 +415,7 @@ int main(int argc, char *argv[])
 	SYS_SetPowerCallback(ShutdownCB);
 	SYS_SetResetCallback(ResetCB);
 	
+	WUPC_Init();
 	WPAD_Init();
 	WPAD_SetPowerButtonCallback((WPADShutdownCallback)ShutdownCB);
 	DI_Init();
