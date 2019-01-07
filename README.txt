@@ -35,6 +35,12 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
+[2.8.0 - January 06, 2019]
+* Credits crash fix and minor update.
+* Removed ImageFolder from GCSettings because it can always be retrieved
+from GCSettings.PreviewImage, added function to get its value. [cebolleto]
+* Changing image preview with plus button. [cebolleto]
+
 [2.7.0 - January 03, 2019]
 * Remove GUI Sounds and BG Music. A bit more resources available now. [bladeoner]
 * Change settings.xml to settingsRX.xml [bladeoner]
