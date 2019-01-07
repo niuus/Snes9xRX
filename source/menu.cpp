@@ -913,7 +913,7 @@ static int MenuGameSelection()
 	GuiFileBrowser gameBrowser(330, 268);
 	gameBrowser.SetPosition(20, 98);
 	ResetBrowser();
-		
+
 	GuiImage bgPreview(&bgPreviewImg);
 	bgPreview.SetPosition(365, 98);
 	
@@ -1000,7 +1000,7 @@ static int MenuGameSelection()
 		if(previousBrowserIndex != browser.selIndex)
 		{			
 			previousBrowserIndex = browser.selIndex;
-			snprintf(imagePath, MAXJOLIET, "%s%s/%s.png", pathPrefix[GCSettings.LoadMethod], GCSettings.ImageFolder, browserList[browser.selIndex].displayname);
+			snprintf(imagePath, MAXJOLIET, "%s%s/%s.png", pathPrefix[GCSettings.LoadMethod], ImageFolder(), browserList[browser.selIndex].displayname);
 			
 			AllocSaveBuffer();
 			int width, height;
@@ -3669,17 +3669,14 @@ static int MenuSettingsMenu()
 			switch(GCSettings.PreviewImage)
 			{
 				case 0:	
-					sprintf(options.value[3], "Screenshots"); 
-					snprintf(GCSettings.ImageFolder, MAXJOLIET, "%s", GCSettings.ScreenshotsFolder);
-					break; 
+						sprintf(options.value[6], "Screenshots");
+						break; 
 				case 1:	
-					sprintf(options.value[3], "Covers");	  
-					snprintf(GCSettings.ImageFolder, MAXJOLIET, "%s", GCSettings.CoverFolder);
-					break; 
+						sprintf(options.value[6], "Covers");
+						break; 
 				case 2:	
-					sprintf(options.value[3], "Artwork");
-					snprintf(GCSettings.ImageFolder, MAXJOLIET, "%s", GCSettings.ArtworkFolder);
-					break; 
+						sprintf(options.value[6], "Artwork");
+						break; 
 			}
 			
 			optionBrowser.TriggerUpdate();
