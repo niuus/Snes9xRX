@@ -423,7 +423,13 @@ DefaultSettings ()
 	GCSettings.render = 2; // Unfiltered
 	GCSettings.FilterMethod = FILTER_NONE;	// no hq2x
 
-	GCSettings.widescreen = 0; // no aspect ratio correction
+	GCSettings.widescreen = 0;
+
+#ifdef HW_RVL // correct the default aspect ratio if the Wii has 16:9 set up
+	if (CONF_GetAspectRatio() == CONF_ASPECT_16_9)
+		GCSettings.widescreen = 1;
+#endif
+
 	GCSettings.zoomHor = 1.0; // horizontal zoom level
 	GCSettings.zoomVert = 1.0; // vertical zoom level
 	GCSettings.xshift = 0; // horizontal video shift
