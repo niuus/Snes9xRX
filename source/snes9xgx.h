@@ -20,7 +20,7 @@
 #include "filelist.h"
 
 #define APPNAME 			"Snes9x RX"
-#define APPVERSION 			"2.9.0"
+#define APPVERSION 			"3.0.0"
 #define APPFOLDER 			"snes9xgx"
 #define PREF_FILE_NAME		"settingsRX.xml"
 
@@ -116,6 +116,7 @@ struct SGCSettings{
 	int		WiimoteOrientation;
 	int		ExitAction;
 	int		language;
+	int		DisplayVM;
 	int		PreviewImage;
 
 	int		sfxOverclock;

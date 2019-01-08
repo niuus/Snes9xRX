@@ -159,6 +159,7 @@ preparePrefsData ()
 #endif
 	createXMLSetting("ExitAction", "Exit Action", toStr(GCSettings.ExitAction));
 	createXMLSetting("language", "Language", toStr(GCSettings.language));
+	createXMLSetting("DisplayMemory", "Display Virtual Memory", toStr(GCSettings.DisplayVM));
 	createXMLSetting("PreviewImage", "Preview Image", toStr(GCSettings.PreviewImage));
 	
 	createXMLSection("Controller", "Controller Settings");
@@ -341,6 +342,7 @@ decodePrefsData ()
 			loadXMLSetting(&GCSettings.WiimoteOrientation, "WiimoteOrientation");
 			loadXMLSetting(&GCSettings.ExitAction, "ExitAction");
 			loadXMLSetting(&GCSettings.language, "language");
+			loadXMLSetting(&GCSettings.DisplayVM, "DisplayMemory");
 			loadXMLSetting(&GCSettings.PreviewImage, "PreviewImage");
 
 			// Controller Settings
@@ -437,7 +439,8 @@ DefaultSettings ()
 	GCSettings.crosshair = 1;
 
 	GCSettings.WiimoteOrientation = 0;
-	GCSettings.ExitAction = 0;
+	GCSettings.ExitAction = 0; // Auto
+	GCSettings.DisplayVM = 0; // Disabled
 	GCSettings.PreviewImage = 0;
 	
 #ifdef HW_RVL

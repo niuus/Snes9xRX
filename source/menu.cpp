@@ -739,10 +739,10 @@ static void WindowCredits(void * ptr)
 	int numEntries = 23;
 	GuiText * txt[numEntries];
 
-	txt[i] = new GuiText("Credits", 30, (GXColor){0, 0, 0, 255});
+	txt[i] = new GuiText("Credits", 28, (GXColor){0, 0, 0, 255});
 	txt[i]->SetAlignment(ALIGN_CENTRE, ALIGN_TOP); txt[i]->SetPosition(0,y); i++; y+=32;
 
-	txt[i] = new GuiText("Official Site: https://github.com/niuus/Snes9xRX", 20, (GXColor){0, 0, 0, 255});
+	txt[i] = new GuiText("Official Site: https://github.com/niuus/Snes9xRX", 18, (GXColor){0, 0, 0, 255});
 	txt[i]->SetAlignment(ALIGN_CENTRE, ALIGN_TOP); txt[i]->SetPosition(0,y); i++; y+=40;
 
 	txt[i]->SetPresets(18, (GXColor){0, 0, 0, 255}, 0,
@@ -759,9 +759,9 @@ static void WindowCredits(void * ptr)
 	txt[i]->SetPosition(60,y); i++;
 	txt[i] = new GuiText("the3seashells");
 	txt[i]->SetPosition(350,y); i++; y+=24;
-	txt[i] = new GuiText("Menu sound");
+	txt[i] = new GuiText("Logo");
 	txt[i]->SetPosition(60,y); i++;
-	txt[i] = new GuiText("Peter de Man");
+	txt[i] = new GuiText("NiuuS");
 	txt[i]->SetPosition(350,y); i++; y+=48;
 
 	txt[i] = new GuiText("Snes9x GX GameCube");
@@ -787,7 +787,7 @@ static void WindowCredits(void * ptr)
 	txt[i]->SetPresets(16, (GXColor){0, 0, 0, 255}, 0,
 		FTGX_JUSTIFY_CENTER | FTGX_ALIGN_TOP, ALIGN_CENTRE, ALIGN_TOP);
 
-	txt[i] = new GuiText("Snes9x - Copyright (c) Snes9x Team 1996 - 2006");
+	txt[i] = new GuiText("Snes9x - Copyright (c) Snes9x Team 1996 - 2019");
 	txt[i]->SetPosition(0,y); i++; y+=20;
 	txt[i] = new GuiText("This software is open source and may be copied, distributed, or modified");
 	txt[i]->SetPosition(0,y); i++; y+=20;
@@ -1353,6 +1353,11 @@ static int MenuGame()
 	w.Append(&deleteBtn);
 	w.Append(&resetBtn);
 	w.Append(&gameSettingsBtn);
+	
+	if(GCSettings.DisplayVM == 1) //show memory usage
+	{
+			w.Append(&memTxt);
+	}
 
 	#ifdef HW_RVL
 	w.Append(batteryBtn[0]);
@@ -1493,6 +1498,7 @@ static int MenuGame()
 			bgTopImg->SetEffect(EFFECT_SLIDE_TOP | EFFECT_SLIDE_OUT, 15);
 			closeBtn.SetEffect(EFFECT_SLIDE_TOP | EFFECT_SLIDE_OUT, 15);
 			titleTxt.SetEffect(EFFECT_SLIDE_TOP | EFFECT_SLIDE_OUT, 15);
+			memTxt.SetEffect(EFFECT_SLIDE_TOP | EFFECT_SLIDE_OUT, 15);
 			mainmenuBtn.SetEffect(EFFECT_SLIDE_BOTTOM | EFFECT_SLIDE_OUT, 15);
 			bgBottomImg->SetEffect(EFFECT_SLIDE_BOTTOM | EFFECT_SLIDE_OUT, 15);
 			btnLogo->SetEffect(EFFECT_SLIDE_BOTTOM | EFFECT_SLIDE_OUT, 15);
@@ -3593,6 +3599,7 @@ static int MenuSettingsMenu()
 	sprintf(options.name[i++], "Exit Action");
 	sprintf(options.name[i++], "Wiimote Orientation");
 	sprintf(options.name[i++], "Language");
+	sprintf(options.name[i++], "Display Virtual Memory");
 	sprintf(options.name[i++], "Preview Image");
 	options.length = i;
 
@@ -3660,8 +3667,12 @@ static int MenuSettingsMenu()
 					GCSettings.language = LANG_ENGLISH;
 	
 				break;
-				
+
 			case 3:
+				GCSettings.DisplayVM ^= 1;
+				break;
+
+			case 4:
 				GCSettings.PreviewImage++;
 				if(GCSettings.PreviewImage > 2)
 					GCSettings.PreviewImage = 0;
@@ -3714,18 +3725,23 @@ static int MenuSettingsMenu()
 				case LANG_CATALAN:		sprintf(options.value[2], "Catalan"); break;
 				case LANG_TURKISH:		sprintf(options.value[2], "Turkish"); break;
 			}
-			
+
+			if (GCSettings.DisplayVM == 1)
+				sprintf (options.value[3], "Enabled");
+			else
+				sprintf (options.value[3], "Disabled");
+
 			switch(GCSettings.PreviewImage)
 			{
-				case 0:	
-						sprintf(options.value[6], "Screenshots");
+				case 0:
+						sprintf(options.value[4], "Screenshots");
 						break; 
-				case 1:	
-						sprintf(options.value[6], "Covers");
+				case 1:
+						sprintf(options.value[4], "Covers");
 						break; 
-				case 2:	
-						sprintf(options.value[6], "Artwork");
-						break; 
+				case 2:
+						sprintf(options.value[4], "Artwork");
+						break;
 			}
 			
 			optionBrowser.TriggerUpdate();
