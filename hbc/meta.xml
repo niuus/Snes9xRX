@@ -2,13 +2,14 @@
  <app version="2">
    <name>Snes9x RX</name>
    <coder>NiuuS, Tantric</coder>
-   <version>2.8.0</version>
-   <release_date>201901061222</release_date>
+   <version>2.9.0</version>
+   <release_date>201901071222</release_date>
    <short_description>Super Nintendo Emulator</short_description>
    <long_description>
 
 Featuring:
 - Screenshot/Cover/Artwork display.
+Swap between them with the + button!
 - Screenshot button.
 - Sharp / Soft / HQ2X / Scanline filter.
 - Wiiflow plugin mode.

@@ -35,6 +35,10 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
+[2.9.0 - January 07, 2019]
+* Port option to not append "Auto" from vbagx. [libertyernie]
+* Correct the default aspect ratio if the Wii has 16:9 set up. [Tantric]
+
 [2.8.0 - January 06, 2019]
 * Credits crash fix and minor update.
 * Removed ImageFolder from GCSettings because it can always be retrieved
@@ -49,7 +53,7 @@ from GCSettings.PreviewImage, added function to get its value. [cebolleto]
 * Backport fix GC build with scanline filter. [Tantric/bladeoner]
 * Forgotten cleanup for remove rumble function. [bladeoner]
 
-[2.6.0 - December 28, 2018]
+[2.6.0 - December 29, 2018]
 * Settings saving fix. (thanks, Askot!)
 * New video filters / Fix for HQ2X-Scanlines change. [Tantric]
 * Minor menu optimizations. [Tantric]
@@ -108,29 +112,24 @@ from GCSettings.PreviewImage, added function to get its value. [cebolleto]
 * Partially remove movie code (part 3).
 
 [1.6.0 - September 05, 2017]
-
 * Partially remove movie code (part 2).
 * Fix MSU-1 file loading after saving/loading snapshots. [qwertymodo]
 * Sync MSU-1 code with upstream (sync 2). [qwertymodo]
 
 [1.5.0 - September 01, 2017]
-
 * Partially remove movie code (part 1).
 * New attempt to fix RAM mapping for Light Fantasy (matches Higan). [qwertymodo]
 
 [1.4.0 - August 31, 2017]
-
 * SuperFX fixes and improvements, some from snes9x2010. [jamsilva]
 
 [1.3.0 - August 30, 2017]
-
 * Added 20 MHz overclock option for the SuperFX chip.
 * Remove movie code. [twinaphex]
 * Sync MSU-1 code with upstream (sync 1). [qwertymodo]
 * Circuit USA timing hack. [bearoso]
 
 [1.2.0 - July 03, 2017]
-
 * Copied VLDC9 fix from snes9x_3ds. [jamsilva]
 * Support for more SA1 char conversion modes. [jamsilva]
 * Still cleaning things up...  [jamsilva]
