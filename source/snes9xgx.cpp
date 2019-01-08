@@ -29,6 +29,9 @@
 #include <wiiuse/wpad.h>
 #include <wupc/wupc.h>
 #endif
+#ifdef USE_VM
+		#include "vmalloc.h"
+#endif
 
 #include "snes9xgx.h"
 #include "networkop.h"
@@ -60,6 +63,9 @@ char appPath[1024] = { 0 };
 static int currentMode;
 
 extern "C" {
+#ifdef USE_VM
+		#include "utils/vm/vm.h"
+#endif
 extern char* strcasestr(const char *, const char *);
 extern void __exception_setreload(int t);
 }
@@ -382,9 +388,13 @@ void InitializeSnes9x() {
 
 int main(int argc, char *argv[])
 {
+	#ifdef USE_VM
+	VM_Init(ARAM_SIZE, MRAM_BACKING);	// Setup Virtual Memory with the entire ARAM
+	#endif
+
 	#ifdef HW_RVL
 	L2Enhance();
-	
+
 	u32 ios = IOS_GetVersion();
 
 	if(!SupportedIOS(ios))
@@ -442,8 +452,13 @@ int main(int argc, char *argv[])
 	savebuffer = (unsigned char *)mem2_malloc(SAVEBUFFERSIZE);
 	browserList = (BROWSERENTRY *)mem2_malloc(sizeof(BROWSERENTRY)*MAX_BROWSER_SIZE);
 #else
-	savebuffer = (unsigned char *)malloc(SAVEBUFFERSIZE);
-	browserList = (BROWSERENTRY *)malloc(sizeof(BROWSERENTRY)*MAX_BROWSER_SIZE);
+#ifdef USE_VM
+	savebuffer = (unsigned char *)vm_malloc(SAVEBUFFERSIZE);
+	browserList = (BROWSERENTRY *)vm_malloc(sizeof(BROWSERENTRY)*MAX_BROWSER_SIZE);
+#else
+	savebuffer = (unsigned char *)memalign(32,SAVEBUFFERSIZE);
+	browserList = (BROWSERENTRY *)memalign(32,sizeof(BROWSERENTRY)*MAX_BROWSER_SIZE);
+#endif
 #endif
 	InitGUIThreads();
 
