@@ -35,6 +35,12 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
+[3.0.0 - January 08, 2019]
+* Gamecube Virtual Memory implementation. [emukidid]
+- Adds ARAM usage via the TLB.
+* Add toggle to enable/disable virtual memory info.
+* Miscellaneous fixes.
+
 [2.9.0 - January 07, 2019]
 * Port option to not append "Auto" from vbagx. [libertyernie]
 * Correct the default aspect ratio if the Wii has 16:9 set up. [Tantric]
