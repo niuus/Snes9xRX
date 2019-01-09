@@ -18,8 +18,6 @@
 #include <string>
 #include <ogcsys.h>
 #include <unistd.h>
-#include <wiiuse/wpad.h>
-#include <wupc/wupc.h>
 #include <fat.h>
 #include <debug.h>
 #include <sys/iosupport.h>

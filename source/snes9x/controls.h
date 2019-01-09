@@ -4,6 +4,7 @@
    For further information, consult the LICENSE file in the root directory.
 \*****************************************************************************/
 
+#include "port.h"
 
 #ifndef _CONTROLS_H_
 #define _CONTROLS_H_

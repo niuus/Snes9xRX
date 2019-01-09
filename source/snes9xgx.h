@@ -14,6 +14,7 @@
 #ifndef _SNES9XGX_H_
 #define _SNES9XGX_H_
 
+#define MAXPATHLEN 1024
 #include "utils/FreeTypeGX.h"
 #include "snes9x.h"
 #include "filter.h"
@@ -86,13 +87,13 @@ struct SGCSettings{
 	int		SaveMethod; // For SRAM, Freeze, Prefs: Auto, SD, USB, SMB
 	int		AppendAuto; // 0 - no, 1 - yes
 	char	LoadFolder[MAXPATHLEN]; 	// Path to game files
-	char	LastFileLoaded[MAXPATHLEN]; //Last file loaded filename
+	char	LastFileLoaded[MAXPATHLEN]; // Last file loaded filename
 	char	SaveFolder[MAXPATHLEN]; 	// Path to save files
 	char	CheatFolder[MAXPATHLEN]; 	// Path to cheat files
-	char	ScreenshotsFolder[MAXPATHLEN]; //Path to screenshots files
-	char	CoverFolder[MAXPATHLEN]; 	//Path to cover files
-	char	ArtworkFolder[MAXPATHLEN]; 	//Path to artwork files
-	char 	ImageFolder[MAXPATHLEN]; 	//Saved image folder path 
+	char	ScreenshotsFolder[MAXPATHLEN]; // Path to screenshots files
+	char	CoverFolder[MAXPATHLEN]; 	// Path to cover files
+	char	ArtworkFolder[MAXPATHLEN]; 	// Path to artwork files
+	char 	ImageFolder[MAXPATHLEN]; 	// Saved image folder path 
 	
 	char	Exit_Dol_File[MAXPATHLEN]; // Exit Path
 	char	LoaderName[20]; // Menu Loader Name
