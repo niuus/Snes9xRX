@@ -165,6 +165,9 @@ struct STimings
 	int32	IRQPendCount;	// This value is just a hack, because Snes9x cannot emulate any events in an opcode.
 	int32	APUSpeedup;
 	bool8	APUAllowTimeOverflow;
+#ifdef GEKKO
+	int32	SA1Cycles;
+#endif
 };
 
 struct SSettings
