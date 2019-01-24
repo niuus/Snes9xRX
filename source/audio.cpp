@@ -97,7 +97,7 @@ InitAudio ()
 {
 	#ifdef NO_SOUND
 	AUDIO_Init (NULL);
-	AUDIO_SetDSPSampleRate(AI_SAMPLERATE_32KHZ);
+	AUDIO_SetDSPSampleRate(AI_SAMPLERATE_48KHZ);
 	AUDIO_RegisterDMACallback(GCMixSamples);
 	#else
 	ASND_Init();
@@ -114,20 +114,35 @@ InitAudio ()
 void
 AudioMode(int mode)
 {
-	#ifndef NO_SOUND
-	ASND_Pause(1);
-	AUDIO_StopDMA();
-	AUDIO_SetDSPSampleRate(AI_SAMPLERATE_32KHZ);
-	AUDIO_RegisterDMACallback(GCMixSamples);
-	#endif
-	memset(soundbuffer[0],0,AUDIOBUFFER);
-	memset(soundbuffer[1],0,AUDIOBUFFER);
-	DCFlushRange(soundbuffer[0],AUDIOBUFFER);
-	DCFlushRange(soundbuffer[1],AUDIOBUFFER);
-	AUDIO_InitDMA((u32)soundbuffer[whichab],AUDIOBUFFER);
-	AUDIO_StartDMA();
-
-	S9xSetSamplesAvailableCallback(FinalizeSamplesCallback, NULL);
+	if(mode == 0) // emulator
+	{
+		#ifndef NO_SOUND
+		ASND_Pause(1);
+		ASND_End();
+		AUDIO_StopDMA();
+		AUDIO_RegisterDMACallback(NULL);
+		DSP_Halt();
+		AUDIO_RegisterDMACallback(GCMixSamples);
+		#endif
+		memset(soundbuffer[0],0,AUDIOBUFFER);
+		memset(soundbuffer[1],0,AUDIOBUFFER);
+		DCFlushRange(soundbuffer[0],AUDIOBUFFER);
+		DCFlushRange(soundbuffer[1],AUDIOBUFFER);
+		AUDIO_InitDMA((u32)soundbuffer[whichab],AUDIOBUFFER);
+		AUDIO_StartDMA();
+		S9xSetSamplesAvailableCallback(FinalizeSamplesCallback, NULL);
+	}
+	else // menu
+	{
+		S9xSetSamplesAvailableCallback(NULL, NULL);
+		#ifndef NO_SOUND
+		DSP_Unhalt();
+		ASND_Init();
+		ASND_Pause(0);
+		#else
+		AUDIO_StopDMA();
+		#endif
+	}
 }
 
 /****************************************************************************
