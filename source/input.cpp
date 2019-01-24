@@ -591,7 +591,7 @@ void ReportButtons ()
 
 	UpdatePads();
 
-	Settings.TurboMode = (
+	Settings.TurboMode = Settings.Mute = (
 		userInput[0].pad.substickX > 70 ||
 		userInput[0].WPAD_StickX(1) > 70 ||
 		userInput[0].wupcdata.substickX > 560
