@@ -63,8 +63,10 @@ namespace spc
 	   if necessary on game load. */
 	static uint32		ratio_numerator = APU_NUMERATOR_NTSC;
 	static uint32		ratio_denominator = APU_DENOMINATOR_NTSC;
+
+	static double		dynamic_rate_multiplier = 1.0;
 }
-  
+
 namespace msu
 {
 	static int			buffer_size;
@@ -99,7 +101,7 @@ static void DeStereo (uint8 *buffer, int sample_count)
 	int16	*buf = (int16 *) buffer;
 	int32	s1, s2;
 
-	for (int i = 0; i < sample_count >> 1; i++)
+	for (int i = 0; i < (sample_count >> 1); i++)
 	{
 		s1 = (int32) buf[2 * i];
 		s2 = (int32) buf[2 * i + 1];
@@ -154,7 +156,9 @@ bool8 S9xMixSamples (uint8 *buffer, int sample_count)
 	{
 		memset(dest, 0, sample_count << 1);
 		spc::resampler->clear();
-        msu::resampler->clear();
+
+		if(Settings.MSU1)
+			msu::resampler->clear();
 
 		return (FALSE);
 	}
@@ -213,6 +217,24 @@ int S9xGetSampleCount (void)
 	return (spc::resampler->avail() >> (Settings.Stereo ? 0 : 1));
 }
 
+#ifdef GEKKO
+void S9xIncreaseDynamicRateMultiplier ()
+{
+	if(spc::dynamic_rate_multiplier != 1.001) {
+		spc::dynamic_rate_multiplier = 1.001;
+		UpdatePlaybackRate();
+	}
+}
+
+void S9xResetDynamicRateMultiplier ()
+{
+	if(spc::dynamic_rate_multiplier != 1.0) {
+		spc::dynamic_rate_multiplier = 1.0;
+		UpdatePlaybackRate();
+	}
+}
+#endif
+
 void S9xFinalizeSamples (void)
 {
 	bool drop_current_msu1_samples = TRUE;
@@ -225,6 +247,7 @@ void S9xFinalizeSamples (void)
 		{
 			/* We weren't able to process the entire buffer. Potential overrun. */
 			spc::sound_in_sync = FALSE;
+			S9xIncreaseDynamicRateMultiplier();
 
 			if (Settings.SoundSync && !Settings.TurboMode)
 				return;
@@ -254,9 +277,14 @@ void S9xFinalizeSamples (void)
 	else
 	if (spc::resampler->space_empty() >= spc::resampler->space_filled())
 		spc::sound_in_sync = TRUE;
-	else
+	else {
+		S9xIncreaseDynamicRateMultiplier ();
 		spc::sound_in_sync = FALSE;
+	}
 
+	if(spc::sound_in_sync) {
+		S9xResetDynamicRateMultiplier ();
+	}
 	spc_core->set_output((SNES_SPC::sample_t *) spc::landing_buffer, spc::buffer_size >> 1);
 }
 
@@ -298,10 +326,19 @@ void UpdatePlaybackRate (void)
 		Settings.SoundInputRate = APU_DEFAULT_INPUT_RATE;
 
 	double time_ratio = (double) Settings.SoundInputRate * spc::timing_hack_numerator / (Settings.SoundPlaybackRate * spc::timing_hack_denominator);
+
+	if (Settings.DynamicRateControl)
+	{
+		time_ratio *= spc::dynamic_rate_multiplier;
+	}
+
 	spc::resampler->time_ratio(time_ratio);
 
-	time_ratio = (44100.0 / Settings.SoundPlaybackRate) * (Settings.SoundInputRate / 32040.0);
-	msu::resampler->time_ratio(time_ratio);
+	if (Settings.MSU1)
+	{
+		time_ratio = (44100.0 / Settings.SoundPlaybackRate) * (Settings.SoundInputRate / 32040.0);
+		msu::resampler->time_ratio(time_ratio);
+	}
 }
 
 bool8 S9xInitSound (int buffer_ms, int lag_ms)
@@ -538,7 +575,9 @@ void S9xResetAPU (void)
 	spc_core->set_output((SNES_SPC::sample_t *) spc::landing_buffer, spc::buffer_size >> 1);
 
 	spc::resampler->clear();
-	msu::resampler->clear();
+
+	if (Settings.MSU1)
+		msu::resampler->clear();
 }
 
 void S9xSoftResetAPU (void)
@@ -549,7 +588,9 @@ void S9xSoftResetAPU (void)
 	spc_core->set_output((SNES_SPC::sample_t *) spc::landing_buffer, spc::buffer_size >> 1);
 
 	spc::resampler->clear();
-	msu::resampler->clear();
+
+	if (Settings.MSU1)
+		msu::resampler->clear();
 }
 
 static void from_apu_to_state (uint8 **buf, void *var, size_t size)

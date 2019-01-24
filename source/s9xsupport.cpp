@@ -84,10 +84,7 @@ void S9xInitSync()
 
 /*** Synchronisation ***/
 
-void S9xSyncSpeed ()
-{
-	while (!S9xSyncSound())
-		usleep(10);
+void S9xSyncSpeed () {
 
 	uint32 skipFrms = Settings.SkipFrames;
 
