@@ -218,20 +218,23 @@ int S9xGetSampleCount (void)
 }
 
 #ifdef GEKKO
-void S9xIncreaseDynamicRateMultiplier ()
-{
-	if(spc::dynamic_rate_multiplier != 1.001) {
-		spc::dynamic_rate_multiplier = 1.001;
+static double new_dynamic_rate_multiplier = 1.0;
+
+void UpdatePlaybackRateWithDynamicRate() {
+	if(spc::dynamic_rate_multiplier != new_dynamic_rate_multiplier) {
+		spc::dynamic_rate_multiplier = new_dynamic_rate_multiplier;
 		UpdatePlaybackRate();
 	}
 }
 
-void S9xResetDynamicRateMultiplier ()
+static inline void IncreaseDynamicRateMultiplier ()
 {
-	if(spc::dynamic_rate_multiplier != 1.0) {
-		spc::dynamic_rate_multiplier = 1.0;
-		UpdatePlaybackRate();
-	}
+	new_dynamic_rate_multiplier = 1.01;
+}
+
+static inline void ResetDynamicRateMultiplier ()
+{
+	new_dynamic_rate_multiplier = 1.0;
 }
 #endif
 
@@ -247,7 +250,7 @@ void S9xFinalizeSamples (void)
 		{
 			/* We weren't able to process the entire buffer. Potential overrun. */
 			spc::sound_in_sync = FALSE;
-			S9xIncreaseDynamicRateMultiplier();
+			S9xClearSamples();
 
 			if (Settings.SoundSync && !Settings.TurboMode)
 				return;
@@ -277,14 +280,16 @@ void S9xFinalizeSamples (void)
 	else
 	if (spc::resampler->space_empty() >= spc::resampler->space_filled())
 		spc::sound_in_sync = TRUE;
-	else {
-		S9xIncreaseDynamicRateMultiplier ();
+	else
 		spc::sound_in_sync = FALSE;
-	}
 
 	if(spc::sound_in_sync) {
-		S9xResetDynamicRateMultiplier ();
+		ResetDynamicRateMultiplier ();
 	}
+	else {
+			IncreaseDynamicRateMultiplier ();
+	}
+
 	spc_core->set_output((SNES_SPC::sample_t *) spc::landing_buffer, spc::buffer_size >> 1);
 }
 
