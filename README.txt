@@ -26,7 +26,7 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 * Custom controller configurations
 * SD, USB, DVD, SMB, Zip, and 7z support
 * Autodetect PAL/NTSC, 16:9 widescreen support
-* Original/filtered/unfiltered video modes
+* Original/filtered (Sharp & Soft))/Unfiltered video modes
 * Turbo Mode - up to 2x the normal speed
 * Zoom option to zoom in/out
 * Open Source!
@@ -34,6 +34,18 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+[3.1.0 - January 24, 2019]
+* Kirby Super Star intro fix (thanks, bladeoner!)
+* Reorder init to init snes9x memory earlier so it goes into MEM1 [Tantric]
+* Mute sound when in turbo mode, otherwise the APU buffer can get messed up [Tantric]
+* Fix sound crackling [Tantric]
+* Change audio playback to 48khz. this should fix the tinny sound problem [Tantric]
+* Try to improve audio sync & reduce sound input rate slightly [Tantric]
+* Disable sound sync (if enabled) when using turbo mode.
+Fixes sound cutting off when using turbo. [Tantric]
+* Also break out of S9xMainLoop in original location [bearoso]
+* Invoke Menu with Start+A+B+Z, special for NES-SNES to GCN adapters
 
 [3.0.0 - January 08, 2019]
 * Gamecube Virtual Memory implementation. [emukidid]
