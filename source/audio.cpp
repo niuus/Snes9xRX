@@ -108,12 +108,12 @@ InitAudio ()
 }
 
 /****************************************************************************
- * AudioMode
+ * SwitchAudioMode
  *
- * Emulator sound
+ * Switches between menu sound and emulator sound
  ***************************************************************************/
 void
-AudioMode(int mode)
+SwitchAudioMode(int mode)
 {
 	if(mode == 0) // emulator
 	{
@@ -131,6 +131,7 @@ AudioMode(int mode)
 		DCFlushRange(soundbuffer[1],AUDIOBUFFER);
 		AUDIO_InitDMA((u32)soundbuffer[whichab],AUDIOBUFFER);
 		AUDIO_StartDMA();
+
 		S9xSetSamplesAvailableCallback(FinalizeSamplesCallback, NULL);
 	}
 	else // menu

@@ -28,7 +28,7 @@
 #include <wupc/wupc.h>
 #endif
 #ifdef USE_VM
-		#include "vmalloc.h"
+	#include "vmalloc.h"
 #endif
 
 #include "snes9xgx.h"
@@ -62,7 +62,7 @@ static int currentMode;
 
 extern "C" {
 #ifdef USE_VM
-		#include "utils/vm/vm.h"
+	#include "utils/vm/vm.h"
 #endif
 extern char* strcasestr(const char *, const char *);
 extern void __exception_setreload(int t);
@@ -532,7 +532,7 @@ int main(int argc, char *argv[])
 		// since we're entering the menu
 		ResumeDeviceThread();
 
-		AudioMode(1);
+		SwitchAudioMode(1);
 
 		if(!autoboot)
 		{
@@ -554,7 +554,7 @@ int main(int argc, char *argv[])
 #endif
 		ConfigRequested = 0;
 		ScreenshotRequested = 0;
-		AudioMode(0);
+		SwitchAudioMode(0);
 
 		Settings.MultiPlayer5Master = (GCSettings.Controller == CTRL_PAD4 ? true : false);
 		Settings.SuperScopeMaster = (GCSettings.Controller == CTRL_SCOPE ? true : false);
