@@ -2,7 +2,7 @@
      Snes9x - Portable Super Nintendo Entertainment System (TM) emulator.
                 This file is licensed under the Snes9x License.
    For further information, consult the LICENSE file in the root directory.
-\*****************************************************************************/ 
+\*****************************************************************************/
 
 
 #include <math.h>
@@ -176,8 +176,6 @@ bool8 S9xMixSamples (uint8 *buffer, int sample_count)
                     for (int32 i = 0; i < sample_count; ++i)
                         *((int16*)(dest+(i * 2))) += *((int16*)(msu::resample_buffer+(i * 2)));
 				}
-				else // should never occur
-					assert(0);
 			}
 		}
 		else
@@ -269,7 +267,6 @@ void S9xFinalizeSamples (void)
 		if (!drop_current_msu1_samples && !msu::resampler->push((short *)msu::landing_buffer, S9xMSU1Samples()))
 		{
 			// should not occur, msu buffer is larger and we drop msu samples if spc buffer overruns
-			assert(0);
 		}
 	}
 
@@ -285,7 +282,7 @@ void S9xFinalizeSamples (void)
 		ResetDynamicRateMultiplier ();
 	}
 	else {
-			IncreaseDynamicRateMultiplier ();
+		IncreaseDynamicRateMultiplier ();
 	}
 
 	spc_core->set_output((SNES_SPC::sample_t *) spc::landing_buffer, spc::buffer_size >> 1);
