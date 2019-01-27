@@ -35,17 +35,23 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
+[3.2.0 - January 26, 2019]
+* We only use the HermiteResampler. [Tantric]
+* SwitchAudioMode update.
+* Update hermite resampler to support dynamic rate control.
+Fixes audio blips. Remove some asserts in APU. [Tantric]
+
 [3.1.0 - January 24, 2019]
-* Kirby Super Star intro fix (thanks, bladeoner!)
-* Reorder init to init snes9x memory earlier so it goes into MEM1 [Tantric]
-* Mute sound when in turbo mode, otherwise the APU buffer can get messed up [Tantric]
-* Fix sound crackling [Tantric]
-* Change audio playback to 48khz. this should fix the tinny sound problem [Tantric]
-* Try to improve audio sync & reduce sound input rate slightly [Tantric]
+* Kirby Super Star intro fix. (thanks, bladeoner!)
+* Reorder init to init snes9x memory earlier so it goes into MEM1. [Tantric]
+* Mute sound when in turbo mode, otherwise the APU buffer can get messed up. [Tantric]
+* Fix sound crackling. [Tantric]
+* Change audio playback to 48khz. this should fix the tinny sound problem. [Tantric]
+* Try to improve audio sync & reduce sound input rate slightly. [Tantric]
 * Disable sound sync (if enabled) when using turbo mode.
 Fixes sound cutting off when using turbo. [Tantric]
-* Also break out of S9xMainLoop in original location [bearoso]
-* Invoke Menu with Start+A+B+Z, special for NES-SNES to GCN adapters
+* Also break out of S9xMainLoop in original location. [bearoso]
+* Invoke Menu with Start+A+B+Z, special for NES-SNES to GCN adapters.
 
 [3.0.0 - January 08, 2019]
 * Gamecube Virtual Memory implementation. [emukidid]

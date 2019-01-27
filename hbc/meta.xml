@@ -2,8 +2,8 @@
  <app version="2">
    <name>Snes9x RX</name>
    <coder>NiuuS, Tantric</coder>
-   <version>3.1.0</version>
-   <release_date>201901240002</release_date>
+   <version>3.2.0</version>
+   <release_date>201901260002</release_date>
    <short_description>Super Nintendo Emulator</short_description>
    <long_description>
 
