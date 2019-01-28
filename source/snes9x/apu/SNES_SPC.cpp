@@ -131,7 +131,6 @@ void SNES_SPC::enable_rom( int enable )
 			int count = (time) - m.dsp_time;\
 			if ( !SPC_MORE_ACCURACY || count )\
 			{\
-				assert( count > 0 );\
 				m.dsp_time = (time);\
 				dsp.run( count );\
 			}\
@@ -495,7 +494,7 @@ int SNES_SPC::cpu_read( int addr, rel_time_t time )
 			else // 1%
 			{
 				if( reg + (r_t0out + 0xF0 - 0x10000) < 0x100 )
-						result = cpu_read( reg + (r_t0out + 0xF0 - 0x10000), time );
+					result = cpu_read( reg + (r_t0out + 0xF0 - 0x10000), time );
 			}
 		}
 	}
@@ -543,7 +542,7 @@ void SNES_SPC::end_frame( time_t end_time )
 	// Greatest number of clocks early that emulation can stop early due to
 	// not being able to execute current instruction without going over
 	// allowed time.
-	assert( -cpu_lag_max <= m.spc_time && m.spc_time <= cpu_lag_max );
+	//assert( -cpu_lag_max <= m.spc_time && m.spc_time <= cpu_lag_max );
 	
 	// Catch timers up to CPU
 	for ( int i = 0; i < timer_count; i++ )
