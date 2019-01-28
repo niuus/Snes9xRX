@@ -35,6 +35,11 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
+[3.3.0 - January 28, 2019]
+* Remove two asserts in SPC.
+* Rewritten audio code. WIP. [Tantric]
+* Add logic to update the playback rate dynamically. [Tantric]
+
 [3.2.0 - January 26, 2019]
 * We only use the HermiteResampler. [Tantric]
 * SwitchAudioMode update.
@@ -344,13 +349,13 @@ Filtering under the Rendering setting.
 			- Filtered
           
 • Scaling 	- Default
-				  	- 16:9 Correction
+			- 16:9 Correction
 
 • Filtering - None
-				  	- hq2x
-					  - hq2x Soft
-					  - hq2x Bold
-					  - Scanlines
+			- hq2x
+			- hq2x Soft
+			- hq2x Bold
+			- Scanlines
 					
 Screen Zoom will bring up a menu where you can adjust the Zoom level by using
 the left and right arrows that you can click on. The default setting is 100%.
