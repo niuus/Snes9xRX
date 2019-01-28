@@ -2,7 +2,7 @@ msgid "&"
 msgstr "&"
 
 msgid "16:9 Correction"
-msgstr "16:9  보정"
+msgstr "16:9 보정"
 
 msgid "7z decompression failed: Archive contains too many files"
 msgstr "7z 압축 해제 실패: 압축 파일에 너무 많은 파일이 포함되었습니다."
@@ -421,8 +421,8 @@ msgstr "잘못된 파일 크기입니다!"
 msgid "Invalid game file!"
 msgstr "잘못된 게임 파일입니다!"
 
-msgid "Invalid network settings - Check settings.xml."
-msgstr "잘못된 네트워크 설정 - settings.xml 확인"
+msgid "Invalid network settings - Check settingsRx.xml."
+msgstr "잘못된 네트워크 설정 - settingsRx.xml 확인"
 
 msgid "Invalid network settings - Share IP is blank."
 msgstr "잘못된 네트워크 설정 - 공유 IP가 비었습니다."
