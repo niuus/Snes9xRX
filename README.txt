@@ -35,6 +35,18 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
+[3.5.0 - February 01, 2019]
+* Add Interpolation option and add Gamemenu Audio. [bladeoner]
+This adds the following:
+- A new "Audio" menu inside "Game". Now you can choose between:
+Gaussian Interpolation (Accurate), Linear, or None.
+* Restore GUI sounds and BG music.
+* Add ability to externally load fonts and activate Japanese/Korean. [Tantric]
+Put the jp.ttf and ko.ttf inside the Apps > Snes9xRX folder.
+You can download them from the Snes9X RX GitHub "hbc" folder.
+* Add support to load external background music. [Tantric]
+Put your bg_music.ogg inside the Apps > Snes9xRX folder.
+
 [3.4.0 - February 01, 2019]
 * Quick and dirty attempt to prevent reading and writing
 from/to the same audio buffer. [Tantric]
