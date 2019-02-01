@@ -21,7 +21,7 @@
 #include "filelist.h"
 
 #define APPNAME 			"Snes9x RX"
-#define APPVERSION 			"3.4.0"
+#define APPVERSION 			"3.2.0"
 #define APPFOLDER 			"snes9xgx"
 #define PREF_FILE_NAME		"settingsRX.xml"
 
@@ -121,6 +121,8 @@ struct SGCSettings{
 	int		PreviewImage;
 
 	int		sfxOverclock;
+
+	int		Interpolation;
 };
 
 char* ImageFolder();

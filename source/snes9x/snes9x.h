@@ -221,6 +221,7 @@ struct SSettings
 	bool8	ReverseStereo;
 	bool8	Mute;
 	bool8	DynamicRateControl;
+	int32	InterpolationMethod;
 	int32	DynamicRateLimit; /* Multiplied by 1000 */
 
 	bool8	SupportHiRes;

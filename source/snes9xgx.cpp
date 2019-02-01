@@ -526,6 +526,13 @@ int main(int argc, char *argv[])
 		S9xResetSuperFX();
 	}
 
+	switch (GCSettings.Interpolation)
+	{
+		case 0: Settings.InterpolationMethod = DSP_INTERPOLATION_GAUSSIAN; break;
+		case 1: Settings.InterpolationMethod = DSP_INTERPOLATION_LINEAR; break;
+		case 2: Settings.InterpolationMethod = DSP_INTERPOLATION_NONE; break;
+	}
+
 	while (1) // main loop
 	{
 		// go back to checking if devices were inserted/removed
