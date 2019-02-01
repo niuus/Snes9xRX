@@ -718,6 +718,6 @@ bool LoadPrefs()
 		CreateDirectory(dirPath);
 	}
 
-	ResetText();
+	ChangeLanguage();
 	return prefFound;
 }
