@@ -35,6 +35,12 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
+[3.4.0 - February 01, 2019]
+* Quick and dirty attempt to prevent reading and writing
+from/to the same audio buffer. [Tantric]
+* Avoid using file stat when possible. It's slow. [Tantric]
+* Fixed black screen: Tengai Makyou Zero. [bladeoner]
+
 [3.3.0 - January 28, 2019]
 * Remove two asserts in SPC.
 * Rewritten audio code. WIP. [Tantric]
