@@ -37,6 +37,9 @@ GuiSaveBrowser::GuiSaveBrowser(int w, int h, SaveList * s, int a)
 	trig2 = new GuiTrigger;
 	trig2->SetSimpleTrigger(-1, WPAD_BUTTON_2, 0);
 
+	btnSoundOver = new GuiSound(button_over_pcm, button_over_pcm_size, SOUND_PCM);
+	btnSoundClick = new GuiSound(button_click_pcm, button_click_pcm_size, SOUND_PCM);
+
 	gameSave = new GuiImageData(button_gamesave_png);
 	gameSaveOver = new GuiImageData(button_gamesave_over_png);
 	gameSaveBlank = new GuiImageData(button_gamesave_blank_png);
@@ -63,6 +66,8 @@ GuiSaveBrowser::GuiSaveBrowser(int w, int h, SaveList * s, int a)
 	arrowUpBtn->SetAlignment(ALIGN_RIGHT, ALIGN_TOP);
 	arrowUpBtn->SetSelectable(false);
 	arrowUpBtn->SetTrigger(trigA);
+	arrowUpBtn->SetSoundOver(btnSoundOver);
+	arrowUpBtn->SetSoundClick(btnSoundClick);
 
 	arrowDownBtn = new GuiButton(arrowDownImg->GetWidth(), arrowDownImg->GetHeight());
 	arrowDownBtn->SetParent(this);
@@ -71,6 +76,8 @@ GuiSaveBrowser::GuiSaveBrowser(int w, int h, SaveList * s, int a)
 	arrowDownBtn->SetAlignment(ALIGN_RIGHT, ALIGN_BOTTOM);
 	arrowDownBtn->SetSelectable(false);
 	arrowDownBtn->SetTrigger(trigA);
+	arrowDownBtn->SetSoundOver(btnSoundOver);
+	arrowDownBtn->SetSoundClick(btnSoundClick);
 
 	for(int i=0; i<SAVELISTSIZE; i++)
 	{
@@ -106,6 +113,8 @@ GuiSaveBrowser::GuiSaveBrowser(int w, int h, SaveList * s, int a)
 		saveBtn[i]->SetState(STATE_DISABLED);
 		saveBtn[i]->SetEffectGrow();
 		saveBtn[i]->SetVisible(false);
+		saveBtn[i]->SetSoundOver(btnSoundOver);
+		saveBtn[i]->SetSoundClick(btnSoundClick);
 		saveBtnLastOver[i] = false;
 	}
 	saveBtn[0]->SetState(STATE_SELECTED, -1);
@@ -135,6 +144,8 @@ GuiSaveBrowser::~GuiSaveBrowser()
 	delete arrowUp;
 	delete arrowUpOver;
 
+	delete btnSoundOver;
+	delete btnSoundClick;
 	delete trigA;
 	delete trig2;
 

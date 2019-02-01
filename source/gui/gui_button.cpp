@@ -1,7 +1,7 @@
 /****************************************************************************
  * libwiigui
  *
- * Tantric 2009
+ * Tantric 2009-2019
  *
  * gui_button.cpp
  *
@@ -34,6 +34,9 @@ GuiButton::GuiButton(int w, int h)
 		labelClick[i] = NULL;
 	}
 
+	soundOver = NULL;
+	soundHold = NULL;
+	soundClick = NULL;
 	tooltip = NULL;
 	selectable = true;
 	holdable = false;
@@ -107,6 +110,18 @@ void GuiButton::SetLabelClick(GuiText* txt, int n)
 	labelClick[n] = txt;
 	if(txt) txt->SetParent(this);
 }
+void GuiButton::SetSoundOver(GuiSound * snd)
+{
+	soundOver = snd;
+}
+void GuiButton::SetSoundHold(GuiSound * snd)
+{
+	soundHold = snd;
+}
+void GuiButton::SetSoundClick(GuiSound * snd)
+{
+	soundClick = snd;
+}
 void GuiButton::SetTooltip(GuiTooltip* t)
 {
 	tooltip = t;
@@ -141,8 +156,7 @@ void GuiButton::Draw()
 			label[0]->Draw();
 			
 		if(labelOver[1])
-			
-			labelOver[1]->Draw();	
+			labelOver[1]->Draw();
 		else if(label[1])
 			label[1]->Draw();
 			
@@ -202,9 +216,12 @@ void GuiButton::Update(GuiTrigger * t)
 	{
 		if(this->IsInside(t->wpad->ir.x, t->wpad->ir.y))
 		{
-			if(state == STATE_DEFAULT) // we weren't on the button before!
+			if(state == STATE_DEFAULT) // We weren't on the button before!
 			{
 				this->SetState(STATE_SELECTED, t->chan);
+
+				if(soundOver)
+					soundOver->Play();
 
 				if(effectsOver && !effects)
 				{
@@ -266,6 +283,9 @@ void GuiButton::Update(GuiTrigger * t)
 							if(!t->wpad->ir.valid ||	this->IsInside(t->wpad->ir.x, t->wpad->ir.y))
 							{
 								this->SetState(STATE_CLICKED, t->chan);
+
+								if(soundClick)
+									soundClick->Play();
 							}
 						}
 						else if(trigger[i]->type == TRIGGER_BUTTON_ONLY)
@@ -305,14 +325,14 @@ void GuiButton::Update(GuiTrigger * t)
 				// lower 16 bits only (WiiU Pro controller)
 				wupc_btns = t->wpad->btns_d >> 16;
 				wupc_btns_h = t->wpad->btns_h >> 16;
-				wupc_btns_trig = trigger[i]->wpad->btns_h >> 16;				
-				
+				wupc_btns_trig = trigger[i]->wpad->btns_h >> 16;
+
 				if(
 					(t->wpad->btns_d > 0 &&
 					(wm_btns == wm_btns_trig ||
 					(cc_btns == cc_btns_trig && t->wpad->exp.type == EXP_CLASSIC))) ||
 					(t->pad.btns_d == trigger[i]->pad.btns_h && t->pad.btns_d > 0) ||
-					(wupc_btns == wupc_btns_trig && wupc_btns > 0))					
+					(wupc_btns == wupc_btns_trig && wupc_btns > 0))
 				{
 					if(trigger[i]->type == TRIGGER_HELD && state == STATE_SELECTED &&
 						(t->chan == stateChan || stateChan == -1))
@@ -325,7 +345,7 @@ void GuiButton::Update(GuiTrigger * t)
 					(cc_btns_h == cc_btns_trig && t->wpad->exp.type == EXP_CLASSIC))) ||
 					(t->pad.btns_h == trigger[i]->pad.btns_h && t->pad.btns_h > 0) ||
 					(wupc_btns_h == wupc_btns_trig && wupc_btns_h > 0))
-					
+
 				{
 					if(trigger[i]->type == TRIGGER_HELD)
 						held = true;

@@ -118,6 +118,9 @@ GuiKeyboard::GuiKeyboard(char * t, u32 max)
 	keyLarge = new GuiImageData(keyboard_largekey_png);
 	keyLargeOver = new GuiImageData(keyboard_largekey_over_png);
 
+	keySoundOver = new GuiSound(button_over_pcm, button_over_pcm_size, SOUND_PCM);
+	keySoundClick = new GuiSound(button_click_pcm, button_click_pcm_size, SOUND_PCM);
+
 	trigA = new GuiTrigger;
 	trigA->SetSimpleTrigger(-1, WPAD_BUTTON_A | WPAD_CLASSIC_BUTTON_A, PAD_BUTTON_A);
 	trig2 = new GuiTrigger;
@@ -130,6 +133,8 @@ GuiKeyboard::GuiKeyboard(char * t, u32 max)
 	keyBack->SetImage(keyBackImg);
 	keyBack->SetImageOver(keyBackOverImg);
 	keyBack->SetLabel(keyBackText);
+	keyBack->SetSoundOver(keySoundOver);
+	keyBack->SetSoundClick(keySoundClick);
 	keyBack->SetTrigger(trigA);
 	keyBack->SetTrigger(trig2);
 	keyBack->SetPosition(10*42+40, 0*42+80);
@@ -143,6 +148,8 @@ GuiKeyboard::GuiKeyboard(char * t, u32 max)
 	keyCaps->SetImage(keyCapsImg);
 	keyCaps->SetImageOver(keyCapsOverImg);
 	keyCaps->SetLabel(keyCapsText);
+	keyCaps->SetSoundOver(keySoundOver);
+	keyCaps->SetSoundClick(keySoundClick);
 	keyCaps->SetTrigger(trigA);
 	keyCaps->SetTrigger(trig2);
 	keyCaps->SetPosition(0, 2*42+80);
@@ -156,6 +163,8 @@ GuiKeyboard::GuiKeyboard(char * t, u32 max)
 	keyShift->SetImage(keyShiftImg);
 	keyShift->SetImageOver(keyShiftOverImg);
 	keyShift->SetLabel(keyShiftText);
+	keyShift->SetSoundOver(keySoundOver);
+	keyShift->SetSoundClick(keySoundClick);
 	keyShift->SetTrigger(trigA);
 	keyShift->SetTrigger(trig2);
 	keyShift->SetPosition(21, 3*42+80);
@@ -167,6 +176,8 @@ GuiKeyboard::GuiKeyboard(char * t, u32 max)
 	keySpace = new GuiButton(keyLarge->GetWidth(), keyLarge->GetHeight());
 	keySpace->SetImage(keySpaceImg);
 	keySpace->SetImageOver(keySpaceOverImg);
+	keySpace->SetSoundOver(keySoundOver);
+	keySpace->SetSoundClick(keySoundClick);
 	keySpace->SetTrigger(trigA);
 	keySpace->SetTrigger(trig2);
 	keySpace->SetPosition(0, 4*42+80);
@@ -191,6 +202,8 @@ GuiKeyboard::GuiKeyboard(char * t, u32 max)
 				keyBtn[i][j] = new GuiButton(key->GetWidth(), key->GetHeight());
 				keyBtn[i][j]->SetImage(keyImg[i][j]);
 				keyBtn[i][j]->SetImageOver(keyImgOver[i][j]);
+				keyBtn[i][j]->SetSoundOver(keySoundOver);
+				keyBtn[i][j]->SetSoundClick(keySoundClick);
 				keyBtn[i][j]->SetTrigger(trigA);
 				keyBtn[i][j]->SetTrigger(trig2);
 				keyBtn[i][j]->SetLabel(keyTxt[i][j]);
@@ -231,6 +244,8 @@ GuiKeyboard::~GuiKeyboard()
 	delete keyMediumOver;
 	delete keyLarge;
 	delete keyLargeOver;
+	delete keySoundOver;
+	delete keySoundClick;
 	delete trigA;
 	delete trig2;
 

@@ -4,7 +4,7 @@
  * softdev July 2006
  * crunchy2 May 2007-July 2007
  * Michniewski 2008
- * Tantric 2008-2010
+ * Tantric 2008-2019
  *
  * snes9xgx.h
  *
@@ -21,7 +21,7 @@
 #include "filelist.h"
 
 #define APPNAME 			"Snes9x RX"
-#define APPVERSION 			"3.2.0"
+#define APPVERSION 			"3.5.0"
 #define APPFOLDER 			"snes9xgx"
 #define PREF_FILE_NAME		"settingsRX.xml"
 
@@ -114,10 +114,12 @@ struct SGCSettings{
 	int		widescreen;	// 0 - 4:3 aspect, 1 - 16:9 aspect
 	int		xshift;	// video output shift
 	int		yshift;
-	int		WiimoteOrientation;
 	int		ExitAction;
-	int		language;
+	int		WiimoteOrientation;
+	int		MusicVolume;
+	int		SFXVolume;
 	int		DisplayVM;
+	int		language;
 	int		PreviewImage;
 
 	int		sfxOverclock;

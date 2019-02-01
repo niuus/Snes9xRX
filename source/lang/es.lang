@@ -304,6 +304,12 @@ msgstr "Salir"
 msgid "Exit Action"
 msgstr "Acción de Salida"
 
+msgid "Filtered (Sharp)"
+msgstr "Filtrado (Nítido)"
+
+msgid "Filtered (Soft)"
+msgstr "Filtrado (Suave)"
+
 msgid "Filtered"
 msgstr "Filtrado"
 
@@ -548,7 +554,7 @@ msgid "Superscope"
 msgstr ""
 
 msgid "Unfiltered"
-msgstr "No filtrado"
+msgstr "Sin filtrado"
 
 msgid "Unknown file type!"
 msgstr "Tipo de archivo desconocido!"

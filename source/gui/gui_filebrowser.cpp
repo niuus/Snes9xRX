@@ -32,6 +32,9 @@ GuiFileBrowser::GuiFileBrowser(int w, int h)
 	trigHeldA = new GuiTrigger;
 	trigHeldA->SetHeldTrigger(-1, WPAD_BUTTON_A | WPAD_CLASSIC_BUTTON_A, PAD_BUTTON_A);
 
+	btnSoundOver = new GuiSound(button_over_pcm, button_over_pcm_size, SOUND_PCM);
+	btnSoundClick = new GuiSound(button_click_pcm, button_click_pcm_size, SOUND_PCM);
+
 	bgFileSelection = new GuiImageData(bg_game_selection_png);
 	bgFileSelectionImg = new GuiImage(bgFileSelection);
 	bgFileSelectionImg->SetParent(this);
@@ -73,6 +76,8 @@ GuiFileBrowser::GuiFileBrowser(int w, int h)
 	arrowUpBtn->SetClickable(false);
 	arrowUpBtn->SetHoldable(true);
 	arrowUpBtn->SetTrigger(trigHeldA);
+	arrowUpBtn->SetSoundOver(btnSoundOver);
+	arrowUpBtn->SetSoundClick(btnSoundClick);
 
 	arrowDownBtn = new GuiButton(arrowDownImg->GetWidth(), arrowDownImg->GetHeight());
 	arrowDownBtn->SetParent(this);
@@ -83,6 +88,8 @@ GuiFileBrowser::GuiFileBrowser(int w, int h)
 	arrowDownBtn->SetClickable(false);
 	arrowDownBtn->SetHoldable(true);
 	arrowDownBtn->SetTrigger(trigHeldA);
+	arrowDownBtn->SetSoundOver(btnSoundOver);
+	arrowDownBtn->SetSoundClick(btnSoundClick);
 
 	scrollbarBoxBtn = new GuiButton(scrollbarBoxImg->GetWidth(), scrollbarBoxImg->GetHeight());
 	scrollbarBoxBtn->SetParent(this);
@@ -113,6 +120,7 @@ GuiFileBrowser::GuiFileBrowser(int w, int h)
 		fileList[i]->SetPosition(2,26*i+3);
 		fileList[i]->SetTrigger(trigA);
 		fileList[i]->SetTrigger(trig2);
+		fileList[i]->SetSoundClick(btnSoundClick);
 	}
 }
 
@@ -149,6 +157,8 @@ GuiFileBrowser::~GuiFileBrowser()
 	delete scrollbarBox;
 	delete scrollbarBoxOver;
 
+	delete btnSoundOver;
+	delete btnSoundClick;
 	delete trigHeldA;
 	delete trigA;
 	delete trig2;
