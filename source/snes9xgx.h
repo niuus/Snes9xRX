@@ -14,17 +14,17 @@
 #ifndef _SNES9XGX_H_
 #define _SNES9XGX_H_
 
-#define MAXPATHLEN 1024
 #include "utils/FreeTypeGX.h"
 #include "snes9x.h"
 #include "filter.h"
 #include "filelist.h"
 
 #define APPNAME 			"Snes9x RX"
-#define APPVERSION 			"3.5.0"
+#define APPVERSION 			"3.6.0"
 #define APPFOLDER 			"snes9xgx"
 #define PREF_FILE_NAME		"settingsRX.xml"
 
+#define MAXPATHLEN 1024
 #define NOTSILENT 0
 #define SILENT 1
 

@@ -25,7 +25,6 @@
 #ifdef HW_RVL
 #include <di/di.h>
 #include <wiiuse/wpad.h>
-#include <wupc/wupc.h>
 #endif
 #ifdef USE_VM
 	#include "vmalloc.h"
@@ -423,7 +422,6 @@ int main(int argc, char *argv[])
 	SYS_SetPowerCallback(ShutdownCB);
 	SYS_SetResetCallback(ResetCB);
 	
-	WUPC_Init();
 	WPAD_Init();
 	WPAD_SetPowerButtonCallback((WPADShutdownCallback)ShutdownCB);
 	DI_Init();
