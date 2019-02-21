@@ -35,7 +35,14 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
-[3.5.0 - February 01, 2019]
+[3.6.0 - February 21, 2019]
+* Remove wiiupc since libogc wiiuse supports WiiU Pro controller. [Tantric]
+* Re-add explicit Wii U Pro controller mappings. [Tantric]
+* Fix joystick calculations and controllers with no analog sticks. [Tantric]
+* Simplify logic for controller analog sticks. [Tantric]
+* Fix crash for Wiiflow plugin mode. (thanks, fledge68!)
+
+[3.5.0 - February 02, 2019]
 * Add Interpolation option and add Gamemenu Audio. [bladeoner]
 This adds the following:
 - A new "Audio" menu inside "Game". Now you can choose between:
