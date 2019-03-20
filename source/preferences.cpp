@@ -351,8 +351,10 @@ decodePrefsData ()
 
 			loadXMLSetting(&GCSettings.WiimoteOrientation, "WiimoteOrientation");
 			loadXMLSetting(&GCSettings.ExitAction, "ExitAction");
-			loadXMLSetting(&GCSettings.language, "language");
+			loadXMLSetting(&GCSettings.MusicVolume, "MusicVolume");
+			loadXMLSetting(&GCSettings.SFXVolume, "SFXVolume");
 			loadXMLSetting(&GCSettings.DisplayVM, "DisplayMemory");
+			loadXMLSetting(&GCSettings.language, "language");
 			loadXMLSetting(&GCSettings.PreviewImage, "PreviewImage");
 
 			// Controller Settings

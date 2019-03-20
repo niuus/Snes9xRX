@@ -519,9 +519,15 @@ int main(int argc, char *argv[])
 	switch (GCSettings.sfxOverclock)
 	{
 		case 0: Settings.SuperFXSpeedPerLine = 0.417 * 10.5e6; break;
-		case 1: Settings.SuperFXSpeedPerLine = 0.417 * 40.5e6; break;
-		case 2: Settings.SuperFXSpeedPerLine = 0.417 * 60.5e6; break;
+		case 1: Settings.SuperFXSpeedPerLine = 0.417 * 20.5e6; break;
+		case 2: Settings.SuperFXSpeedPerLine = 0.417 * 40.5e6; break;
+		case 3: Settings.SuperFXSpeedPerLine = 0.417 * 60.5e6; break;
+	}
+
+	if (GCSettings.sfxOverclock > 0)
+	{
 		S9xResetSuperFX();
+		S9xReset();
 	}
 
 	switch (GCSettings.Interpolation)

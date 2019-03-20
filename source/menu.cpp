@@ -4014,7 +4014,6 @@ static int MenuSettingsMenu()
 				sprintf (options.value[1], "Horizontal");
 
 			if(GCSettings.MusicVolume > 0)
-
 				sprintf(options.value[2], "%d%%", GCSettings.MusicVolume);
 			else
 				sprintf(options.value[2], "Mute");
@@ -4024,7 +4023,7 @@ static int MenuSettingsMenu()
 			else
 				sprintf(options.value[3], "Mute");
 
-			if (GCSettings.DisplayVM == 1)
+			if (GCSettings.DisplayVM == 0)
 				sprintf (options.value[4], "Enabled");
 			else
 				sprintf (options.value[4], "Disabled");
