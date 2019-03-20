@@ -1,5 +1,5 @@
 msgid "&"
-msgstr "&"
+msgstr "y"
 
 msgid "Up"
 msgstr "Arriba"
@@ -26,31 +26,31 @@ msgid "RIGHT"
 msgstr "DERECHA"
 
 msgid "PLUS"
-msgstr "PLUS +"
+msgstr "MÁS +"
 
 msgid "MINUS"
-msgstr "MINUS -"
+msgstr "MENOS -"
 
 msgid "Fire"
 msgstr "Disparar"
 
 msgid "Aim Offscreen"
-msgstr "Apuntar Fuera Pantalla"
+msgstr "Apuntar Fuera de Pantalla"
 
 msgid "Crosshair"
 msgstr "Cursor"
 
 msgid "Turbo On"
-msgstr "Turbo Encendido"
+msgstr "Turbo Activado"
 
 msgid "Turbo Off"
-msgstr "Turbo Apagado"
+msgstr "Turbo Desactivado"
 
 msgid "Pause"
 msgstr "Pausa"
 
 msgid "START"
-msgstr "Start"
+msgstr "START"
 
 msgid "Left Button"
 msgstr "Click Izquierdo"
@@ -74,121 +74,121 @@ msgid "7z decompression failed: File is corrupt (CRC mismatch)"
 msgstr "Descompresión 7z fallida: el archivo está corrupto (CRC no coincide)"
 
 msgid "7z decompression failed: File uses too high of compression settings (dictionary size is too large)"
-msgstr "Descompresión 7z fallida: el archivo utiliza una compresión muy alta (tamaño del diccionario es muy grande)"
+msgstr "Descompresión 7z fallida: el archivo utiliza una compresión muy alta (el tamaño del diccionario es muy grande)"
 
 msgid "7z decompression failed: File uses unsupported compression settings"
 msgstr "Descompresión 7z fallida: el archivo utiliza una configuración de compresión desconocida"
 
 msgid "Compressed GBA files are not supported!"
-msgstr "I file GBA compressi non sono supportati!"
+msgstr "¡Archivos de GBA comprimidos no soportados!"
 
 msgid "Empty or invalid ZIP file!"
-msgstr "Archivo ZIP vacío o inválido!"
+msgstr "¡Archivo ZIP vacío o inválido!"
 
 msgid "Error - Invalid ZIP file!"
-msgstr "Errore - File ZIP non valido!"
+msgstr "Error - ¡Archivo ZIP inválido!"
 
 msgid "Error creating file!"
-msgstr "Errore nella creazione del file!"
+msgstr "¡Error al crear el archivo!"
 
 msgid "Error loading game!"
-msgstr "Errore nel caricamento del gioco!"
+msgstr "¡Error al cargar el juego!"
 
 msgid "Error opening archive!"
-msgstr "Errore nell'apertura dell'archivio!"
+msgstr "¡Error al abrir el archivo!"
 
 msgid "Error opening directory!"
-msgstr "Errore nell'apertura della cartella!"
+msgstr "¡Error al abrir el directorio!"
 
 msgid "Error opening file!"
-msgstr "Errore nell'apertura del file!"
+msgstr "¡Error al abrir el archivo!"
 
 msgid "Error reading file!"
-msgstr "Errore nella lettura del file!"
+msgstr "¡Error al leer el archivo!"
 
 msgid "Error saving file!"
-msgstr "Errore nel salvataggio del file!"
+msgstr "¡Error al guardar el archivo!"
 
 msgid "Failed to connect to network share."
-msgstr "Connessione alla rete fallita."
+msgstr "Fallo al conectar a la red"
 
 msgid "FDS BIOS file is invalid!"
-msgstr "File BIOS FDS non valido!"
+msgstr "¡Archivo de BIOS FDS inválido!"
 
 msgid "FDS BIOS file not found!"
-msgstr "File BIOS FDS non trovato!"
+msgstr "¡Archivo de BIOS FDS no encontrado!"
 
 msgid "Game Genie ROM not found!"
-msgstr "ROM Game Genie non trovata!"
+msgstr "¡ROM del Game Genie no encontrada!"
 
 msgid "Invalid file size!"
-msgstr "Tamaño de archivo no válido!"
+msgstr "¡Tamaño de archivo no válido!"
 
 msgid "Invalid game file!"
-msgstr "File di gioco non valido!"
+msgstr "¡Archivo de juego inválido!"
 
 msgid "Invalid network settings - Check settingsRX.xml."
-msgstr "Impostazioni di rete non valide - Verificare settingsRX.xml."
+msgstr "Configuración de Red inválida - Verifique settingsRX.xml."
 
 msgid "Invalid network settings - Share IP is blank."
-msgstr "Impostazioni di rete non valide - Campo IP Condivisione vuoto."
+msgstr "Configuración de Red inválida - La IP está en blanco."
 
 msgid "Invalid network settings - Share name is blank."
-msgstr "Impostazioni di rete non valide - Campo Nome Condivisione vuoto."
+msgstr "Configuración de Red inválida - El nombre está en blanco."
 
 msgid "Invalid save file"
-msgstr "File di salvataggio non valido"
+msgstr "Archivo de guardado inválido"
 
 msgid "Invalid state file"
-msgstr "FIle di stato non valido"
+msgstr "Archivo de carga inválido"
 
 msgid "Loading DVD..."
-msgstr "Caricando DVD..."
+msgstr "Cargando DVD..."
 
 msgid "Loading patch..."
-msgstr "Caricando patch..."
+msgstr "Cargando parche..."
 
 msgid "No SRAM data to save!"
-msgstr "No hay datos SRAM para salvar!"
+msgstr "¡No hay datos SRAM para guardar!"
 
 msgid "Out of memory!"
-msgstr "Memoria esaurita!"
+msgstr "¡Sin memoria!"
 
 msgid "Out of memory: too many files!"
-msgstr "Memoria esaurita: troppo file!"
+msgstr "¡Sin memoria: demasiados archivos!"
 
 msgid "Unable to initialize network!"
-msgstr "Impossibile inizializzare la rete!"
+msgstr "¡Imposible iniciar red!"
 
 msgid "Unable to locate a load device!"
-msgstr "Impossibile localizzare una periferica di caricamento!"
+msgstr "¡Imposible localizar dispositivo de carga!"
 
 msgid "Unable to locate a save device!"
-msgstr "Impossibile localizzare una periferica di salvataggio!"
+msgstr "¡Imposible localizar dispositivo de guardado!"
 
 msgid "Unable to open snapshot!"
-msgstr "Impossibile aprire lo snapshot!"
+msgstr "¡Imposible abrir instantánea!"
 
 msgid "Unknown file type!"
-msgstr "Tipo di file sconosciuto!"
+msgstr "¡Tipo de archivo desconocido!"
 
 msgid "Unrecognized DVD format."
-msgstr "Formato DVD non riconosciuto!"
+msgstr "¡Formato de DVD desconocido!"
 
 msgid "Unrecognized file extension!"
-msgstr "Estensione file non riconosciuta!"
+msgstr "¡Extensión de archivo desconocida!"
 
 msgid "An update is available!"
 msgstr "¡Actualización disponible!"
 
 msgid "Are you sure that you want to reset this game? Any unsaved progress will be lost."
-msgstr "¿Seguro que desea reiniciar este juego? Se perderá cualquier progreso no salvado."
+msgstr "¿Seguro que desea reiniciar este juego? Se perderá cualquier progreso no guardado."
 
 msgid "Are you sure that you want to reset your mappings?"
-msgstr "¿Seguro que desea reinicializar los controles?"
+msgstr "¿Seguro que desea reiniciar los controles?"
 
 msgid "Are you sure that you want to reset your settings?"
-msgstr "¿Seguro que desea reinicializar la configuración?"
+msgstr "¿Seguro que desea reiniciar la configuración?"
 
 msgid "Artworks Folder"
 msgstr "Carpeta de Arte"
@@ -197,7 +197,7 @@ msgid "Auto"
 msgstr "Auto"
 
 msgid "Auto Detect"
-msgstr "Auto Detección"
+msgstr "Auto Detectar"
 
 msgid "Auto Load"
 msgstr "Auto Carga"
@@ -221,7 +221,7 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 msgid "Caps"
-msgstr ""
+msgstr "Mayús."
 
 msgid "Cheats"
 msgstr "Trucos"
@@ -245,7 +245,7 @@ msgid "Coding"
 msgstr "Programación"
 
 msgid "Coding & menu design"
-msgstr "Código & diseño de menú"
+msgstr "Código y diseño de menú"
 
 msgid "Controller"
 msgstr "Control"
@@ -263,13 +263,13 @@ msgid "Covers Folder"
 msgstr "Carpeta de Portadas"
 
 msgid "ScreenShot"
-msgstr "Pantallazo"
+msgstr "Captura"
 
 msgid "Screenshots"
-msgstr "Pantallazos"
+msgstr "Capturas"
 
 msgid "Screenshots Folder"
-msgstr "Carpeta de Pantallazos"
+msgstr "Carpeta de Capturas"
 
 msgid "Credits"
 msgstr "Créditos"
@@ -281,7 +281,7 @@ msgid "Delete File"
 msgstr "Borrar Archivo"
 
 msgid "Delete this save file? Deleted files can not be restored."
-msgstr "Borrar este archivo salvado? Los archivos borrados no pueden ser recuperados."
+msgstr "¿Borrar este archivo guardado? Los archivos borrados no pueden ser recuperados."
 
 msgid "Default"
 msgstr "Por Defecto"
@@ -290,7 +290,7 @@ msgid "Disabled"
 msgstr "Deshabilitado"
 
 msgid "Don't Save"
-msgstr "No Salvar"
+msgstr "No Guardar"
 
 msgid "Enabled"
 msgstr "Habilitado"
@@ -302,7 +302,7 @@ msgid "Exit"
 msgstr "Salir"
 
 msgid "Exit Action"
-msgstr "Acción de Salida"
+msgstr "Acción al salir"
 
 msgid "Filtered (Sharp)"
 msgstr "Filtrado (Nítido)"
@@ -323,7 +323,7 @@ msgid "GameCube Controller"
 msgstr "Control de GameCube"
 
 msgid "This software is Open Source and may be copied,"
-msgstr "Este software es de Fuente Abierta y puede ser copiado,"
+msgstr "Este software es de Código Abierto y puede ser copiado,"
 
 msgid "distributed, or modified under the terms of the"
 msgstr "distribuido, o modificado bajo los términos de"
@@ -362,7 +362,7 @@ msgid "Load Game"
 msgstr "Cargar Juego"
 
 msgid "Loading"
-msgstr "Cargado"
+msgstr "Cargar"
 
 msgid "Main Menu"
 msgstr "Menú Principal"
@@ -386,22 +386,22 @@ msgid "No"
 msgstr "No"
 
 msgid "No game saves found."
-msgstr "No hay partidas salvadas."
+msgstr "No hay partidas guardadas."
 
 msgid "Nunchuk"
 msgstr ""
 
 msgid "Off"
-msgstr "Apagado"
+msgstr "Desactivado"
 
 msgid "Official Site:"
 msgstr "Sitio Oficial:"
 
 msgid "Ok"
-msgstr ""
+msgstr "Vale"
 
 msgid "On"
-msgstr "Encendido"
+msgstr "Activado"
 
 msgid "Original"
 msgstr ""
@@ -446,7 +446,7 @@ msgid "Quit Game"
 msgstr "Salir del Juego"
 
 msgid "Quit this game? Any unsaved progress will be lost."
-msgstr "¿Salir? Se perderá cualquier progreso no salvado."
+msgstr "¿Salir del juego? Se perderá cualquier progreso no guardado."
 
 msgid "Reboot"
 msgstr "Reiniciar"
@@ -455,16 +455,16 @@ msgid "Rendering"
 msgstr "Renderizado"
 
 msgid "Reset"
-msgstr "Reinicializar"
+msgstr "Reiniciar"
 
 msgid "Reset Game"
-msgstr "Reinicializar"
+msgstr "Reiniciar"
 
 msgid "Reset Mappings"
-msgstr "Reinicializar"
+msgstr "Reiniciar"
 
 msgid "Reset Settings"
-msgstr "Reinicializar"
+msgstr "Reiniciar"
 
 msgid "Retry"
 msgstr "Reintentar"
@@ -476,31 +476,31 @@ msgid "Return to Wii Menu"
 msgstr "Volver al menú de Wii"
 
 msgid "Save"
-msgstr "Salvar"
+msgstr "Guardar"
 
 msgid "Save Device"
-msgstr "Dispositivo de Salvado"
+msgstr "Dispositivo de Guardado"
 
 msgid "Save Folder"
-msgstr "Carpeta de Salvado"
+msgstr "Carpeta de Guardado"
 
 msgid "Save Game"
-msgstr "Salvar Juego"
+msgstr "Guardar Juego"
 
 msgid "Save Snapshot?"
-msgstr "Salvar Instantánea?"
+msgstr "¿Guardar Instantánea?"
 
 msgid "Save SRAM and Snapshot?"
-msgstr "Salvar SRAM e Instantánea?"
+msgstr "¿Guardar SRAM e Instantánea?"
 
 msgid "Save successful"
-msgstr "Salvado exitoso"
+msgstr "Guardado con éxito"
 
 msgid "Saving"
-msgstr "Salvado"
+msgstr "Guardado"
 
 msgid "Saving..."
-msgstr "Grabando..."
+msgstr "Guardando..."
 
 msgid "Scaling"
 msgstr "Escalado"
@@ -514,8 +514,17 @@ msgstr "Zoom de Pantalla"
 msgid "Settings"
 msgstr "Configuración"
 
+msgid "Settings - Menu"
+msgstr "Configuración - Menú"
+
+msgid "Settings - Network"
+msgstr "Configuración - Red"
+
+msgid "Settings - Saving & Loading"
+msgstr "Configuración - Carga y Guardado"
+
 msgid "Caps"
-msgstr ""
+msgstr "Mayús."
 
 msgid "Shift"
 msgstr ""
@@ -533,7 +542,7 @@ msgid "SMB Share Password"
 msgstr "Contraseña del SMB"
 
 msgid "SMB Share Username"
-msgstr "Usuario del SMB"
+msgstr "Nombre de Usuario del SMB"
 
 msgid "Snapshot"
 msgstr "Instantánea"
@@ -551,16 +560,16 @@ msgid "SuperFX Overclock"
 msgstr "Overclock SuperFX"
 
 msgid "Superscope"
-msgstr ""
+msgstr "Superscope"
 
 msgid "Unfiltered"
 msgstr "Sin filtrado"
 
 msgid "Unknown file type!"
-msgstr "Tipo de archivo desconocido!"
+msgstr "¡Tipo de archivo desconocido!"
 
 msgid "Up One Level"
-msgstr "Subir"
+msgstr "Subir Nivel"
 
 msgid "Update Available"
 msgstr "Actualización disponible"
@@ -569,19 +578,19 @@ msgid "Update later"
 msgstr "Actualizar después"
 
 msgid "Update now"
-msgstr "Actualizar ya"
+msgstr "Actualizar ahora"
 
 msgid "Update failed!"
-msgstr "Actualización fallida!"
+msgstr "¡Actualización fallida!"
 
 msgid "USB drive not found!"
-msgstr "Disco USB no encontrado!"
+msgstr "¡Dispositivo USB no encontrado!"
 
 msgid "Video"
-msgstr "Video"
+msgstr "Vídeo"
 
 msgid "Video Mode"
-msgstr "Modo de Video"
+msgstr "Modo de Vídeo"
 
 msgid "Wiimote Orientation"
 msgstr "Orientación del Wiimote"
@@ -591,3 +600,9 @@ msgstr "Control Wii U Pro"
 
 msgid "Yes"
 msgstr "Sí"
+
+msgid "Display Virtual Memory"
+msgstr "Mostrar Memoria Virtual"
+
+msgid "Delete Saves"
+msgstr "Borrar Partidas"
