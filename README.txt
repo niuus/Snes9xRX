@@ -35,6 +35,12 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
+[3.7.0 - March 19, 2019]
+* Fix issue with on-screen keyboard. [Tantric]
+* Fix crash on launch when using network shares. [Tantric]
+* Various settings fixes.
+* Updated spanish language translation.
+
 [3.6.0 - February 21, 2019]
 * Remove wiiupc since libogc wiiuse supports WiiU Pro controller. [Tantric]
 * Re-add explicit Wii U Pro controller mappings. [Tantric]
@@ -478,9 +484,10 @@ NES cheat codes in the Links section (below).
 
 TurboMode increases the playback speed of the game by about 2x. To use it,
 simply press and hold right on the C-stick (yellow control stick on the
-Gamecube controller) or the right analog stick (Wii Classic Controller/Pro,
-and Wii U Pro Controller) for as long as you want playback to be faster.
-Release the stick when you want normal playback speed to resume.
+Gamecube controller), the right analog stick (Wii Classic Controller/Pro),
+or the ZL button (Wii U Pro Controller) for as long as you want gameplay
+to be faster. Release the stick/button whenever you want normal playback
+speed to resume.
 
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 |                                            IMPORTING AND EXPORTING SRAM  |
