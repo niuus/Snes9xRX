@@ -37,7 +37,7 @@ msgstr "오전"
 msgid "An update is available!"
 msgstr "업데이트를 사용할 수 있습니다!"
 
-msgid "Append Auto to .SAV Files"
+msgid "Append Auto to .SAV"
 msgstr ".SAVE 파일에 자동 추가"
 
 msgid "Apr"
@@ -201,6 +201,9 @@ msgstr "사용 불가"
 
 msgid "DISABLED"
 msgstr "사용 불가"
+
+msgid "Display Virtual Memory"
+msgstr "가상 메모리 표시"
 
 msgid "distributed, or modified under the terms of the"
 msgstr "다음 조건 하에서 배포 또는 변경되었습니다."
