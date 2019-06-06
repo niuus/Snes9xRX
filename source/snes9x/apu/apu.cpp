@@ -11,7 +11,7 @@
 #include "../msu1.h"
 #include "../snapshot.h"
 #include "../display.h"
-#include "hermite_resampler.h"
+#include "resampler.h"
 
 #define APU_DEFAULT_INPUT_RATE		32040
 #define APU_MINIMUM_SAMPLE_COUNT	512
@@ -63,7 +63,7 @@ namespace spc
 	static uint32		ratio_denominator = APU_DENOMINATOR_NTSC;
 
 	static double		dynamic_rate_multiplier = 1.0;
-}
+} // namespace spc
 
 namespace msu
 {
@@ -72,7 +72,7 @@ namespace msu
 	static Resampler	*resampler		= NULL;
 	static int			resample_buffer_size	= -1;
 	static uint8		*resample_buffer		= NULL;
-}
+} // namespace msu
 
 static void EightBitize (uint8 *, int);
 static void DeStereo (uint8 *, int);
@@ -360,7 +360,7 @@ bool8 S9xInitSound (int buffer_ms, int lag_ms)
 	   arguments. Use 2x in the resampler for buffer leveling with SoundSync */
 	if (!spc::resampler)
 	{
-		spc::resampler = new HermiteResampler(spc::buffer_size >> (Settings.SoundSync ? 0 : 1));
+		spc::resampler = new Resampler(spc::buffer_size >> (Settings.SoundSync ? 0 : 1));
 		if (!spc::resampler)
 		{
 			delete[] spc::landing_buffer;
@@ -373,7 +373,7 @@ bool8 S9xInitSound (int buffer_ms, int lag_ms)
 
 	if (!msu::resampler)
 	{
-		msu::resampler = new HermiteResampler(msu::buffer_size >> (Settings.SoundSync ? 0 : 1));
+		msu::resampler = new Resampler(msu::buffer_size >> (Settings.SoundSync ? 0 : 1));
 		if (!msu::resampler)
 		{
 			delete[] msu::landing_buffer;
