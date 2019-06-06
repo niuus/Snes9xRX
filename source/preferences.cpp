@@ -511,8 +511,9 @@ DefaultSettings ()
 	Settings.SkipFrames = AUTO_FRAMERATE;
 	Settings.TurboSkipFrames = 19;
 	Settings.DisplayFrameRate = false;
-	Settings.AutoDisplayMessages = 0;
+	Settings.AutoDisplayMessages = true;
 	Settings.InitialInfoStringTimeout = 200; // # frames to display messages for
+	Settings.DisplayTime = false;
 
 	// Frame timings in 50hz and 60hz cpu mode
 	Settings.FrameTimePAL = 20000;
