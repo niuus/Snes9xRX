@@ -4,9 +4,10 @@
    For further information, consult the LICENSE file in the root directory.
 \*****************************************************************************/
 
-
 #ifndef _GFX_H_
 #define _GFX_H_
+
+#include "port.h"
 
 struct SGFX
 {
@@ -18,7 +19,6 @@ struct SGFX
 	uint32	ScreenSize;
 	uint16	*S;
 	uint8	*DB;
-	uint16	*X2;
 	uint16	*ZERO;
 	uint32	RealPPL;			// true PPL of Screen buffer
 	uint32	PPL;				// number of pixels on each of Screen buffer
@@ -49,13 +49,6 @@ struct SGFX
 			uint8	Line;
 		}	OBJ[32];
 	}	OBJLines[SNES_HEIGHT_EXTENDED];
-
-#ifdef GFX_MULTI_FORMAT
-	uint32	PixelFormat;
-	uint32	(*BuildPixel) (uint32, uint32, uint32);
-	uint32	(*BuildPixel2) (uint32, uint32, uint32);
-	void	(*DecomposePixel) (uint32, uint32 &, uint32 &, uint32 &);
-#endif
 
 	void	(*DrawBackdropMath) (uint32, uint32, uint32);
 	void	(*DrawBackdropNomath) (uint32, uint32, uint32);
@@ -126,6 +119,7 @@ struct SLineMatrixData
 extern uint16		BlackColourMap[256];
 extern uint16		DirectColourMaps[8][256];
 extern uint8		mul_brightness[16][32];
+extern uint8		brightness_cap[64];
 extern struct SBG	BG;
 extern struct SGFX	GFX;
 
@@ -137,12 +131,37 @@ extern struct SGFX	GFX;
 	((((((C1) & RGB_REMOVE_LOW_BITS_MASK) + \
 	((C2) & RGB_REMOVE_LOW_BITS_MASK)) >> 1) + \
 	((C1) & (C2) & RGB_LOW_BITS_MASK)) | ALPHA_BITS_MASK)
+#define COLOR_ADD_BRIGHTNESS1_2 COLOR_ADD1_2
 
-#define COLOR_ADD(C1, C2) \
-	(GFX.X2[((((C1) & RGB_REMOVE_LOW_BITS_MASK) + \
-	((C2) & RGB_REMOVE_LOW_BITS_MASK)) >> 1) + \
-	((C1) & (C2) & RGB_LOW_BITS_MASK)] | \
-	(((C1) ^ (C2)) & RGB_LOW_BITS_MASK))
+inline uint16 COLOR_ADD_BRIGHTNESS(uint16 C1, uint16 C2)
+{
+    return ((brightness_cap[ (C1 >> RED_SHIFT_BITS)           +  (C2 >> RED_SHIFT_BITS)          ] << RED_SHIFT_BITS)   |
+            (brightness_cap[((C1 >> GREEN_SHIFT_BITS) & 0x1f) + ((C2 >> GREEN_SHIFT_BITS) & 0x1f)] << GREEN_SHIFT_BITS) |
+// Proper 15->16bit color conversion moves the high bit of green into the low bit.
+#if GREEN_SHIFT_BITS == 6
+           ((brightness_cap[((C1 >> 6) & 0x1f) + ((C2 >> 6) & 0x1f)] & 0x10) << 1) |
+#endif
+            (brightness_cap[ (C1                      & 0x1f) +  (C2                      & 0x1f)]      ));
+}
+
+inline uint16 COLOR_ADD(uint16 C1, uint16 C2)
+{
+	const int RED_MASK = 0x1F << RED_SHIFT_BITS;
+	const int GREEN_MASK = 0x1F << GREEN_SHIFT_BITS;
+	const int BLUE_MASK = 0x1F;
+
+	int rb = C1 & (RED_MASK | BLUE_MASK);
+	rb += C2 & (RED_MASK | BLUE_MASK);
+	int rbcarry = rb & ((0x20 << RED_SHIFT_BITS) | (0x20 << 0));
+	int g = (C1 & (GREEN_MASK)) + (C2 & (GREEN_MASK));
+	int rgbsaturate = (((g & (0x20 << GREEN_SHIFT_BITS)) | rbcarry) >> 5) * 0x1f;
+	uint16 retval = (rb & (RED_MASK | BLUE_MASK)) | (g & GREEN_MASK) | rgbsaturate;
+#if GREEN_SHIFT_BITS == 6
+	retval |= (retval & 0x0400) >> 5;
+#endif
+	return retval;
+}
+
 
 #define COLOR_SUB1_2(C1, C2) \
 	GFX.ZERO[(((C1) | RGB_HI_BITS_MASKx2) - \
@@ -150,35 +169,27 @@ extern struct SGFX	GFX;
 
 inline uint16 COLOR_SUB (uint16 C1, uint16 C2)
 {
-	uint16	mC1, mC2, v = ALPHA_BITS_MASK;
-
-	mC1 = C1 & FIRST_COLOR_MASK;
-	mC2 = C2 & FIRST_COLOR_MASK;
-	if (mC1 > mC2) v += (mC1 - mC2);
-
-	mC1 = C1 & SECOND_COLOR_MASK;
-	mC2 = C2 & SECOND_COLOR_MASK;
-	if (mC1 > mC2) v += (mC1 - mC2);
-
-	mC1 = C1 & THIRD_COLOR_MASK;
-	mC2 = C2 & THIRD_COLOR_MASK;
-	if (mC1 > mC2) v += (mC1 - mC2);
-
-	return (v);
+	int rb1 = (C1 & (THIRD_COLOR_MASK | FIRST_COLOR_MASK)) | ((0x20 << 0) | (0x20 << RED_SHIFT_BITS));
+	int rb2 = C2 & (THIRD_COLOR_MASK | FIRST_COLOR_MASK);
+	int rb = rb1 - rb2;
+	int rbcarry = rb & ((0x20 << RED_SHIFT_BITS) | (0x20 << 0));
+	int g = ((C1 & (SECOND_COLOR_MASK)) | (0x20 << GREEN_SHIFT_BITS)) - (C2 & (SECOND_COLOR_MASK));
+	int rgbsaturate = (((g & (0x20 << GREEN_SHIFT_BITS)) | rbcarry) >> 5) * 0x1f;
+	uint16 retval = ((rb & (THIRD_COLOR_MASK | FIRST_COLOR_MASK)) | (g & SECOND_COLOR_MASK)) & rgbsaturate;
+#if GREEN_SHIFT_BITS == 6
+	retval |= (retval & 0x0400) >> 5;
+#endif
+	return retval;
 }
 
 void S9xStartScreenRefresh (void);
 void S9xEndScreenRefresh (void);
-void S9xUpdateScreen (void);
 void S9xBuildDirectColourMaps (void);
 void RenderLine (uint8);
 void S9xComputeClipWindows (void);
 void S9xDisplayChar (uint16 *, uint8);
 // called automatically unless Settings.AutoDisplayMessages is false
 void S9xDisplayMessages (uint16 *, int, int, int, int);
-#ifdef GFX_MULTI_FORMAT
-bool8 S9xSetRenderPixelFormat (int);
-#endif
 
 // external port interface which must be implemented or initialised for each port
 bool8 S9xGraphicsInit (void);

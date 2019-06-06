@@ -26,8 +26,6 @@
 #include <windows.h>
 #endif
 
-#define GFX_MULTI_FORMAT
-
 #ifdef __WIN32__
 //#define RIGHTSHIFT_IS_SAR
 #define RIGHTSHIFT_int8_IS_SAR
@@ -37,7 +35,6 @@
 #endif
 
 #ifdef __MACOSX__
-#undef GFX_MULTI_FORMAT
 #define PIXEL_FORMAT RGB555
 #endif
 
