@@ -2,7 +2,7 @@ msgid "&"
 msgstr "&"
 
 msgid "16:9 Correction"
-msgstr "16:9  보정"
+msgstr "16:9 보정"
 
 msgid "7z decompression failed: Archive contains too many files"
 msgstr "7z 압축 해제 실패: 압축 파일에 너무 많은 파일이 포함되었습니다."
@@ -38,7 +38,7 @@ msgid "An update is available!"
 msgstr "업데이트를 사용할 수 있습니다!"
 
 msgid "Append Auto to .SAV"
-msgstr ".SAVE 파일에 자동 추가"
+msgstr ".SAVE에 자동 추가"
 
 msgid "Apr"
 msgstr "4월"

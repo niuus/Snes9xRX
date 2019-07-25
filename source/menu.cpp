@@ -1575,8 +1575,7 @@ static int MenuGame()
 				delete gameScreenImg;
 				delete gameScreen;
 				gameScreen = NULL;
-				free(gameScreenPng);
-				gameScreenPng = NULL;
+				ClearScreenshot();
 				gameScreenImg = new GuiImage(screenwidth, screenheight, (GXColor){175, 200, 215, 255});
 				gameScreenImg->ColorStripe(10);
 				mainWindow->Insert(gameScreenImg, 0);
@@ -4366,11 +4365,7 @@ MainMenu (int menu)
 	if(gameScreen)
 		delete gameScreen;
 
-	if(gameScreenPng)
-	{
-		free(gameScreenPng);
-		gameScreenPng = NULL;
-	}
+	ClearScreenshot();
 
 	// wait for keys to be depressed
 	while(MenuRequested())
