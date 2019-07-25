@@ -3365,7 +3365,9 @@ void CMemory::ApplyROMFixes (void)
 			Timings.APUSpeedup = -3;
 		if (match_na("CIRCUIT USA"))
 			Timings.APUSpeedup = 2;
-
+		if (match_na("\xC3\xDD\xBC\xC9\xB3\xC0"))                  // Tenshi no Uta
+			Timings.APUSpeedup = 2;
+		
 		if (match_na("GAIA GENSOUKI 1 JPN")                     || // Gaia Gensouki
 			match_id("JG  ")                                    || // Illusion of Gaia
 			match_id("CQ  ")                                    || // Stunt Race FX
@@ -3386,7 +3388,6 @@ void CMemory::ApplyROMFixes (void)
 			match_na("DARK KINGDOM")                            || // Dark Kingdom
 			match_na("ZAN3 SFC")                                || // Zan III Spirits
 			match_na("HIOUDEN")                                 || // Hiouden - Mamono-tachi Tono Chikai
-			match_na("\xC3\xDD\xBC\xC9\xB3\xC0")                || // Tenshi no Uta
 			match_na("FORTUNE QUEST")                           || // Fortune Quest - Dice wo Korogase
 			match_na("FISHING TO BASSING")                      || // Shimono Masaki no Fishing To Bassing
 			match_na("OHMONO BLACKBASS")                        || // Oomono Black Bass Fishing - Jinzouko Hen
