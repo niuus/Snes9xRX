@@ -424,13 +424,8 @@ msgstr "잘못된 파일 크기입니다!"
 msgid "Invalid game file!"
 msgstr "잘못된 게임 파일입니다!"
 
-<<<<<<< patch-2
-msgid "Invalid network settings - Check settingsRx.xml."
-msgstr "잘못된 네트워크 설정 - settingsRx.xml 확인"
-=======
 msgid "Invalid network settings - Check settings.xml."
 msgstr "잘못된 네트워크 설정 - settings.xml 확인"
->>>>>>> master
 
 msgid "Invalid network settings - Share IP is blank."
 msgstr "잘못된 네트워크 설정 - 공유 IP가 비었습니다."
@@ -1072,11 +1067,7 @@ msgid "Update now"
 msgstr "지금 업데이트"
 
 msgid "Update successful!"
-<<<<<<< patch-2
-msgstr "업데이트 성공!"
-=======
 msgstr "업데이트가 성공!"
->>>>>>> master
 
 msgid "USB drive not found!"
 msgstr "USB 드라이버를 찾을 수 없습니다!"
