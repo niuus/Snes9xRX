@@ -8,6 +8,8 @@
 #ifndef _GFX_H_
 #define _GFX_H_
 
+#include "port.h"
+
 struct SGFX
 {
 	uint16	*Screen;
@@ -149,11 +151,12 @@ extern struct SGFX	GFX;
 #else
 inline uint16 COLOR_ADD(uint16 C1, uint16 C2)
 {
-	return ((brightness_cap[ (C1 >> 11)        +  (C2 >> 11)       ] << 11) |
-            (brightness_cap[((C1 >> 6) & 0x1f) + ((C2 >> 6) & 0x1f)] << 6 ) |
-            (brightness_cap[ (C1 & 0x1f)       +  (C2 & 0x1f)      ]      ));
+	return ((brightness_cap[ (C1 >> RED_SHIFT_BITS)           +  (C2 >> RED_SHIFT_BITS)          ] << RED_SHIFT_BITS)   |
+			(brightness_cap[((C1 >> GREEN_SHIFT_BITS) & 0x1f) + ((C2 >> GREEN_SHIFT_BITS) & 0x1f)] << GREEN_SHIFT_BITS) |
+			(brightness_cap[ (C1                      & 0x1f) +  (C2                      & 0x1f)]      ));
 }
-#endif
+
+#endif // GFX_MULTI_FORMAT
 
 #define COLOR_SUB1_2(C1, C2) \
 	GFX.ZERO[(((C1) | RGB_HI_BITS_MASKx2) - \
