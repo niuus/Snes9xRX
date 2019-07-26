@@ -126,6 +126,7 @@ struct SLineMatrixData
 extern uint16		BlackColourMap[256];
 extern uint16		DirectColourMaps[8][256];
 extern uint8		mul_brightness[16][32];
+extern uint8		brightness_cap[64];
 extern struct SBG	BG;
 extern struct SGFX	GFX;
 
@@ -138,11 +139,21 @@ extern struct SGFX	GFX;
 	((C2) & RGB_REMOVE_LOW_BITS_MASK)) >> 1) + \
 	((C1) & (C2) & RGB_LOW_BITS_MASK)) | ALPHA_BITS_MASK)
 
+#ifdef GFX_MULTI_FORMAT
 #define COLOR_ADD(C1, C2) \
 	(GFX.X2[((((C1) & RGB_REMOVE_LOW_BITS_MASK) + \
 	((C2) & RGB_REMOVE_LOW_BITS_MASK)) >> 1) + \
 	((C1) & (C2) & RGB_LOW_BITS_MASK)] | \
 	(((C1) ^ (C2)) & RGB_LOW_BITS_MASK))
+
+#else
+inline uint16 COLOR_ADD(uint16 C1, uint16 C2)
+{
+	return ((brightness_cap[ (C1 >> 11)        +  (C2 >> 11)       ] << 11) |
+            (brightness_cap[((C1 >> 6) & 0x1f) + ((C2 >> 6) & 0x1f)] << 6 ) |
+            (brightness_cap[ (C1 & 0x1f)       +  (C2 & 0x1f)      ]      ));
+}
+#endif
 
 #define COLOR_SUB1_2(C1, C2) \
 	GFX.ZERO[(((C1) | RGB_HI_BITS_MASKx2) - \
@@ -169,7 +180,6 @@ inline uint16 COLOR_SUB (uint16 C1, uint16 C2)
 
 void S9xStartScreenRefresh (void);
 void S9xEndScreenRefresh (void);
-void S9xUpdateScreen (void);
 void S9xBuildDirectColourMaps (void);
 void RenderLine (uint8);
 void S9xComputeClipWindows (void);
