@@ -1839,6 +1839,8 @@ void S9xSoftResetPPU (void)
 #else
 	IPPU.FirstVRAMRead = FALSE;
 #endif
+	GFX.InterlaceFrame = 0;
+	GFX.DoInterlace = 0;
 	IPPU.Interlace = FALSE;
 	IPPU.InterlaceOBJ = FALSE;
 	IPPU.DoubleWidthPixels = FALSE;
