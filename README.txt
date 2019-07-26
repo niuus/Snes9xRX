@@ -35,6 +35,22 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
+[3.9.0 - July 26, 2019]
+* Korean language update, minor cleanup. [DDinghoya]
+* GFX.DoInterlace-- should occur even if we don't render frame. [bearoso]
+* Move interlace flags to S9xSoftResetPPU. [bearoso]
+* Fix PPU blending with unoptimized change. [bearoso]
+* Use a lookup table. A little faster. [bearoso]
+* Fix color add for non-GFX_MULTI_FORMAT. [bearoso]
+* Make blending work with RGB555. [bearoso]
+* Proper 16-bit color conversion. [bearoso]
+* Use for loops for DRAW_TILE. 3-4% speed benefit. [bearoso]
+
+[3.8.0 - July 24, 2019]
+* Cleanup screenshot memory management. This fixes the preview image
+not displaying on Gamecube. [Tantric]
+* Tenshi No Uta (Japan) compatibility hack.
+
 [3.7.0 - March 19, 2019]
 * Fix issue with on-screen keyboard. [Tantric]
 * Fix crash on launch when using network shares. [Tantric]
