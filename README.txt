@@ -35,6 +35,17 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
+[4.0.0 - July 28, 2019]
+* Add Wii U GamePad support. [Fix94 - Tantric]
+* Allow "Original" render mode to be selectable when using the Wii Options
+TV Resolution setting for "EDTV or HDTV (480p)" over component cables:
+- This caters specifically to LCD / LED users with 240p supported displays,
+since the option was previously hidden. Users with CRT / PVM / BVM displays
+with supported 480p Progressive Scan mode will also benefit, since no Wii
+setting change will be needed for the "Original" 240p mode to be used.
+* Restore MSU1 playback position correctly. [bearoso]
+* Restore MSU1_AUDIO_POS. [bearoso]
+
 [3.9.0 - July 26, 2019]
 * Korean language update, minor cleanup. [DDinghoya]
 * GFX.DoInterlace-- should occur even if we don't render frame. [bearoso]
@@ -126,7 +137,7 @@ from GCSettings.PreviewImage, added function to get its value. [cebolleto]
 * Change settings.xml to settingsRX.xml [bladeoner]
 * Remove rumble in GUI function. [bladeoner]
 * Rollback scanline filter fix. Makes it crash when loading a ROM on the GCN port.
-* Backport fix GC build with scanline filter. [Tantric/bladeoner]
+* Backport fix GC build with scanline filter. [Tantric - bladeoner]
 * Forgotten cleanup for remove rumble function. [bladeoner]
 
 [2.6.0 - December 29, 2018]
