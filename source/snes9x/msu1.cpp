@@ -400,6 +400,8 @@ void S9xMSU1PostLoadState(void)
 
 	if (MSU1.MSU1_STATUS & AudioPlaying)
 	{
+		uint32 savedPosition = MSU1.MSU1_AUDIO_POS;
+
 		if (AudioOpen())
 		{
             REVERT_STREAM(audioStream, 4, 0);
@@ -408,6 +410,7 @@ void S9xMSU1PostLoadState(void)
 			audioLoopPos <<= 2;
 			audioLoopPos += 8;
 
+			MSU1.MSU1_AUDIO_POS = savedPosition;
             REVERT_STREAM(audioStream, MSU1.MSU1_AUDIO_POS, 0);
 		}
 		else
