@@ -499,7 +499,7 @@ DefaultSettings ()
 	Settings.Stereo = true;
 	Settings.ReverseStereo = true;
 	Settings.SoundPlaybackRate = 48000;
-	Settings.SoundInputRate = 31950;
+	Settings.SoundInputRate = 31920;
 	Settings.DynamicRateControl = true;
 	Settings.DynamicRateLimit = 1;
 
@@ -727,9 +727,9 @@ bool LoadPrefs()
 	ChangeLanguage();
 
 #ifdef HW_RVL
-		bg_music = (u8 * )bg_music_ogg;
-		bg_music_size = bg_music_ogg_size;
-		LoadBgMusic();
+	bg_music = (u8 * )bg_music_ogg;
+	bg_music_size = bg_music_ogg_size;
+	LoadBgMusic();
 #endif
 
 	return prefFound;
