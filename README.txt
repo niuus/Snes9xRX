@@ -35,6 +35,24 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
+[4.1.0 - August 01, 2019]
+* Backport+adjust the refactored APU Resampler. [bladeoner]
+* Adjust default input rate.
+* Retrode 2 USB adapter support (thank revvv!)
+The Retrode 2 cartridge reader offers USB mass storage access for your SNES
+cartridges, besides 4 ports for original controllers, more specifically:
+two SuperNES and two Genesis gamepads. 2-4 players are supported!
+
+Some notes from revvv:
+"- If the Retrode does not react, you just have to restart Snes9x GX.
+I never had to restart HBC or the Wii. This happens with my fork, too.
+But not very often.
+- Doom is a good testcase: My first build had a huge lag, but only with
+this game. After polling the Retrode only for player 1, the lag disappeared.
+(Doom is a single player game, so it's strange that they poll player 2.)
+- Connect your Retrode 2, then launch my apps. To make sure the Retrode 2
+was correctly detected in Snes9x GX click on the logo."
+
 [4.0.0 - July 28, 2019]
 * Add Wii U GamePad support. [Fix94 - Tantric]
 * Allow "Original" render mode to be selectable when using the Wii Options
