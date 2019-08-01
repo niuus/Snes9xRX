@@ -233,6 +233,101 @@ void ResetControls(int consoleCtrl, int wiiCtrl)
  * Scans pad and wpad
  ***************************************************************************/
 
+#ifdef HW_RVL
+static bool retrodeConnected = false;
+static s32 deviceIdRetrode = 0;
+static u8 endpointRetrode = 0;
+static u8 bMaxPacketSizeRetrode = 0;
+
+// store previous button state for the SNES Retrode ports
+static u32 jpRetrode[4];
+
+void closeUSB(s32 *fd)
+{
+	s32 res = USB_CloseDevice(fd);
+	if (res < 0)
+	{
+		//printf("USB_CloseDevice: failed\n");
+	}
+}
+
+bool isRetrodeGamepad(usb_devdesc devdesc)
+{
+	if (devdesc.idVendor != 0x0403 || devdesc.idProduct != 0x97C1)
+	{
+		return false;
+	}
+	if (devdesc.configurations != NULL)
+	{
+		if (devdesc.configurations->interfaces != NULL)
+		{
+			if (devdesc.configurations->interfaces->endpoints != NULL)
+			{
+				return devdesc.configurations->interfaces->bInterfaceSubClass == 0;
+			}
+		}
+	}
+	return false;
+}
+
+u8 getEndpoint(usb_devdesc devdesc)
+{
+	if (devdesc.configurations != NULL)
+	{
+		if (devdesc.configurations->interfaces != NULL)
+		{
+			if (devdesc.configurations->interfaces->endpoints != NULL)
+			{
+				return devdesc.configurations->interfaces->endpoints->bEndpointAddress;
+			}
+		}
+	}
+	return -1;
+}
+
+void openRetrode()
+{
+	usb_device_entry dev_entry[8];
+	u8 dev_count;
+	if (USB_GetDeviceList(dev_entry, 8, USB_CLASS_HID, &dev_count) < 0)
+	{
+		//printf("USB_GetDeviceList(): error\n");
+		return;
+	}
+
+	// Retrode has two entries in USB_GetDeviceList(), one for gamepads and one for SNES mouse
+	for (int i = 0; i < dev_count; ++i)
+	{
+		s32 fd;
+		//printf("Device #%d: vid=0x%04X pid=0x%04X id=0x%08X\n", i, dev_entry[i].vid, dev_entry[i].pid, dev_entry[i].device_id);
+		if (USB_OpenDevice(dev_entry[i].device_id, dev_entry[i].vid, dev_entry[i].pid, &fd) < 0)
+		{
+			//printf("USB_OpenDevice(): failed\n");
+			continue;
+		}
+
+		usb_devdesc devdesc;
+		if (USB_GetDescriptors(fd, &devdesc) < 0)
+		{
+			//printf("USB_GetDescriptors(): failed [Maybe not enough power? Is another gamepad connected?]\n");
+			closeUSB(&fd);
+			continue;
+		}
+		if (isRetrodeGamepad(devdesc))
+		{
+			//printf("Retrode gamepads\n");
+			deviceIdRetrode = fd;
+			endpointRetrode = getEndpoint(devdesc);
+			bMaxPacketSizeRetrode = devdesc.bMaxPacketSize0;
+		}
+		else
+		{
+			closeUSB(&fd);
+		}
+	}
+}
+#endif
+
 void
 UpdatePads()
 {
@@ -240,6 +335,24 @@ UpdatePads()
 	WiiDRC_ScanPads();
 	WPAD_ScanPads();
 	#endif
+
+#ifdef HW_RVL
+	// Retrode
+	if(!retrodeConnected)
+	{
+			openRetrode();
+			retrodeConnected = true;
+	}
+	//	else
+	//	{
+	//		u16 buttonsHeld = WPAD_ButtonsHeld(0);
+	//		if(buttonsHeld & WPAD_BUTTON_1  && buttonsHeld & WPAD_BUTTON_2)
+	//		{
+	//		}
+	//		if(buttonsHeld & WPAD_BUTTON_MINUS  && buttonsHeld & WPAD_BUTTON_PLUS)
+	//		{
+	//		}
+	//	}
 
 	PAD_ScanPads();
 
@@ -255,6 +368,8 @@ UpdatePads()
 		userInput[i].pad.triggerL = PAD_TriggerL(i);
 		userInput[i].pad.triggerR = PAD_TriggerR(i);
 	}
+#endif
+
 #ifdef HW_RVL
 	if(WiiDRC_Inited() && WiiDRC_Connected())
 	{
@@ -396,6 +511,50 @@ static void decodepad (int chan)
 	u32 wiidrcp = userInput[chan].wiidrcdata.btns_h;
 #endif
 
+#ifdef HW_RVL
+	// Retrode
+	if (retrodeConnected && chan == 0)
+	{
+	    uint8_t ATTRIBUTE_ALIGN(32) buf[bMaxPacketSizeRetrode];
+		int res = USB_ReadIntrMsg(deviceIdRetrode, endpointRetrode, sizeof(buf), buf);
+		if (res== 5)
+		{
+			// buf[0] contains the port returned, you have to make 4 calls to get the status,
+			// even if you are only interested in one port, because it is not sure which port is returned first
+			// 1 = left SNES
+			// 2 = right SNES
+			// 3 = left Genesis/MD
+			// 4 = right Genesis/MD
+
+			// Retrode gamepad endpoint returns 5 bytes with gamepad events
+			u32 jp12 = 0;
+			jp12 |= ((buf[2] & 0x9C) == 0x9C) ? PAD_BUTTON_UP    : 0;
+			jp12 |= ((buf[2] & 0x64) == 0x64) ? PAD_BUTTON_DOWN  : 0;
+			jp12 |= ((buf[1] & 0x9C) == 0x9C) ? PAD_BUTTON_LEFT  : 0;
+			jp12 |= ((buf[1] & 0x64) == 0x64) ? PAD_BUTTON_RIGHT : 0;
+
+			jp12 |= (buf[3] & 0x10) ? PAD_BUTTON_A : 0;
+			jp12 |= (buf[3] & 0x01) ? PAD_BUTTON_B : 0;
+			jp12 |= (buf[3] & 0x20) ? PAD_BUTTON_X : 0;
+			jp12 |= (buf[3] & 0x02) ? PAD_BUTTON_Y : 0;
+
+			jp12 |= (buf[3] & 0x40) ? PAD_TRIGGER_L : 0;
+			jp12 |= (buf[3] & 0x80) ? PAD_TRIGGER_R : 0;
+
+			jp12 |= (buf[3] & 0x08) ? PAD_BUTTON_START : 0;
+			jp12 |= (buf[3] & 0x04) ? PAD_TRIGGER_Z    : 0; // SNES select button maps to Z
+
+			// Required, otherwise if the returned port isn't the one we are looking for, jp will be set to zero,
+			// and held buttons are not possible w/o saving the state.
+			jpRetrode[buf[0] - 1] = jp12;
+		}
+	}
+	if (retrodeConnected && chan >= 0 && chan <= 3)
+	{
+		jp |= jpRetrode[chan]; // restore previous value
+	}
+#endif
+
 	/***
 	Gamecube Joystick input
 	***/
@@ -444,12 +603,12 @@ static void decodepad (int chan)
 	/*** Report pressed buttons (gamepads) ***/
 	for (i = 0; i < MAXJP; i++)
     {
-		if ( (jp & btnmap[CTRL_PAD][CTRLR_GCPAD][i])									// gamecube controller
+		if ( (jp & btnmap[CTRL_PAD][CTRLR_GCPAD][i]) // gamecube controller
 #ifdef HW_RVL
 		|| ( (exp_type == WPAD_EXP_NONE) && (wp & btnmap[CTRL_PAD][CTRLR_WIIMOTE][i]) )	// wiimote
-		|| ( (exp_type == WPAD_EXP_CLASSIC && !isWUPC) && (wp & btnmap[CTRL_PAD][CTRLR_CLASSIC][i]) )	// classic controller
-		|| ( (exp_type == WPAD_EXP_CLASSIC && isWUPC) && (wp & btnmap[CTRL_PAD][CTRLR_WUPC][i]) )	// wii u pro controller
-		|| ( (exp_type == WPAD_EXP_NUNCHUK) && (wp & btnmap[CTRL_PAD][CTRLR_NUNCHUK][i]) )	// nunchuk + wiimote
+		|| ( (exp_type == WPAD_EXP_CLASSIC && !isWUPC) && (wp & btnmap[CTRL_PAD][CTRLR_CLASSIC][i]) ) // classic controller
+		|| ( (exp_type == WPAD_EXP_CLASSIC && isWUPC) && (wp & btnmap[CTRL_PAD][CTRLR_WUPC][i]) ) // wii u pro controller
+		|| ( (exp_type == WPAD_EXP_NUNCHUK) && (wp & btnmap[CTRL_PAD][CTRLR_NUNCHUK][i]) ) // nunchuk + wiimote
 		|| ( (wiidrcp & btnmap[CTRL_PAD][CTRLR_WIIDRC][i]) ) // Wii U Gamepad
 #endif
 		)
@@ -751,3 +910,17 @@ void SetDefaultButtonMap ()
 
 	SetControllers();
 }
+
+#ifdef HW_RVL
+char* GetRetrodeInfo()
+{
+	if (endpointRetrode == 0)
+	{
+		return "not found";
+	}
+
+	static char info[50];
+	snprintf(info, 50, "bEndpointAddress: 0x%02X", endpointRetrode);
+	return info;
+}
+#endif
