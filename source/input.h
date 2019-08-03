@@ -32,6 +32,5 @@ void SetDefaultButtonMap ();
 bool MenuRequested();
 void SetupPads();
 void UpdatePads();
-char* GetRetrodeInfo();
 
 #endif

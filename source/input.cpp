@@ -336,23 +336,13 @@ UpdatePads()
 	WPAD_ScanPads();
 	#endif
 
-#ifdef HW_RVL
-	// Retrode
+	#ifdef HW_RVL
 	if(!retrodeConnected)
 	{
-			openRetrode();
-			retrodeConnected = true;
+		openRetrode();
+		retrodeConnected = true;
 	}
-	//	else
-	//	{
-	//		u16 buttonsHeld = WPAD_ButtonsHeld(0);
-	//		if(buttonsHeld & WPAD_BUTTON_1  && buttonsHeld & WPAD_BUTTON_2)
-	//		{
-	//		}
-	//		if(buttonsHeld & WPAD_BUTTON_MINUS  && buttonsHeld & WPAD_BUTTON_PLUS)
-	//		{
-	//		}
-	//	}
+	#endif
 
 	PAD_ScanPads();
 
@@ -368,7 +358,6 @@ UpdatePads()
 		userInput[i].pad.triggerL = PAD_TriggerL(i);
 		userInput[i].pad.triggerR = PAD_TriggerR(i);
 	}
-#endif
 
 #ifdef HW_RVL
 	if(WiiDRC_Inited() && WiiDRC_Connected())
@@ -910,17 +899,3 @@ void SetDefaultButtonMap ()
 
 	SetControllers();
 }
-
-#ifdef HW_RVL
-char* GetRetrodeInfo()
-{
-	if (endpointRetrode == 0)
-	{
-		return "not found";
-	}
-
-	static char info[50];
-	snprintf(info, 50, "bEndpointAddress: 0x%02X", endpointRetrode);
-	return info;
-}
-#endif
