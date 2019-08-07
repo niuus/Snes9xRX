@@ -606,3 +606,6 @@ msgstr "Mostrar Memoria Virtual"
 
 msgid "Delete Saves"
 msgstr "Borrar Partidas"
+
+msgid "Append Auto to .SAV files"
+msgstr "Agregar Auto en archivos .SAV"
