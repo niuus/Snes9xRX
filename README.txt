@@ -51,7 +51,7 @@ The flickering was because game thinks joypad2 is constantly firing on/off.
 * Retrode 2 USB adapter support (thank revvv!)
 The Retrode 2 cartridge reader offers USB mass storage access for your SNES
 cartridges, besides 4 ports for original controllers, more specifically:
-two SuperNES and two Genesis gamepads. 2-4 players are supported!
+two SuperNES and two Genesis gamepads.
 
 Some notes from revvv:
 "- If the Retrode does not react, you just have to restart Snes9x GX.
