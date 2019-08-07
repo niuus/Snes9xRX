@@ -30,7 +30,7 @@ extern int WiiFileLoader();
 extern void WiiSetupCheats();
 #endif
 #ifdef USE_VM
-		#include "vmalloc.h"
+	#include "vmalloc.h"
 #endif
 
 #ifndef SET_UI_COLOR
@@ -894,7 +894,7 @@ bool8 CMemory::Init (void)
     SRAM = (uint8 *) memalign(32,0x20000);
     VRAM = (uint8 *) memalign(32,0x10000);
 #ifdef USE_VM
-		ROM  = (uint8 *) vm_malloc(MAX_ROM_SIZE + 0x200 + 0x8000);
+	ROM  = (uint8 *) vm_malloc(MAX_ROM_SIZE + 0x200 + 0x8000);
 #else
     ROM  = (uint8 *) memalign(32,MAX_ROM_SIZE + 0x200 + 0x8000);
 #endif
@@ -3414,7 +3414,7 @@ void CMemory::ApplyROMFixes (void)
 			match_na ("DOOM TROOPERS"))							   // Doom Troopers
 			Timings.APUAllowTimeOverflow = TRUE;
 
-		if (match_id("AKFJ") || match_id("AKFE")) {				   // Hoshi no Kirby / Kirby Super Star
+		if (match_id("AKFJ") || match_id("AKFE")) {	// Hoshi no Kirby / Kirby Super Star
 			Timings.SA1Cycles = 5;
 		}
 		else {
@@ -3439,10 +3439,10 @@ void CMemory::ApplyROMFixes (void)
 			Timings.DMACPUSync = 20;
 			printf("DMA sync: %d\n", Timings.DMACPUSync);
 		}
-		else if (match_na("KORYU NO MIMI ENG")) // Koryu no Mimi translation by rpgone)
+	else if (match_na("KORYU NO MIMI ENG")) // Koryu no Mimi translation by rpgone)
 		{
-			// An infinite loop reads $4210 and checks NMI flag. This only works if LDA instruction executes before the NMI triggers,
-			// which doesn't work very well with s9x's default DMA timing.
+		// An infinite loop reads $4210 and checks NMI flag. This only works if LDA instruction executes before the NMI triggers,
+		// which doesn't work very well with s9x's default DMA timing.
 			Timings.DMACPUSync = 20;
 			printf("DMA sync: %d\n", Timings.DMACPUSync);
 		}
@@ -3478,7 +3478,9 @@ void CMemory::ApplyROMFixes (void)
 	if (!Settings.DisableGameSpecificHacks)
 	{
 		// XXX: What's happening?
-		if (match_na("X-MEN")) // Spider-Man and the X-Men
+		if (match_na("X-MEN") || // Spider-Man and the X-Men
+			match_na("KICK OFF") ||
+			match_na("SUPER FAMICOM JOJO"))
 		{
 			Settings.BlockInvalidVRAMAccess = FALSE;
 			printf("Invalid VRAM access hack\n");
