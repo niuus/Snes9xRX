@@ -35,13 +35,23 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
+[4.2.0 - August 07, 2019]
+* Avoid USB call if there's no Retrode. [revvv]
+* Fix M.A.C.S. Basic Rifle Marksmanship. [ghost - OV2]
+The flickering was because game thinks joypad2 is constantly firing on/off.
+* Cleanup time.
+* Spanish language translation update.
+* JoJo no Kimyō na Bōken and Kick Off graphical glitches fixed. [bearoso]
+* Fixed Speedy Gonzales - Los Gatos Bandidos game freeze. [bearoso]
+* Fixed Doom graphical garbage. [twinaphex]
+
 [4.1.0 - August 01, 2019]
 * Backport+adjust the refactored APU Resampler. [bladeoner]
 * Adjust default input rate.
 * Retrode 2 USB adapter support (thank revvv!)
 The Retrode 2 cartridge reader offers USB mass storage access for your SNES
 cartridges, besides 4 ports for original controllers, more specifically:
-two SuperNES and two Genesis gamepads. 2 players are supported!
+two SuperNES and two Genesis gamepads. 2-4 players are supported!
 
 Some notes from revvv:
 "- If the Retrode does not react, you just have to restart Snes9x GX.
@@ -49,7 +59,7 @@ I never had to restart HBC or the Wii. This happens with my fork, too.
 But not very often.
 - Doom is a good testcase: My first build had a huge lag, but only with
 this game. After polling the Retrode only for player 1, the lag disappeared.
-(Doom is a single player game, so it's strange that they poll player 2.)
+(Doom is a single player game, so it's strange that they poll player 2.)"
 
 [4.0.0 - July 28, 2019]
 * Add Wii U GamePad support. [Fix94 - Tantric]
