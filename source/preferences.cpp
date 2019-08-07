@@ -128,7 +128,7 @@ preparePrefsData ()
 	createXMLSetting("LoadFolder", "Load Folder", GCSettings.LoadFolder);
 	createXMLSetting("LastFileLoaded", "Last File Loaded", GCSettings.LastFileLoaded);
 	createXMLSetting("SaveFolder", "Save Folder", GCSettings.SaveFolder);
-	createXMLSetting("AppendAuto", "Append Auto to .SAV", toStr(GCSettings.AppendAuto));
+	createXMLSetting("AppendAuto", "Append Auto to .SAV files", toStr(GCSettings.AppendAuto));
 	createXMLSetting("CheatFolder", "Cheats Folder", GCSettings.CheatFolder);
 	createXMLSetting("ScreenshotsFolder", "Screenshots Folder", GCSettings.ScreenshotsFolder);
 	createXMLSetting("CoverFolder", "Covers Folder", GCSettings.CoverFolder);
@@ -163,7 +163,7 @@ preparePrefsData ()
 	createXMLSetting("ExitAction", "Exit Action", toStr(GCSettings.ExitAction));
 	createXMLSetting("MusicVolume", "Music Volume", toStr(GCSettings.MusicVolume));
 	createXMLSetting("SFXVolume", "Sound Effects Volume", toStr(GCSettings.SFXVolume));
-	createXMLSetting("DisplayMemory", "Display Virtual Memory", toStr(GCSettings.DisplayVM));
+	createXMLSetting("DisplayVM", "Display Virtual Memory", toStr(GCSettings.DisplayVM));
 	createXMLSetting("language", "Language", toStr(GCSettings.language));
 	createXMLSetting("PreviewImage", "Preview Image", toStr(GCSettings.PreviewImage));
 	
@@ -290,14 +290,14 @@ decodePrefsData ()
 				int verMinor = version[2] - '0';
 				int verPoint = version[4] - '0';
 
-				// first we'll check that the versioning is valid
+				// check that the versioning is valid
 				if(!(verMajor >= 0 && verMajor <= 9 &&
 					verMinor >= 0 && verMinor <= 9 &&
 					verPoint >= 0 && verPoint <= 9))
 					result = false;
 				else if(verMajor < 2) // less than version 2.0.0 for Snes9xRX
 					result = false; // reset settings
-				else if(verMajor == 2 && verMinor == 5 && verPoint < 0)	// anything less than 2.0.5 for Snes9xRX
+				else if(verMajor == 2 && verMinor == 9 && verPoint < 0)	// anything less than 2.9.0 for Snes9xRX
 					result = false; // reset settings
 				else
 					result = true;
@@ -354,7 +354,7 @@ decodePrefsData ()
 			loadXMLSetting(&GCSettings.ExitAction, "ExitAction");
 			loadXMLSetting(&GCSettings.MusicVolume, "MusicVolume");
 			loadXMLSetting(&GCSettings.SFXVolume, "SFXVolume");
-			loadXMLSetting(&GCSettings.DisplayVM, "DisplayMemory");
+			loadXMLSetting(&GCSettings.DisplayVM, "DisplayVM");
 			loadXMLSetting(&GCSettings.language, "language");
 			loadXMLSetting(&GCSettings.PreviewImage, "PreviewImage");
 
@@ -721,6 +721,8 @@ bool LoadPrefs()
 		sprintf(dirPath, "%s%s", pathPrefix[GCSettings.LoadMethod], GCSettings.CoverFolder);
 		CreateDirectory(dirPath);
 		sprintf(dirPath, "%s%s", pathPrefix[GCSettings.LoadMethod], GCSettings.ArtworkFolder);
+		CreateDirectory(dirPath);
+		sprintf(dirPath, "%s%s", pathPrefix[GCSettings.LoadMethod], GCSettings.CheatFolder);
 		CreateDirectory(dirPath);
 	}
 

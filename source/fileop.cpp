@@ -999,4 +999,3 @@ size_t SaveFile(char * filepath, size_t datasize, bool silent)
 {
 	return SaveFile((char *)savebuffer, filepath, datasize, silent);
 }
-

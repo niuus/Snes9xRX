@@ -86,7 +86,6 @@ void S9xInitSync()
 /*** Synchronisation ***/
 
 void S9xSyncSpeed () {
-
 	uint32 skipFrms = Settings.SkipFrames;
 
 	if (Settings.TurboMode)

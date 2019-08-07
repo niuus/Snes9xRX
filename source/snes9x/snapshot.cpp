@@ -1047,10 +1047,6 @@ bool8 S9xUnfreezeGame (const char *filename)
 					S9xMessage(S9X_ERROR, S9X_WRONG_MOVIE_SNAPSHOT, MOVIE_ERR_SNAPSHOT_WRONG_MOVIE);
 					break;
 
-				case NOT_A_MOVIE_SNAPSHOT:
-					S9xMessage(S9X_ERROR, S9X_NOT_A_MOVIE_SNAPSHOT, MOVIE_ERR_SNAPSHOT_NOT_MOVIE);
-					break;
-
 				case SNAPSHOT_INCONSISTENT:
 					S9xMessage(S9X_ERROR, S9X_SNAPSHOT_INCONSISTENT, MOVIE_ERR_SNAPSHOT_INCONSISTENT);
 					break;
@@ -1173,7 +1169,7 @@ void S9xFreezeToStream (STREAM stream)
 
 	if (Settings.MSU1)
 		FreezeStruct(stream, "MSU", &MSU1, SnapMSU1, COUNT(SnapMSU1));
-	
+
 	if (Settings.SnapshotScreenshots)
 	{
 		SnapshotScreenshotInfo	*ssi = new SnapshotScreenshotInfo;
@@ -1367,13 +1363,6 @@ int S9xUnfreezeFromStream (STREAM stream)
 			break;
 
 		result = UnfreezeStructCopy(stream, "SHO", &local_screenshot, SnapScreenshot, COUNT(SnapScreenshot), version);
-
-		SnapshotMovieInfo	mi;
-
-		result = UnfreezeStruct(stream, "MOV", &mi, SnapMovie, COUNT(SnapMovie), version);
-		if (result == SUCCESS)
-				result = UnfreezeBlockCopy(stream, "MID", &local_movie_data, mi.MovieInputDataSize);
-
 		result = SUCCESS;
 	} while (false);
 
@@ -2012,28 +2001,3 @@ static void UnfreezeStructFromCopy (void *sbase, FreezeData *fields, int num_fie
 		}
 	}
 }
-
-bool8 S9xSPCDump (const char *filename)
-{
-	FILE	*fs;
-	uint8	buf[SNES_SPC::spc_file_size];
-	size_t	ignore;
-
-	fs = fopen(filename, "wb");
-	if (!fs)
-		return (FALSE);
-
-	S9xSetSoundMute(TRUE);
-
-	spc_core->init_header(buf);
-	spc_core->save_spc(buf);
-
-	ignore = fwrite(buf, SNES_SPC::spc_file_size, 1, fs);
-
-	fclose(fs);
-
-	S9xSetSoundMute(FALSE);
-
-	return (TRUE);
-}
-

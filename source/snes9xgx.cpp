@@ -387,7 +387,7 @@ void InitializeSnes9x() {
 int main(int argc, char *argv[])
 {
 	#ifdef USE_VM
-	VM_Init(ARAM_SIZE, MRAM_BACKING);	// Setup Virtual Memory with the entire ARAM
+	VM_Init(ARAM_SIZE, MRAM_BACKING); // Setup Virtual Memory with the entire ARAM
 	#endif
 
 	#ifdef HW_RVL

@@ -54,11 +54,11 @@ static TFilterMethod FilterToMethod (RenderFilter filterID)
 {
 	switch(filterID)
 	{
-    case FILTER_HQ2X:       return RenderHQ2X<FILTER_HQ2X>;
-    case FILTER_HQ2XS:      return RenderHQ2X<FILTER_HQ2XS>;
-    case FILTER_HQ2XBOLD:   return RenderHQ2X<FILTER_HQ2XBOLD>;
-			case FILTER_SCANLINES:  return Scanlines<FILTER_SCANLINES>;
-			default: return 0;
+		case FILTER_HQ2X:       return RenderHQ2X<FILTER_HQ2X>;
+		case FILTER_HQ2XS:      return RenderHQ2X<FILTER_HQ2XS>;
+		case FILTER_HQ2XBOLD:   return RenderHQ2X<FILTER_HQ2XBOLD>;
+		case FILTER_SCANLINES:  return Scanlines<FILTER_SCANLINES>;
+		default: return 0;
 	}
 }
 
@@ -66,20 +66,20 @@ int GetFilterScale(RenderFilter filterID)
 {
 	switch(filterID)
 	{
-			case FILTER_NONE:
-					return 1;
-			default:
-    case FILTER_HQ2X:
-    case FILTER_HQ2XS:
-    case FILTER_HQ2XBOLD:
-			case FILTER_SCANLINES:
-					return 2;
+		case FILTER_NONE:
+			return 1;
+		default:
+		case FILTER_HQ2X:
+		case FILTER_HQ2XS:
+		case FILTER_HQ2XBOLD:
+		case FILTER_SCANLINES:
+			return 2;
 	}
 }
 
 void SelectFilterMethod ()
 {
-		FilterMethod = FilterToMethod((RenderFilter)GCSettings.FilterMethod);
+	FilterMethod = FilterToMethod((RenderFilter)GCSettings.FilterMethod);
 }
 
 //
@@ -194,17 +194,17 @@ void InitLUTs(void)
 
 	for (c = 0 ; c < (1<<NUMBITS) ; c++)
   	{
-			b = (int)((c & 0x1F)) << 3;
-			g = (int)((c & 0x7E0)) >> 3;
-			r = (int)((c & 0xF800)) >> 8;
+		b = (int)((c & 0x1F)) << 3;
+		g = (int)((c & 0x7E0)) >> 3;
+		r = (int)((c & 0xF800)) >> 8;
 
-			RGBtoBright[c] = r+r+r + g+g+g + b+b;
+		RGBtoBright[c] = r+r+r + g+g+g + b+b;
 
-			y = (int)( 0.256788f*r + 0.504129f*g + 0.097906f*b + 0.5f) + 16;
-			u = (int)(-0.148223f*r - 0.290993f*g + 0.439216f*b + 0.5f) + 128;
-			v = (int)( 0.439216f*r - 0.367788f*g - 0.071427f*b + 0.5f) + 128;
+		y = (int)( 0.256788f*r + 0.504129f*g + 0.097906f*b + 0.5f) + 16;
+		u = (int)(-0.148223f*r - 0.290993f*g + 0.439216f*b + 0.5f) + 128;
+		v = (int)( 0.439216f*r - 0.367788f*g - 0.071427f*b + 0.5f) + 128;
 
-			RGBtoYUV[c] = (y << 16) + (u << 8) + v;
+		RGBtoYUV[c] = (y << 16) + (u << 8) + v;
 	}
 }
 

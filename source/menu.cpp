@@ -54,18 +54,18 @@ static GuiImageData * pointer[4];
 #endif
 
 #ifdef HW_RVL
-		#include "mem2.h"
+	#include "mem2.h"
 
-		#define MEM_ALLOC(A) (u8*)mem2_malloc(A)
-		#define MEM_DEALLOC(A) mem2_free(A)
+	#define MEM_ALLOC(A) (u8*)mem2_malloc(A)
+	#define MEM_DEALLOC(A) mem2_free(A)
 #else
 #ifdef USE_VM
-		#include "vmalloc.h"
-		#define MEM_ALLOC(A) (u8*)vm_malloc(A)
-		#define MEM_DEALLOC(A) vm_free(A)
+	#include "vmalloc.h"
+	#define MEM_ALLOC(A) (u8*)vm_malloc(A)
+	#define MEM_DEALLOC(A) vm_free(A)
  #else
-		#define MEM_ALLOC(A) (u8*)memalign(32, A)
-		#define MEM_DEALLOC(A) free(A)
+	#define MEM_ALLOC(A) (u8*)memalign(32, A)
+	#define MEM_DEALLOC(A) free(A)
 #endif
 #endif
 
@@ -865,7 +865,7 @@ static void WindowCredits(void * ptr)
 	txt[i]->SetPosition(350,y); i++; y+=48;
 
 	txt[i]->SetPresets(16, (GXColor){0, 0, 0, 255}, 0,
-		FTGX_JUSTIFY_CENTER | FTGX_ALIGN_TOP, ALIGN_CENTRE, ALIGN_TOP);
+	FTGX_JUSTIFY_CENTER | FTGX_ALIGN_TOP, ALIGN_CENTRE, ALIGN_TOP);
 
 	txt[i] = new GuiText("Snes9x - Copyright (c) Snes9x Team 1996 - 2019");
 	txt[i]->SetPosition(0,y); i++; y+=20;
@@ -3722,7 +3722,7 @@ static int MenuSettingsFile()
 	sprintf(options.name[i++], "Artwork Folder");
 	sprintf(options.name[i++], "Auto Load");
 	sprintf(options.name[i++], "Auto Save");
-	sprintf(options.name[i++], "Append Auto to .SAV");
+	sprintf(options.name[i++], "Append Auto to .SAV files");
 	options.length = i;
 
 	for(i=0; i < options.length; i++)

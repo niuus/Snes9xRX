@@ -4,7 +4,7 @@
  * softdev July 2006
  * crunchy2 May 2007
  * Michniewski 2008
- * Tantric 2008-2010
+ * Tantric 2008-2019
  *
  * video.cpp
  *
@@ -656,9 +656,9 @@ ResetVideo_Emu ()
 	u8 sharp[7] = {0,0,21,22,21,0,0};
 	u8 soft[7] = {8,8,10,12,10,8,8};
 	u8* vfilter =
-			GCSettings.render == 3 ? sharp
-			: GCSettings.render == 4 ? soft
-			: rmode->vfilter;
+		GCSettings.render == 3 ? sharp
+		: GCSettings.render == 4 ? soft
+		: rmode->vfilter;
 	GX_SetCopyFilter(rmode->aa, rmode->sample_pattern, (rmode->xfbMode == VI_XFBMODE_SF) ? GX_FALSE : GX_TRUE, vfilter);
 
 	GX_SetFieldMode (rmode->field_rendering, ((rmode->viHeight == 2 * rmode->xfbHeight) ? GX_ENABLE : GX_DISABLE));
@@ -759,8 +759,8 @@ update_video (int width, int height)
 		ResetVideo_Emu ();	// reset video to emulator rendering settings
 #ifdef HW_RVL
 		memset(filtermem, 0, FILTERMEM_SIZE);
-#endif		
-		
+#endif
+
 		/** Update scaling **/
 		if (GCSettings.render == 0)	// original render mode
 		{

@@ -132,7 +132,7 @@ void S9xReset (void)
 		S9xResetSRTC();
 	if (Settings.MSU1)
 		S9xMSU1Init();
-	
+
 	S9xInitCheatData();
 }
 

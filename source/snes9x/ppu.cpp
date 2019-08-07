@@ -1223,7 +1223,7 @@ uint8 S9xGetPPU (uint16 Address)
 		else
 		if (Settings.BS      && Address >= 0x2188 && Address <= 0x219f)
 			return (S9xGetBSXPPU(Address));
-		else	
+		else
 		if (Settings.SRTC    && Address == 0x2800)
 			return (S9xGetSRTC(Address));
 		else
