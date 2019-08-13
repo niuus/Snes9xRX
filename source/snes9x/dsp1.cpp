@@ -1715,7 +1715,7 @@ uint8 DSP1GetByte (uint16 address)
 			DSP1.waiting4command = TRUE;
 		}
 		else
-			t = 0xff;
+			t = 0x80;
 	}
 	else
 		t = 0x80;
