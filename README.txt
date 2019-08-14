@@ -17,9 +17,11 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                                FEATURES  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
-* Based on Snes9x 1.52
+* Core based on Snes9x 1.52
 * Wiimote, Nunchuk, Wii Classic/Classic Pro, and Gamecube controller support
-* Wii U Pro, NES and SNES Classic controller support
+* Wii U Pro, Wii U GamePad, NES and SNES Classic controller support
+* Retrode 2 USB adapter support, so you can use the real controllers!
+* Experimental DualShock 3 support
 * SNES Superscope, Justifier, Mouse peripherals emulation support
 * Cheat support
 * Auto Load/Save Game Snapshots and SRAM
@@ -34,6 +36,20 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+[4.3.0 - August 14, 2019]
+* Fixed "PowerFest 94 - Super Mario Kart" black screen.
+* Fixed Kat's Run - Zen-Nihon K-Car Senshuken graphic bg corruption during
+demo. Phalanx random black screen is fixed too.
+* Fixed Clayfighter blue clown face when selecting a player.
+* Fixed Stunt Race FX graphical glitch on the course selection screen.
+* Fixed Light Fantasy SRAM saving issues.
+* Fix out-of-bounds memory access. [bearoso]
+* Working buttons for all SNES peripherals.
+Mouse, SuperScope and the Konami's Justifier trigger/buttons never worked in
+any other controllers except the GCN pad and Wiimote. Now you can use the
+Wii Classic Controller, Wii U Pro Controller and Wii U Gamepad to
+fully emulate the peripherals.
 
 [4.2.0 - August 07, 2019]
 * Avoid USB call if there's no Retrode. [revvv]
@@ -51,7 +67,7 @@ The flickering was because game thinks joypad2 is constantly firing on/off.
 * Retrode 2 USB adapter support (thank revvv!)
 The Retrode 2 cartridge reader offers USB mass storage access for your SNES
 cartridges, besides 4 ports for original controllers, more specifically:
-two SuperNES and two Genesis gamepads.
+two SuperNES and two Genesis gamepads. 2 players are supported!
 
 Some notes from revvv:
 "- If the Retrode does not react, you just have to restart Snes9x GX.
@@ -275,9 +291,12 @@ To install Snes9x RX you will need to copy over the "apps" and "snes9xgx"
 folders (directories) from this archive to your SD Card. It comes 
 pre-packaged in the Homebrew Channel format (which you will use to launch 
 the emulator). Once you've copied the directories to your SD Card you will 
-need to place your ROM image(s) into "\snes9xgx\roms" directory and place any
-cheat code files (optional) in the "\snes9xgx\cheats" directory. Once this is
-done you can proceed to run the emulator via the Homebrew Channel.
+need to place your ROM image(s) into "\snes9xgx\roms" directory. Optionally,
+you can also place cheat code files and artwork/covers in their respectively
+named folders inside the "\snes9xgx\" directory. The folders will be created
+at first run, if you want to acquire the files later. Once this is done, you
+can proceed to run the emulator via the Homebrew Channel, or by using using
+the Snes9x RX Forwarder Channel already installed on your System Menu.
 
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 |                                                           INITIAL SETUP  |
@@ -294,7 +313,7 @@ However, you can configure Snes9x RX to your liking.
 |                                                           CONFIGURATION  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
-To configure Snes9x RX press "A" on the "Settings" box. This will brings up 
+To configure Snes9x RX press "A" on the "Settings" box. This will bring up 
 the "Settings" screen where you can configure the Button Mappings, Video, 
 Saving, Menu and Network. You can also restore the settings to their initial 
 values by clicking on the "Reset Settings" and you can return to the ROM 
@@ -302,15 +321,17 @@ selection screen by clicking on "Go Back".
 
 --•[ Button Mappings ]•--
 	
-Once in the Button Mappings settings menu you'll have the option to pick to
-configure the SNES Controller, Super Scope, SNES Mouse and the Justifier.
-Once you select a controller to configure you will be presented with which
-input device you would like to configure. To set the button simply click on
-the input device you wish to use and then pick the button you wish to map. 
-After you select a button to configure Snes9x RX will prompt you to press
-the button you wish to assign to the button you've selected. Below is a list
-of each controller followed by the input devices and the default values for
-those devices.
+Once in the Button Mappings settings menu, you'll have the option to configure
+almost all the controllers already supported (except the Retrode 2 USB
+or the Dualshock 3). You can also configure SNES peripherals like the Mouse,
+Super Scope, and the Konami's Justifier, although you can only alter the
+mappings for these in the GameCube controller and Wiimote sections. Once you
+select a controller to configure, you will be presented with which input
+device you would like to remap. To set any buttons, simply click on the input
+device you wish to use and then pick the button. After you select a button to
+configure, Snes9x RX will prompt you to press the button you want to assign
+to the button you've selected. Below is a list of each controller, followed
+by the input devices and the default values for those devices.
 	
 	[ SNES Controller ]
 		
@@ -345,6 +366,7 @@ those devices.
 		• Wii Classic Controller
 		• Wii Classic Controller Pro
 		• Wii U Pro Controller
+		• Wii U GamePad
 
 			A = A
 			B = B
@@ -352,6 +374,8 @@ those devices.
 			Y = Y
 			L = L
 			R = R
+			START = PLUS
+			SELECT = MINUS
 			UP = UP
 			DOWN = DOWN
 			LEFT = LEFT
@@ -371,7 +395,27 @@ those devices.
 			DOWN = DOWN
 			LEFT = LEFT
 			RIGHT = RIGHT
+
+	[ SNES Mouse ]
+	
+		• GameCube Controller
 		
+			LEFT BUTTON = A
+			RIGHT BUTTON = B
+		
+		• Wiimote
+		
+			LEFT BUTTON = A
+			RIGHT BUTTON = B
+
+		• Wii Classic Controller
+		• Wii Classic Controller Pro
+		• Wii U Pro Controller
+		• Wii U GamePad
+
+			LEFT BUTTON = B
+			RIGHT BUTTON = A
+
 	[ Super Scope ]
 
 		• GameCube Controller
@@ -392,18 +436,18 @@ those devices.
 			TURBO OFF = DOWN
 			PAUSE = PLUS
 
-	[ SNES Mouse ]
-	
-		• GameCube Controller
-		
-			LEFT BUTTON = A
-			RIGHT BUTTON = B
-		
-		• Wiimote
-		
-			LEFT BUTTON = A
-			RIGHT BUTTON = B
-			
+		• Wii Classic Controller
+		• Wii Classic Controller Pro
+		• Wii U Pro Controller
+		• Wii U GamePad
+
+			FIRE = B
+			AIM OFFSCREEN = A
+			CURSOR = MINUS
+			TURBO ON = Y
+			TURBO OFF = X
+			PAUSE = PLUS
+
 	[ Justifier ]
 	
 		• GameCube Controller
@@ -413,6 +457,15 @@ those devices.
 			START = START
 		
 		• Wiimote
+
+			FIRE = B
+			AIM OFFSCREEN = A
+			START = PLUS
+
+		• Wii Classic Controller
+		• Wii Classic Controller Pro
+		• Wii U Pro Controller
+		• Wii U GamePad
 
 			FIRE = B
 			AIM OFFSCREEN = A
@@ -427,9 +480,9 @@ clicking on them. To make the Filtering option you select you must enable
 Filtering under the Rendering setting.
 
 • Rendering - Unfiltered
-            - Original
-            - Filtered (Sharp)
-			- Filtered (Soft)
+            - Filtered (Soft)
+			- Filtered (Sharp)
+			- Original
 			- Filtered
           
 • Scaling 	- Default
@@ -452,73 +505,87 @@ Scaling you should be able to get a proper display on your television.
 --•[ SAVING & LOADING ]•--
 
 From this setup option you can configure the way Snes9x RX loads and saves.
-Your options are Load Method, Load Folder, Save Method, Save Folder, Auto
-Load and Auto Save. Clicking on all of the options except the folders will
-let you toggle through their settings. Clicking on the folder options will
-bring up a text box where you can enter in the folder you wish to use for
-your save data. Snes9x RX has two types of saves - one is the SRAM which is
+Your options are Load Device, Save Device, Load Folder, Save Folder, Auto
+Load and Auto Save. Clicking on all of the options except the ones about
+folders, will let you toggle through their settings. Clicking on the folder
+options will bring up a text box where you can enter any other path you wish
+to use, in case you have the need to customize it. This is also true for the
+Cheats, Screenshots, Covers, and Artwork options.
+
+Snes9x RX has two types of saves - one is the SRAM which is
 the save game data (this is only applicable if the game you're playing 
-supports saving) and the other is Snapshots which are real time saves. Real
-time saves allow you to save your game in it's current state and resume it
+supports battery saving) and the other is Snapshots, which are real time saves.
+Real time saves allow you to save your game in it's current state and resume it
 at a later time.
 
-	• Load Method -	SD, USB, DVD, Network and Auto
+	• Load Device -	SD, USB, DVD, Network and Auto Detect
 	
-	• Save Method - SD, USB, Network and Auto
+	• Save Device - SD, USB, Network and Auto Detect
 
 	• Auto Load - SRAM, Snapshot and Off
 
-	• Auto Save - SRAM, Snapshot and Off
+	• Auto Save - SRAM, Snapshot, Both and Off
+
+You can also toggle the option to append "Auto" into the filename of all the
+automatic SRAM saves that the emulator creates whenever you play a supported
+battery saving cartridge.
 
 --•[ MENU ]•--
 
 This settings screen will allow you to customize a few aspects on how the 
-Menu works including the Exit Action, Wiimote Orientation, Music Volume and
-the Sound Effects Volume. The Exit Action can be set to "Return to Loader",
-"Return to Wii Menu" and "Power off Wii". The Wiimote Orientation can be set
-to Vertical or Horizontal and then you can increase and decrease the Music
-and Sound Effects Volume.
+Menu works including the Exit Action, Wiimote Orientation (for navigating
+through the menues), Music Volume, Sound Effects Volume, Display Virtual
+Memory (inside the Game Menu), Language, and the type of Preview Image
+you'd like on the Choose Game screen. The Exit Action can be set to
+"Return to Loader", "Return to Wii Menu" and "Power off Wii".
 
 --•[ NETWORK ]•--
 
-If you're going to be using your Network (LAN) to load and/or save from you
-will need to enter in the SMB share settings you've setup on your computer
-via this settings menu. You will need to enter in the SMB Share IP, Share
-Name, Share Username and Share Password. If you do not have a password on
-your SMB share then set the SMB Share Password to "0".
+If you're going to be using your Network (LAN) to load and/or save from,
+you will need to enter in the SMB share settings you've setup on your
+computer via this settings menu. You will need to enter in the SMB Share IP,
+SMB Share Name, SMB Share Username and SMB Share Password. If you do not
+have a password on your SMB share, then set the SMB Share Password to "0".
 
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 |                                                            FILE BROWSER  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
-The File Browser will automatically load when you start the emulator and it
+The File Browser will automatically load when you start the emulator, and it
 will automatically list the contents of the "\snes9xgx\roms\" directory on
 your SD card. Like mentioned above in the Configuration -> Saving & Loading
-you can specifically a different directory to load from. To launch a game 
+you can specify a different directory to load from. To launch a game 
 (the game can either be uncompressed or inside a ZIP archive) simply click 
-on it and it will load. You may also change the directory you're in by 
-clicking on "Up One Level".
+on it and it will load. In the case of 7z compressed files, you will be
+presented with a list of the supported games inside the archive. You may
+also change the directory you're in by clicking on "Up One Level".
 
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 |                                                                GAMEPLAY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
-Once you load a game you can access another option menu by pressing the 
-Wii controller's "Home" button / Gamecube controller's C-stick left.
-This will bring up the Save, Load, Reset, Controller and Cheats options.
-From this menu you can also return to the File Browser by selecting
+Once you load a game, you can access a special menu by pressing the 
+Wii/Wii U controller's "Home" button / Gamecube controller's C-stick left.
+If you're using any of the other input controllers or a special conversion,
+simply press the button combination Start+A+B+Z/Select. This will bring up
+the Save, Load, Delete, Game Settings and Reset options.
+From this menu you can also return to the Choose Game screen by selecting
 "Main Menu". To leave the menu and resume game play select "Close".
 
 The Save option will allow you to save either your SRAM or a Snapshot. Once
-you've selected Save two options will appear named "New SRAM" and "New 
-Snapshot". Clicking on these will create a new save. Once you have a save
-you can save over it by selecting it instead of a "New" option. The Load
-option will allow you to load your saved SRAM or Snapshot. The Delete option
-allows you to delete any of your snapshots or SRAM saves. Reset will reset
-the game. If you pick Controller you can toggle between which compatible
-SNES peripheral you wish to use your game with, be it a two controllers,
-Multitap (4 players), Mouse, Superscope, or the Konami's Justifier lightgun.
-Finally, the option Cheats will allow you to toggle your cheat codes.
+you've selected Save, two options will appear named "New SRAM" and "New 
+Snapshot". Clicking on either these will create a new save. Once you have
+a save, you can save over it by selecting it instead of the "New" option.
+The Load option will allow you to load your saved SRAM or Snapshot.
+Finally, the Delete option allows you to delete any of your snapshots or
+SRAM saves. Reset will just reset the game, as in the real console.
+
+If you pick Game Settings, you can use other special options which are:
+
+* Controller: toggle between which compatible SNES peripheral you wish to use
+your game with, be it two controllers, Multitap (for up to 4 players), Mouse,
+Superscope, or the Konami's Justifier lightgun. Finally, the option Cheats
+will allow you to enable/disable your cheat codes.
 
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 |                                                                  CHEATS  |
@@ -529,7 +596,7 @@ SNES9X .CHT file format. They also must be named the same name as the game
 you're playing with the .cht extension. An example would be if you have a 
 ROM called "Super Mario World.smc" you would need to name your .cht file to
 "Super Mario World.cht". You can find a link to a massive collection of Super
-NES cheat codes in the Links section (below).
+NES cheat codes in the Links section below.
 
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 |                                                              TURBO MODE  |
