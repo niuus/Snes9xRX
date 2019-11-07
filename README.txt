@@ -37,6 +37,10 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
+[4.4.0 - November 07, 2019]
+* Fixed Funaki Masakatsu Hybrid Wrestler – Tougi Denshou graphical glitch.
+* Retrode 2 support tweaks.
+
 [4.3.0 - August 14, 2019]
 * Fixed "PowerFest 94 - Super Mario Kart" black screen.
 * Fixed Kat's Run - Zen-Nihon K-Car Senshuken graphic bg corruption during
