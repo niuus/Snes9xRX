@@ -37,6 +37,21 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
+[4.5.0 - November 22, 2019]
+* Xbox 360 wired controller support! (thanks revvv!)
+Before loading Snes9x RX, connect your Xbox 360 wired controller. When
+you're at the main screen (Choose a game), click on the emulator logo at the
+corner of the screen and read the status info at the bottom, just to make
+sure it was properly detected. In some cases you won't need to do this,
+it will just work. Remember, the controller only works when in-game.
+You can swap your player/port number by simply pressing on the
+Xbox Guide button. Enjoy!
+
+Right stick is configured as YXBA (essentially duplicating your buttons),
+specially useful for Smash TV fans like me =D
+
+* Xbox 360 wired controller code improvements. [revvv]
+
 [4.4.0 - November 07, 2019]
 * Fixed Funaki Masakatsu Hybrid Wrestler – Tougi Denshou graphical glitch.
 * Retrode 2 support tweaks.
@@ -326,16 +341,17 @@ selection screen by clicking on "Go Back".
 --•[ Button Mappings ]•--
 	
 Once in the Button Mappings settings menu, you'll have the option to configure
-almost all the controllers already supported (except the Retrode 2 USB
-or the Dualshock 3). You can also configure SNES peripherals like the Mouse,
-Super Scope, and the Konami's Justifier, although you can only alter the
-mappings for these in the GameCube controller and Wiimote sections. Once you
-select a controller to configure, you will be presented with which input
-device you would like to remap. To set any buttons, simply click on the input
-device you wish to use and then pick the button. After you select a button to
-configure, Snes9x RX will prompt you to press the button you want to assign
-to the button you've selected. Below is a list of each controller, followed
-by the input devices and the default values for those devices.
+almost all the controllers already supported (except the Retrode 2 USB, Xbox
+360 controller or the Dualshock 3). You can also configure SNES peripherals
+like the Mouse, Super Scope, and the Konami's Justifier, although you can
+only alter the mappings for these in the GameCube controller and Wiimote
+sections. Once you select a controller to configure, you will be presented
+with which input device you would like to remap. To set any buttons, simply
+click on the input device you wish to use and then pick the button. After
+you select a button to configure, Snes9x RX will prompt you to press the
+button you want to assign to the button you've selected. Below is a list of
+each controller, followed by the input devices and the default values
+for those devices.
 	
 	[ SNES Controller ]
 		
@@ -399,6 +415,22 @@ by the input devices and the default values for those devices.
 			DOWN = DOWN
 			LEFT = LEFT
 			RIGHT = RIGHT
+
+		•	Xbox 360 Controller (wired)
+		
+			A = B
+			B = A
+			X = Y
+			Y = X
+			L = Left Bumper/Shoulder
+			R = Right Bumper/Shoulder
+			START = START
+			SELECT = BACK
+			UP = UP
+			DOWN = DOWN
+			LEFT = LEFT
+			RIGHT = RIGHT
+			Swap controller port = XBOX GUIDE BUTTON
 
 	[ SNES Mouse ]
 	
