@@ -137,11 +137,11 @@ static void ResetText()
 	LoadLanguage();
 
 	if(mainWindow)
-    {
+	{
 		HaltGui();
 		mainWindow->ResetText();
 		ResumeGui();
-	}	
+	}
 }
 
 static int currentLanguage = -1;
@@ -874,10 +874,12 @@ static void WindowCredits(void * ptr)
 	txt[i] = new GuiText("under the terms of the GNU General Public License (GPL) Version 2.");
 	txt[i]->SetPosition(0,y); i++; y+=20;
 
-	char iosVersion[20];
+	//char iosVersion[20];
+	char iosVersion[70]; // added 50 for Retrode info
 
 #ifdef HW_RVL
-	sprintf(iosVersion, "IOS: %d", IOS_GetVersion());
+	//sprintf(iosVersion, "IOS: %ld", IOS_GetVersion());
+	snprintf(iosVersion, 70, "IOS: %ld / Retrode: %s", IOS_GetVersion(), GetRetrodeInfo());
 #endif
 
 	txt[i] = new GuiText(iosVersion, 18, (GXColor){0, 0, 0, 255});
@@ -2788,9 +2790,9 @@ ButtonMappingWindow()
 	}
 
 	if(mapMenuCtrl == CTRLR_WIIDRC) {
-			if(pressed == WIIDRC_BUTTON_HOME) {
-					pressed = 0;
-			}
+		if(pressed == WIIDRC_BUTTON_HOME) {
+			pressed = 0;
+		}
 	}
 	else if(pressed == WPAD_BUTTON_HOME || pressed == WPAD_CLASSIC_BUTTON_HOME) {
 		pressed = 0;
