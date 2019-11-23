@@ -855,9 +855,9 @@ void SetDefaultButtonMap ()
 	SetControllers();
 }
 
-char* GetRetrodeInfo()
+char* GetUSBControllerInfo()
 {
     static char info[50];
-    snprintf(info, 50, "Retrode: 0x%02X, XBOX360: 0x%02X", Retrode_Endpoint(), XBOX360_Endpoint());
+    snprintf(info, 50, "Retrode: %s, XBOX360: %s", Retrode_Status(), XBOX360_Status());
     return info;
 }

@@ -5,6 +5,7 @@
 #define USB_CLASS_XBOX360 0xFF
 
 static bool xbox360Setup = false;
+static bool replugRequired = false;
 static s32 deviceIdXBOX360 = 0;
 static u8 endpointXBOX360_IN = 0x81;
 static u8 endpointXBOX360_OUT = 0x01;
@@ -13,7 +14,8 @@ static u8 bConfigurationValueXBOX360 = 1;
 static u8 ATTRIBUTE_ALIGN(32) buf[20];
 static bool xbox360_read = false;
 static u32 jp;
-static int player = 0;
+static u8 player = 0;
+static u32 xboxButtonCount = 0;
 static bool nextPlayer = false;
 
 static u8 getEndpoint(usb_devdesc devdesc)
@@ -121,10 +123,17 @@ static int read_XBOX360_cb(int res, void *usrdata)
         jp |= (rx < -16384) ? PAD_BUTTON_Y : 0; // XBOX360 X button maps to Y
         jp |= (rx >  16384) ? PAD_BUTTON_A : 0; // XBOX360 B button maps to A
 
+		// XBOX button to switch to next player
         if ((buf[3] & 0x04) == 0x04)
         {
-            // XBOX button to switch to next player
-            nextPlayer = true;
+            xboxButtonCount++;
+            // count =  2 means you have to push the button 1x to switch players
+            // count = 10 means you have to push the button 5x to switch players
+            if (xboxButtonCount >= 2)
+            {
+                nextPlayer = true;
+                xboxButtonCount = 0;
+            }
         }
     }
 
@@ -163,9 +172,20 @@ void rumble_XBOX360(s32 device_id, u8 left, u8 right)
     USB_WriteIntrMsg(deviceIdXBOX360, endpointXBOX360_OUT, sizeof(buf), buf);
 }
 
+static int removal_cb(int result, void *usrdata)
+{
+    s32 fd = (s32) usrdata;
+    if (fd == deviceIdXBOX360)
+    {
+        stop_reading_XBOX360();
+        deviceIdXBOX360 = 0;
+    }
+    return 1;
+}
+
 static void openXBOX360()
 {
-    if (USB_Initialize() < 0)
+    if (deviceIdXBOX360 != 0)
     {
         return;
     }
@@ -190,6 +210,7 @@ static void openXBOX360()
         if (USB_GetDescriptors(fd, &devdesc) < 0)
         {
             // You have to replug the XBOX360 controller!
+			replugRequired = true;
             USB_CloseDevice(&fd);
             continue;
         }
@@ -197,7 +218,9 @@ static void openXBOX360()
         if (isXBOX360(devdesc) && USB_SetConfiguration(fd, bConfigurationValueXBOX360) >= 0)
         {
             deviceIdXBOX360 = fd;
-            turnOnLED();
+			replugRequired = false;
+			turnOnLED();
+			USB_DeviceRemovalNotifyAsync(fd, &removal_cb, (void*) fd);
         }
         else
         {
@@ -241,10 +264,12 @@ u32 XBOX360_ButtonsHeld(int chan)
 	return jp;
 }
 
-s32 XBOX360_Endpoint()
+char* XBOX360_Status()
 {
-    openXBOX360();
-    return deviceIdXBOX360 ? endpointXBOX360_IN : 0;
+	openXBOX360();
+	if (replugRequired)
+		return "please replug";
+	return deviceIdXBOX360 ? "connected" : "not found";
 }
 
 #endif

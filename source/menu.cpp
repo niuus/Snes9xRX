@@ -879,7 +879,7 @@ static void WindowCredits(void * ptr)
 
 #ifdef HW_RVL
 	//sprintf(iosVersion, "IOS: %ld", IOS_GetVersion());
-	snprintf(iosVersion, 70, "IOS: %ld / Retrode: %s", IOS_GetVersion(), GetRetrodeInfo());
+	snprintf(iosVersion, 70, "IOS: %ld / %s", IOS_GetVersion(), GetUSBControllerInfo());
 #endif
 
 	txt[i] = new GuiText(iosVersion, 18, (GXColor){0, 0, 0, 255});
