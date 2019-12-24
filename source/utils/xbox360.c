@@ -8,7 +8,7 @@ static bool setup = false;
 static bool replugRequired = false;
 static s32 deviceId = 0;
 static u8 endpoint_in = 0x81;
-static u8 endpoint_out = 0x01; // some 360 pads require 0x02 for LED & rumble, though that makes the other controller revision hang when you press the GUIDE button
+static u8 endpoint_out = 0x01; // some controllers require 0x02 for LED & rumble (updated below)
 static u8 bMaxPacketSize = 20;
 static u8 bConfigurationValue = 1;
 static u8 ATTRIBUTE_ALIGN(32) buf[20];
@@ -183,6 +183,46 @@ static int removal_cb(int result, void *usrdata)
     return 1;
 }
 
+// adapted from RetroArch input/drivers_hid/wiiusb_hid.c#wiiusb_get_description()
+void wiiusb_get_description(usb_device_entry *device, usb_devdesc *devdesc)
+{
+   unsigned char c;
+   unsigned i, k;
+
+   for (c = 0; c < devdesc->bNumConfigurations; c++)
+   {
+      const usb_configurationdesc *config = &devdesc->configurations[c];
+
+      for (i = 0; i < (int)config->bNumInterfaces; i++)
+      {
+         const usb_interfacedesc *inter = &config->interfaces[i];
+
+         for (k = 0; k < (int)inter->bNumEndpoints; k++)
+         {
+            const usb_endpointdesc *epdesc = &inter->endpoints[k];
+            bool is_int = (epdesc->bmAttributes & 0x03)     == USB_ENDPOINT_INTERRUPT;
+            bool is_out = (epdesc->bEndpointAddress & 0x80) == USB_ENDPOINT_OUT;
+            bool is_in  = (epdesc->bEndpointAddress & 0x80) == USB_ENDPOINT_IN;
+
+            if (is_int)
+            {
+               if (is_in)
+               {
+                  //endpoint_in = epdesc->bEndpointAddress;
+                  //endpoint_in_max_size = epdesc->wMaxPacketSize;
+               }
+               if (is_out)
+               {
+                  endpoint_out = epdesc->bEndpointAddress;
+                  //endpoint_out_max_size = epdesc->wMaxPacketSize;
+               }
+            }
+         }
+         break;
+      }
+   }
+}
+
 static void open()
 {
     if (deviceId != 0)
@@ -219,6 +259,7 @@ static void open()
         {
             deviceId = fd;
             replugRequired = false;
+            wiiusb_get_description(&dev_entry[i], &devdesc);
             turnOnLED();
             USB_DeviceRemovalNotifyAsync(fd, &removal_cb, (void*) fd);
             break;
