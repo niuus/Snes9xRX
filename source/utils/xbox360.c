@@ -4,16 +4,16 @@
 
 #define USB_CLASS_XBOX360 0xFF
 
-static bool xbox360Setup = false;
+static bool setup = false;
 static bool replugRequired = false;
-static s32 deviceIdXBOX360 = 0;
-static u8 endpointXBOX360_IN = 0x81;
-static u8 endpointXBOX360_OUT = 0x01;
-static u8 bMaxPacketSizeXBOX360 = 20;
-static u8 bConfigurationValueXBOX360 = 1;
+static s32 deviceId = 0;
+static u8 endpoint_in = 0x81;
+static u8 endpoint_out = 0x01; // some 360 pads require 0x02 for LED & rumble, though that makes the other controller revision hang when you press the GUIDE button
+static u8 bMaxPacketSize = 20;
+static u8 bConfigurationValue = 1;
 static u8 ATTRIBUTE_ALIGN(32) buf[20];
-static bool xbox360_read = false;
-static u32 jp;
+static bool isReading = false;
+static u32 jp = 0;
 static u8 player = 0;
 static u32 xboxButtonCount = 0;
 static bool nextPlayer = false;
@@ -30,30 +30,30 @@ static u8 getEndpoint(usb_devdesc devdesc)
 
 static bool isXBOX360(usb_devdesc devdesc)
 {
-    return (devdesc.idVendor == 0x045e && devdesc.idProduct == 0x028e && getEndpoint(devdesc) == endpointXBOX360_IN);
+	return (devdesc.idVendor == 0x045e && devdesc.idProduct == 0x028e && getEndpoint(devdesc) == endpoint_in);
 }
 
-static int read_XBOX360(s32 device_id, u8 endpoint, u8 bMaxPacketSize0);
+static int read(s32 device_id, u8 endpoint, u8 bMaxPacketSize0);
 
-static void start_reading_XBOX360(s32 device_id, u8 endpoint, u8 bMaxPacketSize0)
+static void start_reading(s32 device_id, u8 endpoint, u8 bMaxPacketSize0)
 {
-    if (xbox360_read)
+    if (isReading)
     {
         // already reading
         return;
     }
-    xbox360_read = true;
-    read_XBOX360(deviceIdXBOX360, endpointXBOX360_IN, bMaxPacketSize0);
+    isReading = true;
+    read(deviceId, endpoint_in, bMaxPacketSize0);
 }
 
-static void stop_reading_XBOX360()
+static void stop_reading()
 {
-    xbox360_read = false;
+    isReading = false;
 }
 
-static int read_XBOX360_cb(int res, void *usrdata)
+static int read_cb(int res, void *usrdata)
 {
-    if (!xbox360_read)
+    if (!isReading)
     {
         // stop reading
         return 1;
@@ -138,22 +138,22 @@ static int read_XBOX360_cb(int res, void *usrdata)
     }
 
     // read again
-    read_XBOX360(deviceIdXBOX360, endpointXBOX360_IN, bMaxPacketSizeXBOX360);
+    read(deviceId, endpoint_in, bMaxPacketSize);
 
     return 1;
 }
 
 // never call directly
-static int read_XBOX360(s32 device_id, u8 endpoint, u8 bMaxPacketSize0)
+static int read(s32 device_id, u8 endpoint, u8 bMaxPacketSize0)
 {
     // need to use async, because USB_ReadIntrMsg() blocks until a button is pressed
-    return USB_ReadIntrMsgAsync(device_id, endpoint, sizeof(buf), buf, &read_XBOX360_cb, NULL);
+    return USB_ReadIntrMsgAsync(device_id, endpoint, sizeof(buf), buf, &read_cb, NULL);
 }
 
 static void turnOnLED()
 {
     uint8_t ATTRIBUTE_ALIGN(32) buf[] = { 0x01, 0x03, 0x06 + player };
-    USB_WriteIntrMsg(deviceIdXBOX360, endpointXBOX360_OUT, sizeof(buf), buf);
+    USB_WriteIntrMsg(deviceId, endpoint_out, sizeof(buf), buf);
 }
 
 static void increasePlayer()
@@ -166,26 +166,26 @@ static void increasePlayer()
     turnOnLED();
 }
 
-void rumble_XBOX360(s32 device_id, u8 left, u8 right)
+void rumble(s32 device_id, u8 left, u8 right)
 {
     uint8_t ATTRIBUTE_ALIGN(32) buf[] = { 0x00, 0x08, 0x00, left, right, 0x00, 0x00, 0x00 };
-    USB_WriteIntrMsg(deviceIdXBOX360, endpointXBOX360_OUT, sizeof(buf), buf);
+    USB_WriteIntrMsg(deviceId, endpoint_out, sizeof(buf), buf);
 }
 
 static int removal_cb(int result, void *usrdata)
 {
     s32 fd = (s32) usrdata;
-    if (fd == deviceIdXBOX360)
+    if (fd == deviceId)
     {
-        stop_reading_XBOX360();
-        deviceIdXBOX360 = 0;
+        stop_reading();
+        deviceId = 0;
     }
     return 1;
 }
 
-static void openXBOX360()
+static void open()
 {
-    if (deviceIdXBOX360 != 0)
+    if (deviceId != 0)
     {
         return;
     }
@@ -210,17 +210,18 @@ static void openXBOX360()
         if (USB_GetDescriptors(fd, &devdesc) < 0)
         {
             // You have to replug the XBOX360 controller!
-			replugRequired = true;
+            replugRequired = true;
             USB_CloseDevice(&fd);
-            continue;
+            break;
         }
 
-        if (isXBOX360(devdesc) && USB_SetConfiguration(fd, bConfigurationValueXBOX360) >= 0)
+        if (isXBOX360(devdesc) && USB_SetConfiguration(fd, bConfigurationValue) >= 0)
         {
-            deviceIdXBOX360 = fd;
-			replugRequired = false;
-			turnOnLED();
-			USB_DeviceRemovalNotifyAsync(fd, &removal_cb, (void*) fd);
+            deviceId = fd;
+            replugRequired = false;
+            turnOnLED();
+            USB_DeviceRemovalNotifyAsync(fd, &removal_cb, (void*) fd);
+            break;
         }
         else
         {
@@ -228,27 +229,26 @@ static void openXBOX360()
         }
     }
 
-    xbox360Setup = true;
+    setup = true;
 }
 
 void XBOX360_ScanPads()
 {
-	if(!xbox360Setup)
-	{
-		openXBOX360();
-	}
-
-	if (deviceIdXBOX360 == 0)
+	if (deviceId == 0)
 	{
 		return;
 	}
 
-	start_reading_XBOX360(deviceIdXBOX360, endpointXBOX360_IN, bMaxPacketSizeXBOX360);
+	start_reading(deviceId, endpoint_in, bMaxPacketSize);
 }
 
 u32 XBOX360_ButtonsHeld(int chan)
 {
-    if (deviceIdXBOX360 == 0)
+    if(!setup)
+    {
+        open();
+    }
+    if (deviceId == 0)
     {
         return 0;
     }
@@ -266,10 +266,10 @@ u32 XBOX360_ButtonsHeld(int chan)
 
 char* XBOX360_Status()
 {
-	openXBOX360();
-	if (replugRequired)
-		return "please replug";
-	return deviceIdXBOX360 ? "connected" : "not found";
+    open();
+    if (replugRequired)
+        return "please replug";
+    return deviceId ? "connected" : "not found";
 }
 
 #endif
