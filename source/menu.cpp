@@ -828,41 +828,41 @@ static void WindowCredits(void * ptr)
 	txt[i]->SetPresets(18, (GXColor){0, 0, 0, 255}, 0,
 			FTGX_JUSTIFY_LEFT | FTGX_ALIGN_TOP, ALIGN_LEFT, ALIGN_TOP);
 	txt[i] = new GuiText("Coding & menu design");
-	txt[i]->SetPosition(60,y); i++;
+	txt[i]->SetPosition(50,y); i++;
 	txt[i] = new GuiText("Tantric");
-	txt[i]->SetPosition(350,y); i++; y+=24;
+	txt[i]->SetPosition(330,y); i++; y+=24;
 	txt[i] = new GuiText("Additional improvements");
-	txt[i]->SetPosition(60,y); i++;
+	txt[i]->SetPosition(50,y); i++;
 	txt[i] = new GuiText("NiuuS, bladeoner, Zopenko");
-	txt[i]->SetPosition(350,y); i++; y+=24;
+	txt[i]->SetPosition(330,y); i++; y+=24;
 	txt[i] = new GuiText("Menu artwork");
-	txt[i]->SetPosition(60,y); i++;
+	txt[i]->SetPosition(50,y); i++;
 	txt[i] = new GuiText("the3seashells");
-	txt[i]->SetPosition(350,y); i++; y+=24;
+	txt[i]->SetPosition(330,y); i++; y+=24;
 	txt[i] = new GuiText("Logo");
-	txt[i]->SetPosition(60,y); i++;
+	txt[i]->SetPosition(50,y); i++;
 	txt[i] = new GuiText("NiuuS");
-	txt[i]->SetPosition(350,y); i++; y+=48;
+	txt[i]->SetPosition(330,y); i++; y+=48;
 
 	txt[i] = new GuiText("Snes9x GX GameCube");
-	txt[i]->SetPosition(60,y); i++;
+	txt[i]->SetPosition(50,y); i++;
 	txt[i] = new GuiText("SoftDev, crunchy2,");
-	txt[i]->SetPosition(350,y); i++; y+=24;
+	txt[i]->SetPosition(330,y); i++; y+=24;
 	txt[i] = new GuiText("eke-eke, others");
-	txt[i]->SetPosition(350,y); i++; y+=24;
+	txt[i]->SetPosition(330,y); i++; y+=24;
 	txt[i] = new GuiText("Snes9x");
-	txt[i]->SetPosition(60,y); i++;
+	txt[i]->SetPosition(50,y); i++;
 	txt[i] = new GuiText("Snes9x Team");
-	txt[i]->SetPosition(350,y); i++; y+=24;
+	txt[i]->SetPosition(330,y); i++; y+=24;
 
 	txt[i] = new GuiText("libogc / devkitPPC");
-	txt[i]->SetPosition(60,y); i++;
+	txt[i]->SetPosition(50,y); i++;
 	txt[i] = new GuiText("shagkur & wintermute");
-	txt[i]->SetPosition(350,y); i++; y+=24;
+	txt[i]->SetPosition(330,y); i++; y+=24;
 	txt[i] = new GuiText("FreeTypeGX");
-	txt[i]->SetPosition(60,y); i++;
+	txt[i]->SetPosition(50,y); i++;
 	txt[i] = new GuiText("Armin Tamzarian");
-	txt[i]->SetPosition(350,y); i++; y+=48;
+	txt[i]->SetPosition(330,y); i++; y+=48;
 
 	txt[i]->SetPresets(16, (GXColor){0, 0, 0, 255}, 0,
 	FTGX_JUSTIFY_CENTER | FTGX_ALIGN_TOP, ALIGN_CENTRE, ALIGN_TOP);
@@ -882,9 +882,9 @@ static void WindowCredits(void * ptr)
 	snprintf(iosVersion, 70, "IOS: %ld / %s", IOS_GetVersion(), GetUSBControllerInfo());
 #endif
 
-	txt[i] = new GuiText(iosVersion, 18, (GXColor){0, 0, 0, 255});
+	txt[i] = new GuiText(iosVersion, 15, (GXColor){0, 0, 0, 255});
 	txt[i]->SetAlignment(ALIGN_LEFT, ALIGN_BOTTOM);
-	txt[i]->SetPosition(20,-20);
+	txt[i]->SetPosition(25,-5);
 
 	for(i=0; i < numEntries; i++)
 		creditsWindowBox.Append(txt[i]);
