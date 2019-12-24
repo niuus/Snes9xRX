@@ -21,6 +21,7 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 * Wiimote, Nunchuk, Wii Classic/Classic Pro, and Gamecube controller support
 * Wii U Pro, Wii U GamePad, NES and SNES Classic controller support
 * Retrode 2 USB adapter support, so you can use the real controllers!
+* Wired Xbox 360 Controller support (autodetected when in-game)
 * Experimental DualShock 3 support
 * SNES Superscope, Justifier, Mouse peripherals emulation support
 * Cheat support
@@ -36,6 +37,13 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+[4.6.0 - December 24, 2019]
+* Minor cosmetic tweaks.
+* Retrode 2 code cleanup.
+* Xbox 360 Controller code cleanup.
+* LED fix for different X360 Controller revision.
+* Fix GCN build.
 
 [4.5.0 - November 22, 2019]
 * Xbox 360 wired controller support! (thanks revvv!)
