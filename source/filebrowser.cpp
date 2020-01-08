@@ -69,6 +69,8 @@ int autoLoadMethod()
 		device = DEVICE_SD_SLOTA;
 	else if(ChangeInterface(DEVICE_SD_SLOTB, SILENT))
 		device = DEVICE_SD_SLOTB;
+	else if(ChangeInterface(DEVICE_SD_SLOTC, SILENT))
+		device = DEVICE_SD_SLOTC;
 	else if(ChangeInterface(DEVICE_DVD, SILENT))
 		device = DEVICE_DVD;
 	else if(ChangeInterface(DEVICE_SMB, SILENT))
@@ -102,6 +104,8 @@ int autoSaveMethod(bool silent)
 		device = DEVICE_SD_SLOTA;
 	else if(ChangeInterface(DEVICE_SD_SLOTB, SILENT))
 		device = DEVICE_SD_SLOTB;
+	else if(ChangeInterface(DEVICE_SD_SLOTC, SILENT))
+		device = DEVICE_SD_SLOTC;
 	else if(ChangeInterface(DEVICE_SMB, SILENT))
 		device = DEVICE_SMB;
 	else if(!silent)
@@ -171,7 +175,8 @@ bool IsDeviceRoot(char * path)
 		strcmp(path, "dvd:/")   == 0 ||
 		strcmp(path, "smb:/")   == 0 ||
 		strcmp(path, "carda:/") == 0 ||
-		strcmp(path, "cardb:/") == 0)
+		strcmp(path, "cardb:/") == 0 ||
+		strcmp(path, "cardc:/") == 0)
 	{
 		return true;
 	}
@@ -336,7 +341,7 @@ int FileSortCallback(const void *f1, const void *f2)
 	if(((BROWSERENTRY *)f1)->isdir && !(((BROWSERENTRY *)f2)->isdir)) return -1;
 	if(!(((BROWSERENTRY *)f1)->isdir) && ((BROWSERENTRY *)f2)->isdir) return 1;
 
-	return stricmp(((BROWSERENTRY *)f1)->filename, ((BROWSERENTRY *)f2)->filename);
+	return strcasecmp(((BROWSERENTRY *)f1)->filename, ((BROWSERENTRY *)f2)->filename);
 }
 
 /****************************************************************************
@@ -357,7 +362,7 @@ static bool IsValidROM()
 		{
 			char * zippedFilename = NULL;
 			
-			if(stricmp(p, ".zip") == 0 && !inSz)
+			if(strcasecmp(p, ".zip") == 0 && !inSz)
 			{
 				// we need to check the file extension of the first file in the archive
 				zippedFilename = GetFirstZipFilename ();
@@ -370,10 +375,10 @@ static bool IsValidROM()
 
 			if(p != NULL)
 			{
-				if (stricmp(p, ".smc") == 0 ||
-					stricmp(p, ".fig") == 0 ||
-					stricmp(p, ".sfc") == 0 ||
-					stricmp(p, ".swc") == 0)
+				if (strcasecmp(p, ".smc") == 0 ||
+					strcasecmp(p, ".fig") == 0 ||
+					strcasecmp(p, ".sfc") == 0 ||
+					strcasecmp(p, ".swc") == 0)
 				{
 					if(zippedFilename) free(zippedFilename);
 					return true;
@@ -398,7 +403,7 @@ bool IsSz()
 		char * p = strrchr(browserList[browser.selIndex].filename, '.');
 
 		if (p != NULL)
-			if(stricmp(p, ".7z") == 0)
+			if(strcasecmp(p, ".7z") == 0)
 				return true;
 	}
 	return false;
@@ -598,6 +603,14 @@ int BrowserChangeFolder()
 		AddBrowserEntry();
 		sprintf(browserList[i].filename, "cardb:/");
 		sprintf(browserList[i].displayname, "SD Gecko Slot B");
+		browserList[i].length = 0;
+		browserList[i].isdir = 1;
+		browserList[i].icon = ICON_SD;
+		i++;
+		
+		AddBrowserEntry();
+		sprintf(browserList[i].filename, "cardc:/");
+		sprintf(browserList[i].displayname, "SD2SP2");
 		browserList[i].length = 0;
 		browserList[i].isdir = 1;
 		browserList[i].icon = ICON_SD;
