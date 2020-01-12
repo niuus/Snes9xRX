@@ -3421,12 +3421,14 @@ void CMemory::ApplyROMFixes (void)
 			match_na ("DOOM TROOPERS"))							   // Doom Troopers
 			Timings.APUAllowTimeOverflow = TRUE;
 
+#ifdef HW_RVL
 		if (match_id("AKFJ") || match_id("AKFE")) {	// Hoshi no Kirby / Kirby Super Star
 			Timings.SA1Cycles = 5;
 		}
 		else {
 			Timings.SA1Cycles = 3;
 		}
+#endif
 	}
 
 	S9xAPUTimingSetSpeedup(Timings.APUSpeedup);

@@ -93,7 +93,11 @@ void S9xSA1MainLoop (void)
 			SA1.Flags &= ~IRQ_FLAG;
 	}
 
+#ifdef HW_RVL
 	for (int i = 0; i < Timings.SA1Cycles && SA1.Executing; i++)
+#else
+	for (int i = 0; i < 3 && SA1.Executing; i++)
+#endif
 	{
 	#ifdef CPU_SHUTDOWN
 		SA1.PBPCAtOpcodeStart = SA1Registers.PBPC;
