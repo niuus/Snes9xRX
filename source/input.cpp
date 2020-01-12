@@ -38,6 +38,12 @@
 #ifdef HW_RVL
 #include "utils/retrode.h"
 #include "utils/xbox360.h"
+extern "C"{
+#include "utils/sicksaxis.h"
+}
+/* sicksaxis lib (by xerpi) */
+	static ss_instance_t sicksaxis;
+#define SICKSAXIS_DEADZONE 115
 #endif
 
 #define ANALOG_SENSITIVITY 30
@@ -101,7 +107,7 @@ void ResetControls(int consoleCtrl, int wiiCtrl)
 		btnmap[CTRL_PAD][CTRLR_WIIMOTE][i++] = WPAD_BUTTON_DOWN;
 	}
 
-	/*** Classic Controller Padmap ***/
+	/*** Wii Classic Controller Padmap ***/
 	if(consoleCtrl == -1 || (consoleCtrl == CTRL_PAD && wiiCtrl == CTRLR_CLASSIC))
 	{
 		i=0;
@@ -154,8 +160,8 @@ void ResetControls(int consoleCtrl, int wiiCtrl)
 		btnmap[CTRL_PAD][CTRLR_WIIDRC][i++] = WIIDRC_BUTTON_LEFT;
 		btnmap[CTRL_PAD][CTRLR_WIIDRC][i++] = WIIDRC_BUTTON_RIGHT;
 	}
-		
-	/*** Nunchuk + wiimote Padmap ***/
+
+	/*** Nunchuk + Wiimote Padmap ***/
 	if(consoleCtrl == -1 || (consoleCtrl == CTRL_PAD && wiiCtrl == CTRLR_NUNCHUK))
 	{
 		i=0;
@@ -185,7 +191,7 @@ void ResetControls(int consoleCtrl, int wiiCtrl)
 		btnmap[CTRL_SCOPE][CTRLR_GCPAD][i++] = PAD_BUTTON_START;
 	}
 
-	/*** Superscope : wiimote button mapping ***/
+	/*** Superscope : Wiimote button mapping ***/
 	if(consoleCtrl == -1 || (consoleCtrl == CTRL_SCOPE && wiiCtrl == CTRLR_WIIMOTE))
 	{
 		i=0;
@@ -197,7 +203,7 @@ void ResetControls(int consoleCtrl, int wiiCtrl)
 		btnmap[CTRL_SCOPE][CTRLR_WIIMOTE][i++] = WPAD_BUTTON_PLUS;
 	}
 
-	/*** Superscope : Classic Controller button mapping ***/
+	/*** Superscope : Wii Classic Controller button mapping ***/
 	if(consoleCtrl == -1 || (consoleCtrl == CTRL_SCOPE && wiiCtrl == CTRLR_CLASSIC))
 	{
 		i=0;
@@ -241,7 +247,7 @@ void ResetControls(int consoleCtrl, int wiiCtrl)
 		btnmap[CTRL_MOUSE][CTRLR_GCPAD][i++] = PAD_BUTTON_B;
 	}
 
-	/*** Mouse : wiimote button mapping ***/
+	/*** Mouse : Wiimote button mapping ***/
 	if(consoleCtrl == -1 || (consoleCtrl == CTRL_MOUSE && wiiCtrl == CTRLR_WIIMOTE))
 	{
 		i=0;
@@ -249,7 +255,7 @@ void ResetControls(int consoleCtrl, int wiiCtrl)
 		btnmap[CTRL_MOUSE][CTRLR_WIIMOTE][i++] = WPAD_BUTTON_B;
 	}
 
-	/*** Mouse : Classic Controller button mapping ***/
+	/*** Mouse : Wii Classic Controller button mapping ***/
 	if(consoleCtrl == -1 || (consoleCtrl == CTRL_MOUSE && wiiCtrl == CTRLR_CLASSIC))
 	{
 		i=0;
@@ -282,7 +288,7 @@ void ResetControls(int consoleCtrl, int wiiCtrl)
 		btnmap[CTRL_JUST][CTRLR_GCPAD][i++] = PAD_BUTTON_START;
 	}
 
-	/*** Justifier : wiimote button mapping ***/
+	/*** Justifier : Wiimote button mapping ***/
 	if(consoleCtrl == -1 || (consoleCtrl == CTRL_JUST && wiiCtrl == CTRLR_WIIMOTE))
 	{
 		i=0;
@@ -291,7 +297,7 @@ void ResetControls(int consoleCtrl, int wiiCtrl)
 		btnmap[CTRL_JUST][CTRLR_WIIMOTE][i++] = WPAD_BUTTON_PLUS;
 	}
 
-	/*** Justifier : Classic Controller button mapping ***/
+	/*** Justifier : Wii Classic Controller button mapping ***/
 	if(consoleCtrl == -1 || (consoleCtrl == CTRL_JUST && wiiCtrl == CTRLR_CLASSIC))
 	{
 		i=0;
@@ -335,6 +341,29 @@ UpdatePads()
 	WPAD_ScanPads();
 	#endif
 
+	#ifdef HW_RVL
+	/* SickSaxis lib 1.0 (by xerpi) */
+	u16 buttonsHeld = WPAD_ButtonsHeld(0);
+	if(sicksaxis.connected)
+	{
+		if(buttonsHeld & WPAD_BUTTON_1  && buttonsHeld & WPAD_BUTTON_2)
+		{
+			ss_close(&sicksaxis);
+		}
+	}
+	else
+	{
+		if(buttonsHeld & WPAD_BUTTON_MINUS  && buttonsHeld & WPAD_BUTTON_PLUS)
+		{
+			if(ss_open(&sicksaxis) > 0)
+			{
+				ss_set_led(&sicksaxis, 1);
+				ss_start_reading(&sicksaxis);
+			}
+		}
+	}
+	#endif
+
 	PAD_ScanPads();
 
 	for(int i=3; i >= 0; i--)
@@ -349,6 +378,7 @@ UpdatePads()
 		userInput[i].pad.triggerL = PAD_TriggerL(i);
 		userInput[i].pad.triggerR = PAD_TriggerR(i);
 	}
+
 #ifdef HW_RVL
 	if(WiiDRC_Inited() && WiiDRC_Connected())
 	{
@@ -377,7 +407,13 @@ SetupPads()
 	PAD_Init();
 
 	#ifdef HW_RVL
-	// read wiimote accelerometer and IR data
+	/* SickSaxis lib 1.0 (by xerpi) */
+	ss_init();
+	if(ss_open(&sicksaxis) > 0) ss_start_reading(&sicksaxis);
+	#endif
+
+	#ifdef HW_RVL
+	// read Wiimote accelerometer and IR data
 	WPAD_SetDataFormat(WPAD_CHAN_ALL,WPAD_FMT_BTNS_ACC_IR);
 	WPAD_SetVRes(WPAD_CHAN_ALL, screenwidth, screenheight);
 	#endif
@@ -491,6 +527,40 @@ static void decodepad (int chan)
 
 	jp |= Retrode_ButtonsHeld(chan);
 	jp |= XBOX360_ButtonsHeld(chan);
+#endif
+
+#ifdef HW_RVL
+	/* Sicksaxis lib 1.0 (by xerpi) */
+	if(sicksaxis.connected)
+	{
+		int8_t aX = sicksaxis.gamepad.leftAnalog.x - 128;
+		int8_t aY = sicksaxis.gamepad.leftAnalog.y - 128;
+		
+		uint8_t up    = sicksaxis.gamepad.buttons.up    ||  (aY < -SICKSAXIS_DEADZONE);
+		uint8_t down  = sicksaxis.gamepad.buttons.down  ||  (aY > SICKSAXIS_DEADZONE);
+		uint8_t right = sicksaxis.gamepad.buttons.right ||  (aX > SICKSAXIS_DEADZONE);
+		uint8_t left  = sicksaxis.gamepad.buttons.left  ||  (aX < -SICKSAXIS_DEADZONE);
+
+		jp |= up    ? PAD_BUTTON_UP    : 0;
+		jp |= down  ? PAD_BUTTON_DOWN  : 0;
+		jp |= right ? PAD_BUTTON_RIGHT : 0;
+		jp |= left  ? PAD_BUTTON_LEFT  : 0;
+
+		jp |= sicksaxis.gamepad.buttons.circle   ? PAD_BUTTON_A : 0;
+		jp |= sicksaxis.gamepad.buttons.cross    ? PAD_BUTTON_B : 0;
+		jp |= sicksaxis.gamepad.buttons.triangle ? PAD_BUTTON_X : 0;
+		jp |= sicksaxis.gamepad.buttons.square   ? PAD_BUTTON_Y : 0;
+
+		jp |= sicksaxis.gamepad.buttons.L1 ? PAD_TRIGGER_L : 0;
+		jp |= sicksaxis.gamepad.buttons.R1 ? PAD_TRIGGER_R : 0;
+		
+		jp |= sicksaxis.gamepad.buttons.select ? PAD_TRIGGER_Z : 0;
+		jp |= sicksaxis.gamepad.buttons.start ? PAD_BUTTON_START : 0;
+
+		jp |= sicksaxis.gamepad.buttons.L2 ? PAD_TRIGGER_L : 0;
+		jp |= sicksaxis.gamepad.buttons.R2 ? PAD_TRIGGER_R : 0;
+		
+	}
 #endif
 
 	/***
