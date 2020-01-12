@@ -875,11 +875,11 @@ static void WindowCredits(void * ptr)
 	txt[i]->SetPosition(0,y); i++; y+=20;
 
 	//char iosVersion[20];
-	char iosVersion[70]; // added 50 for Retrode info
+	char iosVersion[90]; // added 70 for USB info
 
 #ifdef HW_RVL
 	//sprintf(iosVersion, "IOS: %ld", IOS_GetVersion());
-	snprintf(iosVersion, 70, "IOS: %ld / %s", IOS_GetVersion(), GetUSBControllerInfo());
+	snprintf(iosVersion, 90, "IOS: %ld / %s", IOS_GetVersion(), GetUSBControllerInfo());
 #endif
 
 	txt[i] = new GuiText(iosVersion, 15, (GXColor){0, 0, 0, 255});

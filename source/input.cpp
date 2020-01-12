@@ -858,8 +858,8 @@ void SetDefaultButtonMap ()
 #ifdef HW_RVL
 char* GetUSBControllerInfo()
 {
-    static char info[50];
-    snprintf(info, 50, "Retrode: %s, XBOX360: %s", Retrode_Status(), XBOX360_Status());
+    static char info[70];
+    snprintf(info, 70, "Retrode: %s, XBOX360: %s", Retrode_Status(), XBOX360_Status());
     return info;
 }
 #endif
