@@ -3,6 +3,8 @@
 #include <ogc/usb.h>
 
 #define USB_CLASS_XBOX360 0xFF
+#define XBOX360_VID 0x045e
+#define XBOX360_PID 0x028e
 
 static bool setup = false;
 static bool replugRequired = false;
@@ -28,9 +30,14 @@ static u8 getEndpoint(usb_devdesc devdesc)
 	return devdesc.configurations->interfaces->endpoints->bEndpointAddress;
 }
 
-static bool isXBOX360(usb_devdesc devdesc)
+static bool isXBOX360(usb_device_entry dev)
 {
-	return (devdesc.idVendor == 0x045e && devdesc.idProduct == 0x028e && getEndpoint(devdesc) == endpoint_in);
+    return dev.vid == XBOX360_VID && dev.pid == XBOX360_PID;
+}
+
+static bool isXBOX360Gamepad(usb_devdesc devdesc)
+{
+	return devdesc.idVendor == XBOX360_VID && devdesc.idProduct == XBOX360_PID && getEndpoint(devdesc) == endpoint_in;
 }
 
 static int read(s32 device_id, u8 endpoint, u8 bMaxPacketSize0);
@@ -240,6 +247,10 @@ static void open()
     int i;
     for	(i = 0; i < dev_count; ++i)
     {
+        if (!isXBOX360(dev_entry[i]))
+        {
+            continue;
+        }
         s32 fd;
         if (USB_OpenDevice(dev_entry[i].device_id, dev_entry[i].vid, dev_entry[i].pid, &fd) < 0)
         {
@@ -255,7 +266,7 @@ static void open()
             break;
         }
 
-        if (isXBOX360(devdesc) && USB_SetConfiguration(fd, bConfigurationValue) >= 0)
+        if (isXBOX360Gamepad(devdesc) && USB_SetConfiguration(fd, bConfigurationValue) >= 0)
         {
             deviceId = fd;
             replugRequired = false;
