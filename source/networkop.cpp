@@ -225,7 +225,7 @@ ConnectShare (bool silent)
 			char msg[50];
 			char msg2[100];
 			if(chkS + chkI > 1) // more than one thing is wrong
-				sprintf(msg, "Check settings.xml.");
+				sprintf(msg, "Check settingsRX.xml");
 			else if(chkS)
 				sprintf(msg, "Share name is blank.");
 			else if(chkI)

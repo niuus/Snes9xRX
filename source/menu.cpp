@@ -822,7 +822,7 @@ static void WindowCredits(void * ptr)
 	txt[i] = new GuiText("Credits", 28, (GXColor){0, 0, 0, 255});
 	txt[i]->SetAlignment(ALIGN_CENTRE, ALIGN_TOP); txt[i]->SetPosition(0,y); i++; y+=32;
 
-	txt[i] = new GuiText("Official Site: https://github.com/niuus/Snes9xRX", 18, (GXColor){0, 0, 0, 255});
+	txt[i] = new GuiText("Official Site: https://github.com/niuus/Snes9xRX/", 18, (GXColor){0, 0, 0, 255});
 	txt[i]->SetAlignment(ALIGN_CENTRE, ALIGN_TOP); txt[i]->SetPosition(0,y); i++; y+=40;
 
 	txt[i]->SetPresets(18, (GXColor){0, 0, 0, 255}, 0,
@@ -837,7 +837,7 @@ static void WindowCredits(void * ptr)
 	txt[i]->SetPosition(330,y); i++; y+=24;
 	txt[i] = new GuiText("Menu artwork");
 	txt[i]->SetPosition(50,y); i++;
-	txt[i] = new GuiText("the3seashells");
+	txt[i] = new GuiText("NiuuS, the3seashells");
 	txt[i]->SetPosition(330,y); i++; y+=24;
 	txt[i] = new GuiText("Logo");
 	txt[i]->SetPosition(50,y); i++;
@@ -867,7 +867,7 @@ static void WindowCredits(void * ptr)
 	txt[i]->SetPresets(16, (GXColor){0, 0, 0, 255}, 0,
 	FTGX_JUSTIFY_CENTER | FTGX_ALIGN_TOP, ALIGN_CENTRE, ALIGN_TOP);
 
-	txt[i] = new GuiText("Snes9x - Copyright (c) Snes9x Team 1996 - 2019");
+	txt[i] = new GuiText("Snes9x - Copyright (c) Snes9x Team 1996 - 2020");
 	txt[i]->SetPosition(0,y); i++; y+=20;
 	txt[i] = new GuiText("This software is open source and may be copied, distributed, or modified");
 	txt[i]->SetPosition(0,y); i++; y+=20;
@@ -2910,7 +2910,7 @@ static int MenuSettingsMappingsMap()
 	GuiOptionBrowser optionBrowser(552, 248, &options);
 	optionBrowser.SetPosition(0, 108);
 	optionBrowser.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
-	optionBrowser.SetCol2Position(215);
+	optionBrowser.SetCol2Position(245);
 
 	HaltGui();
 	GuiWindow w(screenwidth, screenheight);
@@ -3427,11 +3427,11 @@ static int MenuSettingsVideo()
 				case 0:
 					sprintf (options.value[9], "Default"); break;
 				case 1:
-					sprintf (options.value[9], "20 Mhz"); break;
+					sprintf (options.value[9], "20 MHz"); break;
 				case 2:
-					sprintf (options.value[9], "40 Mhz"); break;
+					sprintf (options.value[9], "40 MHz"); break;
 				case 3:
-					sprintf (options.value[9], "60 Mhz"); break;
+					sprintf (options.value[9], "60 MHz"); break;
 			}
 			optionBrowser.TriggerUpdate();
 		}
@@ -3728,7 +3728,7 @@ static int MenuSettingsFile()
 	sprintf(options.name[i++], "Artwork Folder");
 	sprintf(options.name[i++], "Auto Load");
 	sprintf(options.name[i++], "Auto Save");
-	sprintf(options.name[i++], "Append Auto to .SAV files");
+	sprintf(options.name[i++], "Append 'Auto' to .SAV files");
 	options.length = i;
 
 	for(i=0; i < options.length; i++)
@@ -3761,7 +3761,7 @@ static int MenuSettingsFile()
 	GuiOptionBrowser optionBrowser(552, 248, &options);
 	optionBrowser.SetPosition(0, 108);
 	optionBrowser.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
-	optionBrowser.SetCol2Position(215);
+	optionBrowser.SetCol2Position(295);
 
 	HaltGui();
 	GuiWindow w(screenwidth, screenheight);
@@ -4170,7 +4170,7 @@ static int MenuSettingsNetwork()
 	GuiOptionBrowser optionBrowser(552, 248, &options);
 	optionBrowser.SetPosition(0, 108);
 	optionBrowser.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
-	optionBrowser.SetCol2Position(290);
+	optionBrowser.SetCol2Position(310);
 
 	HaltGui();
 	GuiWindow w(screenwidth, screenheight);

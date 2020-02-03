@@ -179,9 +179,9 @@ preparePrefsData ()
 	createXMLController(btnmap[CTRL_PAD][CTRLR_WIIDRC], "btnmap_pad_wiidrc", "SNES Pad - Wii U Gamepad");
 	createXMLController(btnmap[CTRL_PAD][CTRLR_NUNCHUK], "btnmap_pad_nunchuk", "SNES Pad - Nunchuk + Wiimote");
 #endif
-	createXMLController(btnmap[CTRL_SCOPE][CTRLR_GCPAD], "btnmap_scope_gcpad", "Superscope - GameCube Controller");
+	createXMLController(btnmap[CTRL_SCOPE][CTRLR_GCPAD], "btnmap_scope_gcpad", "Super Scope - GameCube Controller");
 #ifdef HW_RVL
-	createXMLController(btnmap[CTRL_SCOPE][CTRLR_WIIMOTE], "btnmap_scope_wiimote", "Superscope - Wiimote");
+	createXMLController(btnmap[CTRL_SCOPE][CTRLR_WIIMOTE], "btnmap_scope_wiimote", "Super Scope - Wiimote");
 #endif
 	createXMLController(btnmap[CTRL_MOUSE][CTRLR_GCPAD], "btnmap_mouse_gcpad", "Mouse - GameCube Controller");
 #ifdef HW_RVL
@@ -295,9 +295,9 @@ decodePrefsData ()
 					verMinor >= 0 && verMinor <= 9 &&
 					verPoint >= 0 && verPoint <= 9))
 					result = false;
-				else if(verMajor < 2) // less than version 2.0.0 for Snes9xRX
+				else if(verMajor < 4) // less than version 4.0.0 for Snes9x RX
 					result = false; // reset settings
-				else if(verMajor == 2 && verMinor == 9 && verPoint < 0)	// anything less than 2.9.0 for Snes9xRX
+				else if(verMajor == 4 && verMinor == 7 && verPoint < 0)	// anything less than 4.7.0 for Snes9x RX
 					result = false; // reset settings
 				else
 					result = true;
