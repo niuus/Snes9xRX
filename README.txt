@@ -39,44 +39,51 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 |                                                        RECENT CHANGELOG  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
-[4.8.0 - March 10, 2020]
-* Language updates for Spanish, French, Portuguese.
-* .bs file extension support.
-* Classify region id 18 as PAL. [Tantric]
-* Set default calibration values, fix controllers that return invalid data.
-* Quick fixes for Rendering Ranger R2 and Targa (50/60Hz).
+[4.9.0 - July 15, 2020]
+* Reduce save buffer size on GCN. Should fix preview glitch. [Tantric]
+* Snes9x - Increase SRAM size to 512KB. [cout]
+* Wii U widescreen patch, report whether Wii U CPU is full speed. [Daryl]
+Use the Credits section to see it (press the Snes9xRX logo on the main menu)
+* Fix some warnings. [bearoso]
 
 [older update history at the bottom]
 
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
-|                                                            INSTALLATION  |
+|                                                    INSTALLATION AND USE  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
-To install Snes9x RX you will need to copy over the "apps" and "snes9xgx" 
-folders (directories) from this archive to your SD Card. It comes 
-pre-packaged in the Homebrew Channel format (which you will use to launch 
-the emulator). Once you've copied the directories to your SD Card you will 
-need to place your ROM image(s) into "\snes9xgx\roms" directory. Optionally,
-you can also place cheat code files and artwork/covers in their respectively
-named folders inside the "\snes9xgx\" directory. If they are not present,
-the folders will be created at second run, in case you want to acquire the
-files later. Once you are done, you can proceed to run the emulator via
-the Homebrew Channel. Optionally, you can install the Snes9x RX Forwarder
-Channel in your Wii System Menu (which points to "\apps\Snes9xRX", or the
-special Snes9x RX Channel for Wii U, which fully installs to your console
-and reads the configuration and necessary files from your device "\snes9xgx"
-folder, be it SD or USB.
+On the Wii / Wii U's Virtual Wii, to use Snes9x RX you will need to copy
+over the "apps" and "snes9xgx" folders (directories) from the .zip to your
+SD Card. It comes pre-packaged in the Homebrew Channel format (which you
+will use to launch the emulator). Once you've copied the directories to
+your SD Card you will need to place your ROM image(s) into "\snes9xgx\roms"
+directory. Optionally, you can place cheat code files and artwork/covers
+in their respectively named folders inside the "\snes9xgx\" directory.
+If they are not present, the folders will be created at second run, in case
+you want to acquire the files later. Once you are done, you can proceed to
+run the emulator. Optionally, you can install the Snes9x RX Forwarder
+Channel in your Wii or vWii System Menu (which points to "\apps\Snes9xRX",
+or the special Snes9x RX Channel for Wii U, which fully installs to your
+console and reads the configuration and necessary files from your device
+"\snes9xgx" folder, be it SD or USB.
+
+In the case of the Wii U, you could use the Wii U Channel version, which
+installs directly to the console, and also allows you to take advantage
+of the extra CPU power (when and if you run sign_c2w_patcher first). With
+this, you only need the folder "snes9xgx", which also comes pre-packaged in
+the respective .zip archive. To install, you need to use WUP Installer GX2
+or WUP Installer Y Mod, through the Homebrew Launcher.
 
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 |                                                           INITIAL SETUP  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
-The first time you run Snes9x RX it will create a new "settingsRX.xml" file on
-the SD Card which stores the configuration of the emulator. So when you run
-Snes9x RX it will automatically detect your storage medium and will bring you
-to the ROM selection screen. If you want to run a game with the default 
-settings then just highlight the game and press "A" on it and it will load. 
-However, you can configure Snes9x RX to your liking.
+The first time you run Snes9x RX it will create a new "settingsRX.xml" file
+on the SD/USB Card which stores the configuration of the emulator. So when
+you run Snes9x RX it will automatically detect your storage medium and will
+bring you to the ROM selection screen. If you want to run a game with the
+default settings then just highlight the game and press "A" on it and it
+will load. However, you can configure Snes9x RX to your liking.
 
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 |                                                           CONFIGURATION  |
@@ -511,6 +518,13 @@ file to be what that version of snes9x expects it to be.
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 |                                                          UPDATE HISTORY  |
 •˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+[4.8.0 - March 10, 2020]
+* Language updates for Spanish, French, Portuguese.
+* .bs file extension support.
+* Classify region id 18 as PAL. [Tantric]
+* Set default calibration values, fix controllers that return invalid data.
+* Quick fixes for Rendering Ranger R2 and Targa (50/60Hz).
 
 [4.7.0 - February 02, 2020]
 * Kirby Super Star GCN performance fix.
