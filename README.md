@@ -1,10 +1,9 @@
-_____________________________________________________________________________
-|0O×øo·                         Snes9x RX                             ·oø×O0|
-|                   https://github.com/niuus/snes9xrx                       |
-|                           Based/forked from:                              |
-|                   https://github.com/dborth/snes9xgx                      |
-|                          (Under GPL License)                              |
-|___________________________________________________________________________|
+# Snes9x RX
+https://github.com/niuus/snes9xrx 
+
+Based/forked from:
+https://github.com/dborth/snes9xgx   
+(Under GPL License)
 
 Snes9x RX is a Super Nintendo™ / Super Famicom emulator for the Nintendo Wii.
 Snes9x RX is a fork from Snes9x GX, a port of Snes9x (http://www.snes9x.com).
@@ -13,9 +12,8 @@ Snes9x RX is a "homebrew application" which means you will need a way to run
 unsigned code on your Nintendo Wii. The best website for getting started with
 Wii homebrew is WiiBrew (www.wiibrew.org).
 
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
-|                                                                FEATURES  |
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+## FEATURES
 
 * Core based on Snes9x 1.52
 * Wiimote, Nunchuk, Wii Classic/Classic Pro, and Gamecube controller support
@@ -35,9 +33,8 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 * Available in various skins/colors
 * Open Source!
 
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
-|                                                        RECENT CHANGELOG  |
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+## RECENT CHANGELOG
 
 [4.9.0 - July 15, 2020]
 * Reduce save buffer size on GCN. Should fix preview glitch. [Tantric]
@@ -48,9 +45,8 @@ Use the Credits section to see it (press the Snes9xRX logo on the main menu)
 
 [older update history at the bottom]
 
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
-|                                                    INSTALLATION AND USE  |
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+## INSTALLATION AND USE
 
 On the Wii / Wii U's Virtual Wii, to use Snes9x RX you will need to copy
 over the "apps" and "snes9xgx" folders (directories) from the .zip to your
@@ -74,9 +70,8 @@ this, you only need the folder "snes9xgx", which also comes pre-packaged in
 the respective .zip archive. To install, you need to use WUP Installer GX2
 or WUP Installer Y Mod, through the Homebrew Launcher.
 
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
-|                                                           INITIAL SETUP  |
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+## INITIAL SETUP
 
 The first time you run Snes9x RX it will create a new "settingsRX.xml" file
 on the SD/USB Card which stores the configuration of the emulator. So when
@@ -85,9 +80,8 @@ bring you to the ROM selection screen. If you want to run a game with the
 default settings then just highlight the game and press "A" on it and it
 will load. However, you can configure Snes9x RX to your liking.
 
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
-|                                                           CONFIGURATION  |
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+## CONFIGURATION
 
 To configure Snes9x RX, press "A" on the "Settings" box. This will bring
 up the "Settings" screen where you can configure the "Saving & Loading",
@@ -95,11 +89,10 @@ up the "Settings" screen where you can configure the "Saving & Loading",
 values by clicking on the "Reset Settings", or you can return to the ROM 
 selection screen by clicking on "Go Back".
 
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
-|                                                                SETTINGS  |
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
---•[ SAVING & LOADING ]•--
+## SETTINGS
+
+### SAVING & LOADING
 
 From this setup option you can configure the way Snes9x RX loads and saves.
 Your options are Load Device, Save Device, Load Folder, Save Folder, Auto
@@ -127,7 +120,7 @@ You can also toggle the option to append "Auto" into the filename of all the
 automatic SRAM saves that the emulator creates whenever you play a supported
 battery saving cartridge.
 
---•[ MENU ]•--
+### MENU
 
 This settings screen will allow you to customize a few aspects on how the 
 Menu works including the Exit Action, Wiimote Orientation (for navigating
@@ -136,7 +129,7 @@ Memory (inside the Game Menu), Language, and the type of Preview Image
 you'd like on the Choose Game screen. The Exit Action can be set to
 "Return to Loader", "Return to Wii Menu" and "Power off Wii".
 
---•[ NETWORK ]•--
+### NETWORK
 
 If you're going to be using your Network (LAN) to load and/or save from,
 you will need to enter in the SMB share settings you've setup on your
@@ -144,9 +137,8 @@ computer via this settings menu. You will need to enter in the SMB Share IP,
 SMB Share Name, SMB Share Username and SMB Share Password. If you do not
 have a password on your SMB share, then set the SMB Share Password to "0".
 
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
-|                                                            FILE BROWSER  |
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+## FILE BROWSER
 
 The File Browser will automatically load when you start the emulator, which
 will list the contents of the "\snes9xgx\roms\" directory on your SD card.
@@ -159,9 +151,8 @@ ZIP archive) simply click on the title and it will load. In the case of
 7z compressed files, you will be presented first with a list of all the
 supported games inside the archive.
 
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
-|                                                           GAMEPLAY MENU  |
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+### GAMEPLAY MENU
 
 Once you load a game, you can access a special menu by pressing the 
 Wii/Wii U controller's "Home" button / Gamecube controller's C-stick left.
@@ -183,11 +174,10 @@ SRAM saves. Reset will just reset the game, as in the real console.
 If you pick Game Settings, you can adjust other special options, which are
 covered in the following sections.
 
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
-|                                                           GAME SETTINGS  |
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
 
---•[ BUTTON MAPPINGS ]•--
+## GAME SETTINGS
+
+### BUTTON MAPPINGS
 	
 Once in the Button Mappings settings menu, you'll have the option to configure
 almost all the controllers already supported (except the Retrode 2 USB, Xbox
@@ -202,7 +192,7 @@ button you want to assign to the button you've selected. Below is a list of
 each controller, followed by the input devices and the default values
 for those devices.
 	
-	[ SNES Controller ]
+### SNES Controller
 		
 		• GameCube Controller
 			
@@ -299,7 +289,7 @@ for those devices.
 			RIGHT = RIGHT
 			Left Analog Stick = D-pad directions
 
-	[ SNES Mouse ]
+### SNES Mouse
 	
 		• GameCube Controller
 		
@@ -319,7 +309,7 @@ for those devices.
 			LEFT BUTTON = B
 			RIGHT BUTTON = A
 
-	[ Super Scope ]
+### Super Scope
 
 		• GameCube Controller
 
@@ -351,7 +341,7 @@ for those devices.
 			TURBO OFF = X
 			PAUSE = PLUS
 
-	[ Justifier ]
+### Justifier
 	
 		• GameCube Controller
 		
@@ -374,7 +364,7 @@ for those devices.
 			AIM OFFSCREEN = A
 			START = PLUS
 
---•[ AUDIO ]•--
+### AUDIO
 
 Here you can choose between audio interpolation filters:
 
@@ -387,7 +377,7 @@ while being a bit clearer, depending on your taste.
 
 • None: entirely disables interpolation.
 
---•[ VIDEO ]•--
+### VIDEO
 
 The Video settings screen will allow you to configure various video settings
 including the Rendering method, Scaling, Filtering, Screen Zoom and Screen	
@@ -442,25 +432,24 @@ supported game, which improves games with faster or smoother framerates.
 You can have it at the Default chip speed (10.7 MHz), or set it to 20 MHz,
 40 MHz, or 60 MHz.
 
---•[ CONTROLLER ]•--
+### CONTROLLER
 
 Toggle between which compatible SNES peripheral you wish to use your game
 with (wherever it is supported), be it two controllers, Multitap (for up to
 4 players), Mouse, Superscope, or the Konami's Justifier lightgun.
 
---•[ SCREENSHOT ]•--
+### SCREENSHOT
 
 Take a screenshot of the screen you're in at the moment, for Preview's use
 on the File Browser's "Choose a game".
 
---•[ CHEATS ]•--
+### CHEATS
 
 This will allow you to enable/disable your Game Genie cheat codes.
 Check the in-depth section below.
 
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
-|                                                                  CHEATS  |
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+## CHEATS
 
 Cheats are loaded from the "\snes9xgx\cheats" directory and must be in the
 SNES9X .CHT file format. They also must be named the same name as the game
@@ -469,9 +458,8 @@ ROM called "Super Mario World.smc" you would need to name your .cht file to
 "Super Mario World.cht". You can find a link to a massive collection of Super
 NES cheat codes in the Links section below.
 
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
-|                                                         USB CONTROLLERS  |
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+## USB CONTROLLERS
 
 To enable the Xbox 360 (wired) controller, there are two ways available:
 Before loading Snes9x RX, connect your Xbox 360 wired controller. If the
@@ -489,9 +477,8 @@ The DS3 led #1 should light up once, and then the four leds.
 After that, press the PS button, it should be enabled for in-game use
 by now. You can do this before loading any game, for example.
 
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
-|                                                              TURBO MODE  |
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+## TURBO MODE
 
 TurboMode increases the playback speed of the game by about 2x. To use it,
 simply press and hold right on the C-stick (yellow control stick on the
@@ -500,9 +487,9 @@ or the ZL button (Wii U Pro Controller) for as long as you want gameplay
 to be faster. Release the stick/button whenever you want normal playback
 speed to resume.
 
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
-|                                            IMPORTING AND EXPORTING SRAM  |
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+
+## IMPORTING AND EXPORTING SRAM
 
 Snes9x RX now includes the ability to load SRAM from Snes9x on other
 platforms (Mac/PC/Linux/etc) and to save back to those platforms. 
@@ -515,9 +502,8 @@ To use a Wii/GameCube SRAM file on another platform just do the opposite:
 copy the saved SRAM file to the other platform. You may have to rename the 
 file to be what that version of snes9x expects it to be.
 
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
-|                                                          UPDATE HISTORY  |
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+## UPDATE HISTORY
 
 [4.8.0 - March 10, 2020]
 * Language updates for Spanish, French, Portuguese.
@@ -821,9 +807,8 @@ from GCSettings.PreviewImage, added function to get its value. [cebolleto]
 * The minimum file size for a ROM is now 30KB.
 * Fixed typos.
 
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
-|                                                 UPDATE HISTORY (PRE-RX)  |
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+### UPDATE HISTORY (PRE-RX)
 
 [4.3.7 - December 9, 2016]
 
@@ -1371,16 +1356,15 @@ changes to the emulator settings again and save them.
 * ROM injector
 * ... and more ...
 
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
-|                                                                 CREDITS  |
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+### CREDITS
 
                       Coding & menu design                           Tantric
                       Additional coding                          michniewski
                       Menu artwork                      NiuuS, the3seashells
                       Menu sound                                Peter de Man
                       Extra coding   Zopenko, Burnt Lasagna, Askot, emukidid
-											  NiuuS, Bladeoner, libertyernie
+                                              NiuuS, bladeoner, libertyernie
 
                       ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
                       Snes9x GX GameCube                   SoftDev, crunchy2
@@ -1390,9 +1374,8 @@ changes to the emulator settings again and save them.
                       libogc/devkitPPC                  shagkur & wintermute
                       FreeTypeGX                             Armin Tamzarian
 
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
-|                                                                   LINKS  |
-•˜———–—––-- - —————————––––– ———–—––-- - —————————––––– ———–—––-- - ————————•
+
+### LINKS
 
                       SNES9X RX Project Page
                       https://github.com/niuus/Snes9xRX
@@ -1408,7 +1391,3 @@ changes to the emulator settings again and save them.
 
                       Cheat Codes
                       www.cheatzilla.com
-
-×—–­—–­—–­—–­ –­—–­—–­—–­—–­—–­—–­—–­—–­—–­— ­—–­—–­—–­—–­—–­—–­—–­—-­—–­-–•¬
-|0O×øo·                                                               ·oø×O0|
-`¨•¨¨¨¨¨ ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨ ¨¨¨¨¨¨¨¨¨¨¨¨¨'
