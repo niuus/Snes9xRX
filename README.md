@@ -54,6 +54,7 @@ SD Card. It comes pre-packaged in the Homebrew Channel format (which you
 will use to launch the emulator). Once you've copied the directories to
 your SD Card you will need to place your ROM image(s) into "\snes9xgx\roms"
 directory. Optionally, you can place cheat code files and artwork/covers
+(both of those categories need to be in PNG format, 316x224 resolution)
 in their respectively named folders inside the "\snes9xgx\" directory.
 If they are not present, the folders will be created at second run, in case
 you want to acquire the files later. Once you are done, you can proceed to
