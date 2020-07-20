@@ -152,7 +152,7 @@ ZIP archive) simply click on the title and it will load. In the case of
 supported games inside the archive.
 
 
-### GAMEPLAY MENU
+## GAMEPLAY MENU
 
 Once you load a game, you can access a special menu by pressing the 
 Wii/Wii U controller's "Home" button / Gamecube controller's C-stick left.
@@ -808,7 +808,7 @@ from GCSettings.PreviewImage, added function to get its value. [cebolleto]
 * Fixed typos.
 
 
-### UPDATE HISTORY (PRE-RX)
+## UPDATE HISTORY (PRE-RX)
 
 [4.3.7 - December 9, 2016]
 
@@ -1357,7 +1357,7 @@ changes to the emulator settings again and save them.
 * ... and more ...
 
 
-### CREDITS
+## CREDITS
 
                       Coding & menu design                           Tantric
                       Additional coding                          michniewski
@@ -1375,7 +1375,7 @@ changes to the emulator settings again and save them.
                       FreeTypeGX                             Armin Tamzarian
 
 
-### LINKS
+## LINKS
 
                       SNES9X RX Project Page
                       https://github.com/niuus/Snes9xRX
