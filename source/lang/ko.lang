@@ -1176,3 +1176,6 @@ msgstr "현재 IOS는 (가짜 서명) 변경되었습니다. 기능 및 안정�
 
 msgid "The current IOS is unsupported. Functionality and/or stability may be adversely affected."
 msgstr "현재 IOS는 지원하지 않습니다. 기능 및 안정성에 부정적인 영향을 줄 수 있습니다."
+
+msgid "Append Auto to .SAV files"
+msgstr ".SAV 파일에 자동 추가"
