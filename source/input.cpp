@@ -38,6 +38,7 @@
 #ifdef HW_RVL
 #include "utils/retrode.h"
 #include "utils/xbox360.h"
+#include "utils/mayflash.h"
 extern "C"{
 #include "utils/sicksaxis.h"
 }
@@ -339,6 +340,7 @@ UpdatePads()
 	WiiDRC_ScanPads();
 	Retrode_ScanPads();
 	XBOX360_ScanPads();
+	Mayflash_ScanPads();
 	WPAD_ScanPads();
 	#endif
 
@@ -528,6 +530,7 @@ static void decodepad (int chan, int emuChan)
 
 	jp |= Retrode_ButtonsHeld(chan);
 	jp |= XBOX360_ButtonsHeld(chan);
+	jp |= Mayflash_ButtonsHeld(chan);
 #endif
 
 #ifdef HW_RVL
@@ -932,8 +935,8 @@ void SetDefaultButtonMap ()
 #ifdef HW_RVL
 char* GetUSBControllerInfo()
 {
-    static char info[70];
-    snprintf(info, 70, "Retrode: %s, XBOX360: %s", Retrode_Status(), XBOX360_Status());
+    static char info[100];
+    snprintf(info, 100, "Retrode: %s, XBOX360: %s, Mayflash: %s", Retrode_Status(), XBOX360_Status, Mayflash_Status());
     return info;
 }
 #endif
