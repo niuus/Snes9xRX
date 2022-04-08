@@ -891,7 +891,7 @@ static void S9xDeinterleaveGD24 (int size, uint8 *base)
 bool8 CMemory::Init (void)
 {
     RAM	 = (uint8 *) memalign(32,0x20000);
-    SRAM = (uint8 *) memalign(32,0x20000);
+    SRAM = (uint8 *) memalign(32,0x80000);
     VRAM = (uint8 *) memalign(32,0x10000);
 #ifdef USE_VM
 	ROM  = (uint8 *) vm_malloc(MAX_ROM_SIZE + 0x200 + 0x8000);
@@ -936,7 +936,7 @@ bool8 CMemory::Init (void)
     }
 
 	ZeroMemory(RAM,  0x20000);
-	ZeroMemory(SRAM, 0x20000);
+	ZeroMemory(SRAM, 0x80000);
 	ZeroMemory(VRAM, 0x10000);
 	ZeroMemory(ROM,  MAX_ROM_SIZE + 0x200 + 0x8000);
 
