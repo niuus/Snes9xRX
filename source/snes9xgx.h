@@ -20,7 +20,7 @@
 #include "filelist.h"
 
 #define APPNAME 			"Snes9x RX"
-#define APPVERSION 			"4.9.0"
+#define APPVERSION 			"5.0.0"
 #define APPFOLDER 			"snes9xgx"
 #define PREF_FILE_NAME		"settingsRX.xml"
 
@@ -126,8 +126,6 @@ struct SGCSettings{
 
 	int		Interpolation;
 };
-
-char* ImageFolder();
 
 void ExitApp();
 void ShutdownWii();
