@@ -890,9 +890,9 @@ static void WindowCredits(void * ptr)
 
 	GuiText::SetPresets(12, (GXColor){0, 0, 0, 255}, 0, FTGX_JUSTIFY_CENTER | FTGX_ALIGN_TOP, ALIGN_CENTRE, ALIGN_BOTTOM);
 
-	txt[i] = new GuiText("Snes9x - Copyright (c) Snes9x Team 1996 - 2020");
+	txt[i] = new GuiText("Snes9x - Copyright (c) Snes9x Team 1996 - 2021");
 	txt[i]->SetPosition(0,-44); i++;
-	txt[i] = new GuiText("This software is open source and may be copied, distributed, or modified ");
+	txt[i] = new GuiText("This software is open source and may be copied, distributed, or modified");
 	txt[i]->SetPosition(0,-32); i++;
 	txt[i] = new GuiText("under the terms of the GNU General Public License (GPL) Version 2.");
 	txt[i]->SetPosition(0,-20);
@@ -3148,8 +3148,13 @@ static void ScreenPositionWindowUpdate(void * ptr, int x, int y)
 		GCSettings.xshift += x;
 		GCSettings.yshift += y;
 
+		if(!(GCSettings.xshift > -50 && GCSettings.xshift < 50))
+			GCSettings.xshift = 0;
+		if(!(GCSettings.yshift > -50 && GCSettings.yshift < 50))
+			GCSettings.yshift = 0;
+
 		char shift[10];
-		sprintf(shift, "%i, %i", GCSettings.xshift, GCSettings.yshift);
+		sprintf(shift, "%hd, %hd", GCSettings.xshift, GCSettings.yshift);
 		settingText->SetText(shift);
 		b->ResetState();
 	}
