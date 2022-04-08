@@ -3367,7 +3367,9 @@ void CMemory::ApplyROMFixes (void)
 	if (!Settings.DisableGameSpecificHacks)
 	{
 		if (match_id("AVCJ"))                                      // Rendering Ranger R2
-			Timings.APUSpeedup = 2;
+			Timings.APUSpeedup = 4;
+		if (match_na("TARGA"))                                     // TARGA (Prototype)
+			Timings.APUSpeedup = 4;
 		if (match_id("AANJ"))                                      // Chou Aniki
 			Timings.APUSpeedup = -3;
 		if (match_na("CIRCUIT USA"))
