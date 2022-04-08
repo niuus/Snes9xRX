@@ -373,7 +373,8 @@ static bool IsValidROM()
 				if (stricmp(p, ".smc") == 0 ||
 					stricmp(p, ".fig") == 0 ||
 					stricmp(p, ".sfc") == 0 ||
-					stricmp(p, ".swc") == 0)
+					stricmp(p, ".swc") == 0 ||
+					stricmp(p, ".bs") == 0)
 				{
 					if(zippedFilename) free(zippedFilename);
 					return true;
