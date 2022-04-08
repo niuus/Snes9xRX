@@ -4,7 +4,7 @@
  * softdev July 2006
  * crunchy2 May 2007
  * Michniewski 2008
- * Tantric 2008-2010
+ * Tantric 2008-2019
  *
  * fileop.h
  *
@@ -18,7 +18,11 @@
 #include <string.h>
 #include <unistd.h>
 
+#ifdef HW_RVL
 #define SAVEBUFFERSIZE (1024 * 1024 * 2) // leave room for IPS/UPS files and large images
+#else
+#define SAVEBUFFERSIZE (1024 * 1024 * 1)
+#endif
 
 void InitDeviceThread();
 void ResumeDeviceThread();
