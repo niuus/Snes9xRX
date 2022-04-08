@@ -34,7 +34,8 @@ static uint16 RGBtoBright[1<<NUMBITS];
 TFilterMethod FilterMethod;
 
 template<int GuiScale> void RenderHQ2X (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height);
-template<int GuiScale> void Scanlines (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height);
+template<int GuiScale> void ScanlinesA (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height);
+template<int GuiScale> void ScanlinesB (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height);
 
 const char* GetFilterName (RenderFilter filterID)
 {
@@ -45,7 +46,8 @@ const char* GetFilterName (RenderFilter filterID)
 		case FILTER_HQ2X: return "hq2x";
 		case FILTER_HQ2XS: return "hq2x Soft";
 		case FILTER_HQ2XBOLD: return "hq2x Bold";
-		case FILTER_SCANLINES: return "Scanlines";
+		case FILTER_SCANLINESA: return "Scanlines 25%";
+		case FILTER_SCANLINESB: return "Scanlines 50%";
 	}
 }
 
@@ -57,7 +59,8 @@ static TFilterMethod FilterToMethod (RenderFilter filterID)
 		case FILTER_HQ2X:       return RenderHQ2X<FILTER_HQ2X>;
 		case FILTER_HQ2XS:      return RenderHQ2X<FILTER_HQ2XS>;
 		case FILTER_HQ2XBOLD:   return RenderHQ2X<FILTER_HQ2XBOLD>;
-		case FILTER_SCANLINES:  return Scanlines<FILTER_SCANLINES>;
+		case FILTER_SCANLINESA:  return ScanlinesA<FILTER_SCANLINESA>;
+		case FILTER_SCANLINESB:  return ScanlinesB<FILTER_SCANLINESB>;
 		default: return 0;
 	}
 }
@@ -72,7 +75,8 @@ int GetFilterScale(RenderFilter filterID)
 		case FILTER_HQ2X:
 		case FILTER_HQ2XS:
 		case FILTER_HQ2XBOLD:
-		case FILTER_SCANLINES:
+		case FILTER_SCANLINESA:
+		case FILTER_SCANLINESB:
 			return 2;
 	}
 }
@@ -493,7 +497,34 @@ void RenderHQ2X (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch,
 }
 
 template<int GuiScale>
-void Scanlines (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height)
+void ScanlinesA (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height)
+{
+	unsigned int nextlineSrc = srcPitch / sizeof(uint16);
+	uint16 *p = (uint16 *)srcPtr;
+
+	unsigned int nextlineDst = dstPitch / sizeof(uint16);
+	uint16 *q = (uint16 *)dstPtr;
+
+	while(height--) {
+		for (int i = 0, j = 0; i < width; ++i, j += 2) {
+			uint16 p1 = *(p + i);
+			uint32 pi;
+
+			pi = (((p1 & Mask_2) * 6) >> 3) & Mask_2;
+			pi |= (((p1 & Mask13) * 6) >> 3) & Mask13;
+
+			*(q + j) = p1;
+			*(q + j + 1) = p1;
+			*(q + j + nextlineDst) = (uint16)pi;
+			*(q + j + nextlineDst + 1) = (uint16)pi;
+		}
+		p += nextlineSrc;
+		q += nextlineDst << 1;
+	}
+}
+
+template<int GuiScale>
+void ScanlinesB (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height)
 {
 	while (height--) {
 		uint16 *dp = (uint16 *) dstPtr;
