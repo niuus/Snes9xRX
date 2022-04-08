@@ -24,6 +24,7 @@
 #define MAXJP 			12 // # of mappable controller buttons
 
 extern u32 btnmap[4][6][12];
+extern int playerMapping[4];
 
 void ResetControls(int cc = -1, int wc = -1);
 void ReportButtons ();
