@@ -94,10 +94,8 @@ struct SGCSettings{
 	char	CoverFolder[MAXPATHLEN]; 	// Path to cover files
 	char	ArtworkFolder[MAXPATHLEN]; 	// Path to artwork files
 	char 	ImageFolder[MAXPATHLEN]; 	// Saved image folder path 
-	
-	char	Exit_Dol_File[MAXPATHLEN]; // Exit Path
-	char	LoaderName[20]; // Menu Loader Name
-	u32		Exit_Channel[2]; // Exit Channel
+
+	int		AutoloadGame;
 
 	char	smbip[80];
 	char	smbuser[20];
