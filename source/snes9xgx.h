@@ -21,7 +21,7 @@
 
 #define APPNAME 			"Snes9x RX"
 #define APPVERSION 			"5.0.0"
-#define APPFOLDER 			"snes9xgx"
+#define APPFOLDER 			"snes9xrx"
 #define PREF_FILE_NAME		"settingsRX.xml"
 
 #define MAXPATHLEN 1024
