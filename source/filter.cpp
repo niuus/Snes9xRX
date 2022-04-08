@@ -6,10 +6,18 @@
  * HQ2x, HQ3x, HQ4x filters
  * (c) Copyright 2003         Maxim Stepin (maxim@hiend3d.com)
  *
- * filter.cpp
- *
  * Adapted from Snes9x Win32/MacOSX ports
  * Video Filter Code (hq2x)
+ *
+ * Scale2x filter
+ * (c) Copyright 2001         Andrea Mazzoleni (amadvance@gmail.com)
+ *
+ * Adapted from AdvanceMAME
+ * Video Filter Code (scale2x)
+ * http://www.scale2x.it/
+ *
+ * filter.cpp
+ *
  ****************************************************************************/
 #include <gccore.h>
 #include <stdio.h>
@@ -33,6 +41,7 @@ static uint16 RGBtoBright[1<<NUMBITS];
 
 TFilterMethod FilterMethod;
 
+template<int GuiScale> void RenderScale2X (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height);
 template<int GuiScale> void RenderHQ2X (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height);
 template<int GuiScale> void ScanlinesA (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height);
 template<int GuiScale> void ScanlinesB (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height);
@@ -43,6 +52,7 @@ const char* GetFilterName (RenderFilter filterID)
 	{
 		default: return "Unknown";
 		case FILTER_NONE: return "None";
+		case FILTER_SCALE2X: return "Scale2x";
 		case FILTER_HQ2X: return "hq2x";
 		case FILTER_HQ2XS: return "hq2x Soft";
 		case FILTER_HQ2XBOLD: return "hq2x Bold";
@@ -56,6 +66,7 @@ static TFilterMethod FilterToMethod (RenderFilter filterID)
 {
 	switch(filterID)
 	{
+		case FILTER_SCALE2X:    return RenderScale2X<FILTER_SCALE2X>;
 		case FILTER_HQ2X:       return RenderHQ2X<FILTER_HQ2X>;
 		case FILTER_HQ2XS:      return RenderHQ2X<FILTER_HQ2XS>;
 		case FILTER_HQ2XBOLD:   return RenderHQ2X<FILTER_HQ2XBOLD>;
@@ -72,6 +83,7 @@ int GetFilterScale(RenderFilter filterID)
 		case FILTER_NONE:
 			return 1;
 		default:
+		case FILTER_SCALE2X:
 		case FILTER_HQ2X:
 		case FILTER_HQ2XS:
 		case FILTER_HQ2XBOLD:
@@ -374,6 +386,33 @@ void InitLUTs(void)
 	case 223: if (Diff(RGBtoYUVtable[w4], RGBtoYUVtable[w2])) PIXEL00_0; else PIXEL00_20; if (Diff(RGBtoYUVtable[w2], RGBtoYUVtable[w6])) PIXEL01_0; else PIXEL01_100; PIXEL10_10; if (Diff(RGBtoYUVtable[w6], RGBtoYUVtable[w8])) PIXEL11_0; else PIXEL11_20; break; \
 	case 247: PIXEL00_11; if (Diff(RGBtoYUVtable[w2], RGBtoYUVtable[w6])) PIXEL01_0; else PIXEL01_100; PIXEL10_12; if (Diff(RGBtoYUVtable[w6], RGBtoYUVtable[w8])) PIXEL11_0; else PIXEL11_100; break; \
 	case 255: if (Diff(RGBtoYUVtable[w4], RGBtoYUVtable[w2])) PIXEL00_0; else PIXEL00_100; if (Diff(RGBtoYUVtable[w2], RGBtoYUVtable[w6])) PIXEL01_0; else PIXEL01_100; if (Diff(RGBtoYUVtable[w8], RGBtoYUVtable[w4])) PIXEL10_0; else PIXEL10_100; if (Diff(RGBtoYUVtable[w6], RGBtoYUVtable[w8])) PIXEL11_0; else PIXEL11_100; break;
+
+template<int GuiScale>
+void RenderScale2X (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height)
+{
+	unsigned int nextlineSrc = srcPitch / sizeof(uint16);
+	uint16 *p = (uint16 *)srcPtr;
+
+	unsigned int nextlineDst = dstPitch / sizeof(uint16);
+	uint16 *q = (uint16 *)dstPtr;
+
+	while (height--) {
+		for (int i = 0; i < width; ++i) {
+			uint16 B = *(p + i - nextlineSrc);
+			uint16 D = *(p + i - 1);
+			uint16 E = *(p + i);
+			uint16 F = *(p + i + 1);
+			uint16 H = *(p + i + nextlineSrc);
+
+			*(q + (i << 1)) = D == B && B != F && D != H ? D : E;
+			*(q + (i << 1) + 1) = B == F && B != D && F != H ? F : E;
+			*(q + (i << 1) + nextlineDst) = D == H && D != B && H != F ? D : E;
+			*(q + (i << 1) + nextlineDst + 1) = H == F && D != H && B != F ? F : E;
+		}
+		p += nextlineSrc;
+		q += nextlineDst << 1;
+	}
+}
 
 template<int GuiScale>
 void RenderHQ2X (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height)
