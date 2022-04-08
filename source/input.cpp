@@ -743,7 +743,11 @@ bool MenuRequested()
 			#ifdef HW_RVL
 			|| (userInput[i].wpad->btns_h & WPAD_BUTTON_HOME) ||
 			(userInput[i].wpad->btns_h & WPAD_CLASSIC_BUTTON_HOME) ||
-			(userInput[i].wiidrcdata.btns_h & WIIDRC_BUTTON_HOME)
+			(userInput[i].wiidrcdata.btns_h & WIIDRC_BUTTON_HOME) ||
+			(userInput[i].wpad->btns_h & WPAD_CLASSIC_BUTTON_PLUS &&
+			userInput[i].wpad->btns_h & WPAD_CLASSIC_BUTTON_A &&
+			userInput[i].wpad->btns_h & WPAD_CLASSIC_BUTTON_B &&
+			userInput[i].wpad->btns_h & WPAD_CLASSIC_BUTTON_MINUS)
 			#endif
 		)
 		{
@@ -768,9 +772,8 @@ void ReportButtons ()
 	Settings.TurboMode = (
 		userInput[0].pad.substickX > 70 ||
 		userInput[0].WPAD_StickX(1) > 70 ||
-		userInput[0].wpad->btns_h & WPAD_CLASSIC_BUTTON_ZL ||
 		userInput[0].wiidrcdata.substickX > 45
-	);	// RIGHT on c-stick and on classic controller right joystick
+	);	// RIGHT on c-stick and Wii Classic Controller/Wii U Pro/Wii U Pro Gamepad right stick
 
 	if(Settings.TurboMode) {
 		Settings.SoundSync = false;
@@ -780,10 +783,10 @@ void ReportButtons ()
 	}
 
 	/* Check for menu:
-	 * CStick left
-	 * OR "A+B+Start+Z" (eg. Homebrew/Adapted SNES controllers)
-	 * OR "Home" on the wiimote or classic controller
-	 * OR Left on classic right analog stick
+	 * Gamecube c-stick left
+	 * OR "A+B+Start+Z" on the Gamecube controller ports (eg. Homebrew/Adapted NES-SNES controllers)
+	 * OR "Home" on the Wiimote or Wii Classic Controller
+	 * OR "Select+Start+A+B" on Wiimote controller extensions (eg. NES/SNES/3rd party controllers)
 	 */
 	if(MenuRequested())
 		ScreenshotRequested = 1; // go to the menu
