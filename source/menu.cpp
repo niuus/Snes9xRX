@@ -816,7 +816,7 @@ static void WindowCredits(void * ptr)
 	creditsBoxImg.SetAlignment(ALIGN_CENTRE, ALIGN_MIDDLE);
 	creditsWindowBox.Append(&creditsBoxImg);
 
-	int numEntries = 23;
+	int numEntries = 24;
 	GuiText * txt[numEntries];
 
 	txt[i] = new GuiText("Credits", 28, (GXColor){0, 0, 0, 255});
@@ -825,8 +825,7 @@ static void WindowCredits(void * ptr)
 	txt[i] = new GuiText("Official Site: https://github.com/niuus/Snes9xRX/", 18, (GXColor){0, 0, 0, 255});
 	txt[i]->SetAlignment(ALIGN_CENTRE, ALIGN_TOP); txt[i]->SetPosition(0,y); i++; y+=40;
 
-	txt[i]->SetPresets(18, (GXColor){0, 0, 0, 255}, 0,
-			FTGX_JUSTIFY_LEFT | FTGX_ALIGN_TOP, ALIGN_LEFT, ALIGN_TOP);
+	GuiText::SetPresets(18, (GXColor){0, 0, 0, 255}, 0, FTGX_JUSTIFY_LEFT | FTGX_ALIGN_TOP, ALIGN_LEFT, ALIGN_TOP);
 	txt[i] = new GuiText("Coding & menu design");
 	txt[i]->SetPosition(50,y); i++;
 	txt[i] = new GuiText("Tantric");
@@ -862,29 +861,41 @@ static void WindowCredits(void * ptr)
 	txt[i] = new GuiText("FreeTypeGX");
 	txt[i]->SetPosition(50,y); i++;
 	txt[i] = new GuiText("Armin Tamzarian");
-	txt[i]->SetPosition(330,y); i++; y+=48;
+	txt[i]->SetPosition(330,y); i++;
 
-	txt[i]->SetPresets(16, (GXColor){0, 0, 0, 255}, 0,
-	FTGX_JUSTIFY_CENTER | FTGX_ALIGN_TOP, ALIGN_CENTRE, ALIGN_TOP);
-
-	txt[i] = new GuiText("Snes9x - Copyright (c) Snes9x Team 1996 - 2020");
-	txt[i]->SetPosition(0,y); i++; y+=20;
-	txt[i] = new GuiText("This software is open source and may be copied, distributed, or modified");
-	txt[i]->SetPosition(0,y); i++; y+=20;
-	txt[i] = new GuiText("under the terms of the GNU General Public License (GPL) Version 2.");
-	txt[i]->SetPosition(0,y); i++; y+=20;
-
-	//char iosVersion[20];
-	char iosVersion[90]; // added 70 for USB info
+	char wiiDetails[30];
+	char wiiInfo[20];
+	char controllerInfo[70];
 
 #ifdef HW_RVL
-	//sprintf(iosVersion, "IOS: %ld", IOS_GetVersion());
-	snprintf(iosVersion, 90, "IOS: %ld / %s", IOS_GetVersion(), GetUSBControllerInfo());
+	if(!IsWiiU()) {
+		sprintf(wiiInfo, "Wii");
+	}
+	else if(IsWiiUFastCPU()) {
+		sprintf(wiiInfo, "vWii (1.215 GHz)");
+	}
+	else {
+		sprintf(wiiInfo, "vWii (729 MHz)");
+	}
+	sprintf(wiiDetails, "IOS: %d / %s", IOS_GetVersion(), wiiInfo);
+	sprintf(controllerInfo, GetUSBControllerInfo());
 #endif
 
-	txt[i] = new GuiText(iosVersion, 15, (GXColor){0, 0, 0, 255});
+	txt[i] = new GuiText(controllerInfo, 14, (GXColor){0, 0, 0, 255});
 	txt[i]->SetAlignment(ALIGN_LEFT, ALIGN_BOTTOM);
-	txt[i]->SetPosition(25,-5);
+	txt[i]->SetPosition(20,-60); i++;
+	txt[i] = new GuiText(wiiDetails, 14, (GXColor){0, 0, 0, 255});
+	txt[i]->SetAlignment(ALIGN_RIGHT, ALIGN_BOTTOM);
+	txt[i]->SetPosition(-20,-60); i++;
+
+	GuiText::SetPresets(12, (GXColor){0, 0, 0, 255}, 0, FTGX_JUSTIFY_CENTER | FTGX_ALIGN_TOP, ALIGN_CENTRE, ALIGN_BOTTOM);
+
+	txt[i] = new GuiText("Snes9x - Copyright (c) Snes9x Team 1996 - 2020");
+	txt[i]->SetPosition(0,-44); i++;
+	txt[i] = new GuiText("This software is open source and may be copied, distributed, or modified ");
+	txt[i]->SetPosition(0,-32); i++;
+	txt[i] = new GuiText("under the terms of the GNU General Public License (GPL) Version 2.");
+	txt[i]->SetPosition(0,-20);
 
 	for(i=0; i < numEntries; i++)
 		creditsWindowBox.Append(txt[i]);
