@@ -2346,7 +2346,7 @@ static int MenuGameCheats()
 
 	for(i=0; i < Cheat.num_cheats; i++)
 	{
-		sprintf (options.name[i], "%s", Cheat.c[i].name);
+		snprintf (options.name[i], 50, "%s", Cheat.c[i].name);
 		sprintf (options.value[i], "%s", Cheat.c[i].enabled == true ? "On" : "Off");
 	}
 
