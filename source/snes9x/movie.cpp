@@ -420,7 +420,7 @@ static int read_movie_extrarominfo (FILE *fd, SMovie *movie)
 
 	ptr += 3; // zero bytes
 	movie->ROMCRC32 = Read32(ptr);
-	strncpy(movie->ROMName, (char *) ptr, 23);
+	memcpy(movie->ROMName, (char *) ptr, 23);
 
 	return (SUCCESS);
 }
