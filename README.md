@@ -543,10 +543,10 @@ by now. You can do this before loading any game, for example.
 
 TurboMode increases the playback speed of the game by about 2x. To use it,
 simply press and hold right on the C-stick (yellow control stick on the
-Gamecube controller), the right analog stick (Wii Classic Controller/Pro),
-or the ZL button (Wii U Pro Controller) for as long as you want gameplay
-to be faster. Release the stick/button whenever you want normal playback
-speed to resume.
+Gamecube controller) or the right analog stick on the Wii Classic Controller
+/ Wii Classic Controller Pro / Wii U Pro Controller for as long as you want
+gameplay to be faster. Release the stick/button whenever you want normal
+playback speed to resume.
 
 
 ## IMPORTING AND EXPORTING SRAM
