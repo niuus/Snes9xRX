@@ -2,23 +2,24 @@
  <app version="2">
    <name>Snes9x RX</name>
    <coder>NiuuS</coder>
-   <version>4.7.0</version>
-   <release_date>202002020002</release_date>
+   <version>5.0.0</version>
+   <release_date>202204222022</release_date>
    <short_description>Super Nintendo Emulator</short_description>
    <long_description>
 
 Featuring:
 - MSU-1 audio enhancement chip support.
-- Retrode 2 USB adapter support.
-- Xbox 360 Controller support (wired)
-- Experimental DualShock 3 (wired) support
+- Classic Controllers support (NES / SNES)
+- Mayflash 2-port SNES USB adapter
+- Xbox 360 Controller (wired) support.
+- Experimental DualShock 3 (wired) support.
 - Wii U Pro Controller support.
 - Wii U Gamepad controller support through VC injects.
+- Retrode 2 USB adapter support.
 - Screenshot/Cover/Artwork display.
 Swap between them with the +/Z button!
-- Classic Controllers support (NES / SNES)
 
-- Sharp / Soft / HQ2X / Scanline filters.
+- Sharp / Soft / HQ2X / Scale2x / Scanline filters.
 - Super FX overclock (20/40/60 MHz).
 - Wiiflow plugin mode.
 - FPS counter toggle.
