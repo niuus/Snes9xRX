@@ -3,7 +3,9 @@ https://github.com/niuus/snes9xrx/
 
 Based/forked from:
 https://github.com/snes9xgit/
+
 https://github.com/dborth/snes9xgx/
+
 (Under GPL License)
 
 Snes9x RX is a Super Nintendo™ / Super Famicom emulator for the Nintendo Wii.
@@ -155,6 +157,7 @@ supports battery saving) and the other is Snapshots, which are real time saves.
 Real time saves allow you to save your game in it's current state and resume it
 at a later time.
 
+```
 	• Load Device -	SD, USB, DVD, Network and Auto Detect
 	
 	• Save Device - SD, USB, Network and Auto Detect
@@ -162,6 +165,7 @@ at a later time.
 	• Auto Load - SRAM, Snapshot and Off
 
 	• Auto Save - SRAM, Snapshot, Both and Off
+```
 
 You can also toggle the option to append "Auto" into the filename of all the
 automatic SRAM saves that the emulator creates whenever you play a supported
@@ -227,7 +231,7 @@ covered in the following sections.
 ## GAME SETTINGS
 
 ### BUTTON MAPPINGS
-	
+
 Once in the Button Mappings settings menu, you'll have the option to configure
 almost all the controllers already supported (except the Retrode 2 USB, Xbox
 360 controller or the DualShock 3). You can also configure SNES peripherals
@@ -240,11 +244,11 @@ you select a button to configure, Snes9x RX will prompt you to press the
 button you want to assign to the button you've selected. Below is a list of
 each controller, followed by the input devices and the default values
 for those devices.
-	
+
 ### SNES Controller
-		
+
 		• GameCube Controller
-			
+
 			A = A
 			B = B
 			X = X
@@ -257,9 +261,9 @@ for those devices.
 			DOWN = DOWN
 			LEFT = LEFT
 			RIGHT = RIGHT
-			
+
 		• Wiimote
-		
+
 			A = B
 			B = 2
 			X = 1
@@ -270,7 +274,7 @@ for those devices.
 			DOWN = DOWN
 			LEFT = LEFT
 			RIGHT = RIGHT
-		
+
 		• Wii Classic Controller
 		• Wii Classic Controller Pro
 		• Wii U Pro Controller
@@ -289,8 +293,8 @@ for those devices.
 			LEFT = LEFT
 			RIGHT = RIGHT
 
-		•	Wiimote Nunchuck + Wiimote
-		
+		• Wiimote Nunchuck + Wiimote
+
 			A = A
 			B = B
 			X = C
@@ -304,8 +308,8 @@ for those devices.
 			LEFT = LEFT
 			RIGHT = RIGHT
 
-		•	Xbox 360 Controller (wired)
-		
+		• Xbox 360 Controller (wired)
+
 			A = B
 			B = A
 			X = Y
@@ -322,8 +326,8 @@ for those devices.
 			Right Analog Stick = Mapped to Y, X, B, A
 			Swap controller port = XBOX GUIDE BUTTON
 
-		•	DualShock 3 Controller (wired)
-		
+		• DualShock 3 Controller (wired)
+
 			A = Circle
 			B = Cross
 			X = Triangle
@@ -339,14 +343,14 @@ for those devices.
 			Left Analog Stick = D-pad directions
 
 ### SNES Mouse
-	
+
 		• GameCube Controller
-		
+
 			LEFT BUTTON = A
 			RIGHT BUTTON = B
-		
+
 		• Wiimote
-		
+
 			LEFT BUTTON = A
 			RIGHT BUTTON = B
 
@@ -370,7 +374,7 @@ for those devices.
 			PAUSE = START
 
 		• Wiimote
-		
+
 			FIRE = B
 			AIM OFFSCREEN = A
 			CURSOR = MINUS
@@ -391,13 +395,13 @@ for those devices.
 			PAUSE = PLUS
 
 ### Justifier
-	
+
 		• GameCube Controller
-		
+
 			FIRE = A
 			AIM OFFSCREEN = B
 			START = START
-		
+
 		• Wiimote
 
 			FIRE = B
@@ -417,6 +421,7 @@ for those devices.
 
 Here you can choose between audio interpolation filters:
 
+```
 • Gaussian: the most accurate representation to how the console sounded.
 Might produce better bass in certain sound effects. However, the sound
 will overall be a bit more muffled or soft.
@@ -425,6 +430,7 @@ will overall be a bit more muffled or soft.
 while being a bit clearer, depending on your taste.
 
 • None: entirely disables interpolation.
+```
 
 ### VIDEO
 
@@ -433,6 +439,7 @@ including the Rendering method, Scaling, Filtering, Screen Zoom and Screen
 Position. You can toggle the options for the first three selections by 
 clicking on them.
 
+```
 • Rendering - Unfiltered
             - Filtered (Soft)
             - Filtered (Sharp)
@@ -449,6 +456,7 @@ clicking on them.
             - hq2x Bold
             - Scanlines 25%
 	    - Scanlines 50%
+```
 
 To use the "Original" rendering, make sure your LCD/LED display supports
 240p, else you will have a black screen upon returning to the game, or
@@ -458,6 +466,7 @@ and will give you crisp unfiltered pixels, most ideally suited to enjoy
 on CRT TVs or monitors. Can even be coupled with modern TVs for use with
 scanline generators or line doublers (Framemeister, OSSC, RetroTink).
 
+```
 • Screen Zoom: this will bring up a menu where you can adjust the Zoom level
 by using the clickable left and right arrows. The default setting is 100%.
 
@@ -482,6 +491,7 @@ the GSU-1 & GSU-2 -most commonly known as the SuperFX chip- on every
 supported game, which improves games with faster or smoother framerates.
 You can have it at the Default chip speed (10.7 MHz), or set it to 20 MHz,
 40 MHz, or 60 MHz.
+```
 
 ### CONTROLLER
 
@@ -552,14 +562,16 @@ To use a Wii/GameCube SRAM file on another platform just do the opposite:
 copy the saved SRAM file to the other platform. You may have to rename the 
 file to be what that version of snes9x expects it to be.
 
+
 ## AUTOBOOT MODE
 
 Snes9x RX also sports an autoboot feature, for special use with custom
 forwarders made to look like Wii Virtual Console channels, or individual
 entries on your Homebrew Channel. To make use of this feature, just add
-the following lines to your meta.xml right between </long_description>
-and </app>, like the following example:
+the following lines to your meta.xml right between ```</long_description>```
+and ```</app>```, like the following example:
 
+```
    </long_description>
    <arguments>
    <arg>sd:/snes9xgx/roms</arg>
@@ -567,6 +579,7 @@ and </app>, like the following example:
    </arguments>
    <ahb_access/>
  </app>
+```
 
 Use "sd:" OR "usb:" according to your media, adjust the path to the specific
 location of the ROM on your device, and replace "game.sfc" with the specific
@@ -575,7 +588,6 @@ name of your game file (can be a .zip, too).
 Make sure to set your configuration to your liking before using autoboot,
 as you won't be able to change the ones that are only accesible inside the
 Settings menu at the emulator's Main Menu / Game browser.
-
 
 
 ## UPDATE HISTORY
