@@ -218,7 +218,7 @@ void S9xStartScreenRefresh (void)
 		ZeroMemory(GFX.SubZBuffer, GFX.ScreenSize);
 	}
 
-	if (++IPPU.FrameCount % Memory.ROMFramesPerSecond == 0)
+	if (++IPPU.FrameCount == (uint32)Memory.ROMFramesPerSecond)
 	{
 		IPPU.DisplayedRenderedFrameCount = IPPU.RenderedFramesCount;
 		IPPU.RenderedFramesCount = 0;
