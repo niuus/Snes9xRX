@@ -11,17 +11,12 @@
 enum s9x_getdirtype
 {
 	DEFAULT_DIR = 0,
-	HOME_DIR,
-	ROMFILENAME_DIR,
-	ROM_DIR,
 	SRAM_DIR,
 	SNAPSHOT_DIR,
-	SCREENSHOT_DIR,
 	SPC_DIR,
 	CHEAT_DIR,
 	IPS_DIR,
 	BIOS_DIR,
-	LOG_DIR,
 	LAST_DIR
 };
 
@@ -32,9 +27,6 @@ void S9xSetInfoString (const char *);
 
 // Routines the port has to implement even if it doesn't use them
 
-void S9xPutImage (int, int);
-void S9xInitDisplay (int, char **);
-void S9xDeinitDisplay (void);
 void S9xTextMode (void);
 void S9xGraphicsMode (void);
 void S9xToggleSoundChannel (int);
@@ -55,9 +47,6 @@ void S9xParseArg (char **, int &, int);
 
 void S9xExtraDisplayUsage (void);
 void S9xParseDisplayArg (char **, int &, int);
-void S9xSetTitle (const char *);
-void S9xInitInputDevices (void);
-void S9xProcessEvents (bool8);
 const char * S9xSelectFilename (const char *, const char *, const char *, const char *);
 
 #endif
