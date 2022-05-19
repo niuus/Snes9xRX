@@ -283,7 +283,6 @@ struct SSettings
 	bool8	DontSaveOopsSnapshot;
 	bool8	UpAndDown;
 
-	bool8	OpenGLEnable;
 	float	SuperFXSpeedPerLine;
 };
 
