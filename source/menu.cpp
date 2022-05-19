@@ -2481,7 +2481,7 @@ static int MenuSettingsMappings()
 	GuiImage mouseBtnIcon(&iconMouse);
 	GuiButton mouseBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
 	mouseBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
-	mouseBtn.SetPosition(-125, 250);
+	mouseBtn.SetPosition(-200, 250);
 	mouseBtn.SetLabel(&mouseBtnTxt);
 	mouseBtn.SetImage(&mouseBtnImg);
 	mouseBtn.SetImageOver(&mouseBtnImgOver);
@@ -2498,7 +2498,7 @@ static int MenuSettingsMappings()
 	GuiImage justifierBtnIcon(&iconJustifier);
 	GuiButton justifierBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
 	justifierBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
-	justifierBtn.SetPosition(125, 250);
+	justifierBtn.SetPosition(0, 250);
 	justifierBtn.SetLabel(&justifierBtnTxt);
 	justifierBtn.SetImage(&justifierBtnImg);
 	justifierBtn.SetImageOver(&justifierBtnImgOver);
@@ -2508,6 +2508,21 @@ static int MenuSettingsMappings()
 	justifierBtn.SetTrigger(trigA);
 	justifierBtn.SetTrigger(trig2);
 	justifierBtn.SetEffectGrow();
+
+	GuiText turboBtnTxt("Other Mappings", 22, (GXColor){0, 0, 0, 255});
+	GuiImage turboBtnImg(&btnLargeOutline);
+	GuiImage turboBtnImgOver(&btnLargeOutlineOver);
+	GuiButton turboBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
+	turboBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
+	turboBtn.SetPosition(200, 250);
+	turboBtn.SetLabel(&turboBtnTxt);
+	turboBtn.SetImage(&turboBtnImg);
+	turboBtn.SetImageOver(&turboBtnImgOver);
+	turboBtn.SetSoundOver(&btnSoundOver);
+	turboBtn.SetSoundClick(&btnSoundClick);
+	turboBtn.SetTrigger(trigA);
+	turboBtn.SetTrigger(trig2);
+	turboBtn.SetEffectGrow();
 
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
@@ -2531,6 +2546,7 @@ static int MenuSettingsMappings()
 	w.Append(&superscopeBtn);
 	w.Append(&mouseBtn);
 	w.Append(&justifierBtn);
+	w.Append(&turboBtn);
 
 	w.Append(&backBtn);
 
@@ -2561,6 +2577,10 @@ static int MenuSettingsMappings()
 		{
 			menu = MENU_GAMESETTINGS_MAPPINGS_CTRL;
 			mapMenuCtrlSNES = CTRL_JUST;
+		}
+		else if(turboBtn.GetState() == STATE_CLICKED)
+		{
+			menu = MENU_GAMESETTINGS_MAPPINGS_TURBOMODE;
 		}
 		else if(backBtn.GetState() == STATE_CLICKED)
 		{
@@ -3393,6 +3413,138 @@ static void ScreenPositionWindow()
 	delete(settingText);
 }
 
+static int MenuSettingsTurboMode()
+{
+	int menu = MENU_NONE;
+	int ret;
+	int i = 0;
+	bool firstRun = true;
+	OptionList options;
+
+	sprintf(options.name[i++], "Enable Turbo Mode");
+	sprintf(options.name[i++], "Turbo Mode Button");
+
+	options.length = i;
+
+	for(i=0; i < options.length; i++)
+		options.value[i][0] = 0;
+
+	GuiText titleTxt("Game Settings - Button Mappings", 26, (GXColor){255, 255, 255, 255});
+	titleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
+	titleTxt.SetPosition(50,30);
+
+	GuiText subtitleTxt("Other Mappings for Snes9xRX", 20, (GXColor){255, 255, 255, 255});
+	subtitleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
+	subtitleTxt.SetPosition(50,60);
+
+	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
+	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
+	GuiImageData btnOutline(button_png);
+	GuiImageData btnOutlineOver(button_over_png);
+
+	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
+	GuiImage backBtnImg(&btnOutline);
+	GuiImage backBtnImgOver(&btnOutlineOver);
+	GuiButton backBtn(btnOutline.GetWidth(), btnOutline.GetHeight());
+	backBtn.SetAlignment(ALIGN_LEFT, ALIGN_BOTTOM);
+	backBtn.SetPosition(50, -35);
+	backBtn.SetLabel(&backBtnTxt);
+	backBtn.SetImage(&backBtnImg);
+	backBtn.SetImageOver(&backBtnImgOver);
+	backBtn.SetSoundOver(&btnSoundOver);
+	backBtn.SetSoundClick(&btnSoundClick);
+	backBtn.SetTrigger(trigA);
+	backBtn.SetTrigger(trig2);
+	backBtn.SetEffectGrow();
+
+	GuiOptionBrowser optionBrowser(552, 248, &options);
+	optionBrowser.SetPosition(0, 108);
+	optionBrowser.SetCol2Position(200);
+	optionBrowser.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
+
+	HaltGui();
+	GuiWindow w(screenwidth, screenheight);
+	w.Append(&backBtn);
+	mainWindow->Append(&optionBrowser);
+	mainWindow->Append(&w);
+	mainWindow->Append(&titleTxt);
+	w.Append(&subtitleTxt);
+	ResumeGui();
+
+	while(menu == MENU_NONE)
+	{
+		usleep(THREAD_SLEEP);
+
+		ret = optionBrowser.GetClickedOption();
+
+		switch (ret)
+		{
+			case 0:
+				GCSettings.TurboModeEnabled ^= 1;
+				break;
+
+			case 1:
+				GCSettings.TurboModeButton++;
+				if (GCSettings.TurboModeButton > 14)
+					GCSettings.TurboModeButton = 0;
+				break;
+		}
+
+		if(ret >= 0 || firstRun)
+		{
+			firstRun = false;
+			sprintf (options.value[0], "%s", GCSettings.TurboModeEnabled == 1 ? "On" : "Off");
+
+			switch(GCSettings.TurboModeButton)
+			{
+				case 0:
+					sprintf (options.value[1], "Right Stick (default)"); break;
+				case 1:
+					sprintf (options.value[1], "A"); break;
+				case 2:
+					sprintf (options.value[1], "B"); break;
+				case 3:
+					sprintf (options.value[1], "X"); break;
+				case 4:
+					sprintf (options.value[1], "Y"); break;
+				case 5:
+					sprintf (options.value[1], "L"); break;
+				case 6:
+					sprintf (options.value[1], "R"); break;
+				case 7:
+					sprintf (options.value[1], "ZL"); break;
+				case 8:
+					sprintf (options.value[1], "ZR"); break;
+				case 9:
+					sprintf (options.value[1], "Z"); break;
+				case 10:
+					sprintf (options.value[1], "C"); break;
+				case 11:
+					sprintf (options.value[1], "1"); break;
+				case 12:
+					sprintf (options.value[1], "2"); break;
+				case 13:
+					sprintf (options.value[1], "Plus"); break;
+				case 14:
+					sprintf (options.value[1], "Minus"); break;
+			}
+
+			optionBrowser.TriggerUpdate();
+		}
+
+		if(backBtn.GetState() == STATE_CLICKED)
+		{
+			menu = MENU_GAMESETTINGS_MAPPINGS;
+		}
+	}
+	HaltGui();
+	mainWindow->Remove(&optionBrowser);
+	mainWindow->Remove(&w);
+	mainWindow->Remove(&titleTxt);
+	mainWindow->Remove(&subtitleTxt);
+	return menu;
+}
+
 static int MenuSettingsVideo()
 {
 	int menu = MENU_NONE;
@@ -3412,7 +3564,7 @@ static int MenuSettingsVideo()
 	sprintf(options.name[i++], "Show Local Time");
 	sprintf(options.name[i++], "SuperFX Overclock");
 	options.length = i;
-	
+
 #ifdef HW_DOL
 	options.name[2][0] = 0; // disable hq2x on GameCube
 #endif
@@ -4531,6 +4683,9 @@ MainMenu (int menu)
 				break;
 			case MENU_SETTINGS_NETWORK:
 				currentMenu = MenuSettingsNetwork();
+				break;
+			case MENU_GAMESETTINGS_MAPPINGS_TURBOMODE:
+				currentMenu = MenuSettingsTurboMode();
 				break;
 			default: // unrecognized menu
 				currentMenu = MenuGameSelection();

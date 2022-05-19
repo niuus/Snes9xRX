@@ -123,6 +123,9 @@ struct SGCSettings{
 	int		sfxOverclock;
 
 	int		Interpolation;
+
+	int		TurboModeEnabled; // 0 - disabled, 1 - enabled
+	int		TurboModeButton;
 };
 
 void ExitApp();
