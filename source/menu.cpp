@@ -1563,7 +1563,6 @@ static int MenuGame()
 	HaltGui();
 	GuiWindow w(screenwidth, screenheight);
 	w.Append(&titleTxt);
-	w.Append(&memTxt);
 	w.Append(&saveBtn);
 	w.Append(&loadBtn);
 	w.Append(&deleteBtn);
@@ -1572,7 +1571,7 @@ static int MenuGame()
 	
 	if(GCSettings.DisplayVM == 1) //show memory usage
 	{
-			w.Append(&memTxt);
+		w.Append(&memTxt);
 	}
 
 	#ifdef HW_RVL
@@ -4363,7 +4362,7 @@ static int MenuSettingsMenu()
 			else
 				sprintf(options.value[3], "Mute");
 
-			if (GCSettings.DisplayVM == 0)
+			if (GCSettings.DisplayVM == 1)
 				sprintf (options.value[4], "Enabled");
 			else
 				sprintf (options.value[4], "Disabled");
