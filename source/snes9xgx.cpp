@@ -59,7 +59,6 @@ int ResetRequested = 0;
 int ExitRequested = 0;
 bool isWiiVC = false;
 char appPath[1024] = { 0 };
-static int currentMode;
 bool firstRun = true;
 
 extern "C" {
@@ -536,7 +535,6 @@ int main(int argc, char *argv[])
 
 		CheckVideo = 2;		// force video update
 		prevRenderedFrameCount = IPPU.RenderedFramesCount;
-		currentMode = GCSettings.render;
 
 		while(1) // emulation loop
 		{
