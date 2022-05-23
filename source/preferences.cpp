@@ -150,12 +150,18 @@ preparePrefsData ()
 	createXMLSetting("widescreen", "Aspect Ratio Correction", toStr(GCSettings.widescreen));
 	createXMLSetting("crosshair", "Crosshair", toStr(GCSettings.crosshair));
 	createXMLSetting("FilterMethod", "Filter Method", toStr(GCSettings.FilterMethod));
+	createXMLSetting("ShowFrameRate", "Show Framerate", toStr(GCSettings.ShowFrameRate));
+	createXMLSetting("ShowLocalTime", "Show Local Time", toStr(GCSettings.ShowLocalTime));
 	createXMLSetting("xshift", "Horizontal Video Shift", toStr(GCSettings.xshift));
 	createXMLSetting("yshift", "Vertical Video Shift", toStr(GCSettings.yshift));
 	createXMLSetting("sfxOverclock", "SuperFX Overclock", toStr(GCSettings.sfxOverclock));
-	createXMLSetting("Interpolation", "Interpolation", toStr(GCSettings.Interpolation));
 	createXMLSetting("TurboModeEnabled", "Turbo Mode Enabled", toStr(GCSettings.TurboModeEnabled));
 	createXMLSetting("TurboModeButton", "Turbo Mode Button", toStr(GCSettings.TurboModeButton));
+
+	createXMLSection("Audio", "Audio Settings");
+
+	createXMLSetting("ReverseStereo", "Stereo Reverse", toStr(GCSettings.ReverseStereo));
+	createXMLSetting("Interpolation", "Interpolation", toStr(GCSettings.Interpolation));
 
 	createXMLSection("Menu", "Menu Settings");
 
@@ -340,6 +346,8 @@ decodePrefsData ()
 			loadXMLSetting(&GCSettings.widescreen, "widescreen");
 			loadXMLSetting(&GCSettings.crosshair, "crosshair");
 			loadXMLSetting(&GCSettings.FilterMethod, "FilterMethod");
+			loadXMLSetting(&GCSettings.ShowFrameRate, "ShowFrameRate");
+			loadXMLSetting(&GCSettings.ShowLocalTime, "ShowLocalTime");
 			loadXMLSetting(&GCSettings.xshift, "xshift");
 			loadXMLSetting(&GCSettings.yshift, "yshift");
 			loadXMLSetting(&GCSettings.TurboModeEnabled, "TurboModeEnabled");
@@ -347,6 +355,7 @@ decodePrefsData ()
 
 			// Audio Settings
 
+			loadXMLSetting(&GCSettings.ReverseStereo, "ReverseStereo");
 			loadXMLSetting(&GCSettings.Interpolation, "Interpolation");
 
 			// Emulation Settings
@@ -505,11 +514,11 @@ DefaultSettings ()
 	Settings.SoundSync = true;
 	Settings.SixteenBitSound = true;
 	Settings.Stereo = true;
-	Settings.ReverseStereo = true;
 	Settings.SoundPlaybackRate = 48000;
 	Settings.SoundInputRate = 31920;
 	Settings.DynamicRateControl = true;
 	Settings.DynamicRateLimit = 1;
+	GCSettings.ReverseStereo = 1; // Enabled to fix inverted L/R audio channels
 
 	// Interpolation Method
 	GCSettings.Interpolation = 0;
@@ -520,10 +529,10 @@ DefaultSettings ()
 	Settings.SupportHiRes = true;
 	Settings.SkipFrames = AUTO_FRAMERATE;
 	Settings.TurboSkipFrames = 19;
-	Settings.DisplayFrameRate = false;
 	Settings.AutoDisplayMessages = false;
 	Settings.InitialInfoStringTimeout = 200; // # frames to display messages for
-	Settings.DisplayTime = false;
+	GCSettings.ShowFrameRate = 0;
+	GCSettings.ShowLocalTime = 0;
 
 	// Frame timings in 50hz and 60hz cpu mode
 	Settings.FrameTimePAL = 20000;

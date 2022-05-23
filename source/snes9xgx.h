@@ -127,6 +127,8 @@ struct SGCSettings{
 	int		FilterMethod; // convert to RenderFilter
 	int		Controller;
 	int		crosshair;
+	int		ShowFrameRate;
+	int		ShowLocalTime;
 	int		widescreen;	// 0 - 4:3 aspect, 1 - 16:9 aspect
 	int		xshift;	// video output shift
 	int		yshift;
@@ -140,6 +142,7 @@ struct SGCSettings{
 
 	int		sfxOverclock;
 
+	int		ReverseStereo;
 	int		Interpolation;
 
 	int		TurboModeEnabled; // 0 - disabled, 1 - enabled
