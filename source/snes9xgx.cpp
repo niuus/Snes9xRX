@@ -59,7 +59,6 @@ int ResetRequested = 0;
 int ExitRequested = 0;
 bool isWiiVC = false;
 char appPath[1024] = { 0 };
-static int currentMode;
 bool firstRun = true;
 
 extern "C" {
@@ -360,22 +359,22 @@ extern "C" {
 }
 
 void InitializeSnes9x() {
-	S9xUnmapAllControls ();
-	SetDefaultButtonMap ();
+	S9xUnmapAllControls();
+	SetDefaultButtonMap();
 
 	// Allocate SNES Memory
-	if (!Memory.Init ())
+	if (!Memory.Init())
 		ExitApp();
 
 	// Allocate APU
-	if (!S9xInitAPU ())
+	if (!S9xInitAPU())
 		ExitApp();
 
-	S9xInitSound (64, 0); // Initialise Sound System
+	S9xInitSound(64, 0); // Initialise Sound System
 
 	// Initialise Graphics
-	setGFX ();
-	if (!S9xGraphicsInit ())
+	setGFX();
+	if (!S9xGraphicsInit())
 		ExitApp();
 
 	AllocGfxMem();
@@ -406,10 +405,10 @@ int main(int argc, char *argv[])
 	USBGeckoOutput();
 	__exception_setreload(8);
 
-	DefaultSettings (); // Set defaults
+	DefaultSettings(); // Set defaults
 	InitGCVideo(); // Initialise video
 	InitializeSnes9x();
-	ResetVideo_Menu (); // change to menu video mode
+	ResetVideo_Menu(); // change to menu video mode
 	
 	#ifdef HW_RVL
 	// Wii Power/Reset buttons
@@ -427,7 +426,7 @@ int main(int argc, char *argv[])
 	DI_Init();
 	USBStorage_Initialize();
 	#else
-	DVD_Init (); // Initialize DVD subsystem (GameCube only)
+	DVD_Init(); // Initialize DVD subsystem (GameCube only)
 	#endif
 	
 	SetupPads();
@@ -486,10 +485,7 @@ int main(int argc, char *argv[])
 
 			SwitchAudioMode(1);
 
-			if(SNESROMSize == 0)
-				MainMenu(MENU_GAMESELECTION);
-			else
-				MainMenu(MENU_GAME);
+			SNESROMSize == 0 ? MainMenu(MENU_GAMESELECTION) : MainMenu(MENU_GAME);
 		}
 
 #ifdef HW_RVL
@@ -506,16 +502,13 @@ int main(int argc, char *argv[])
 				case 3: Settings.SuperFXSpeedPerLine = 0.417 * 60.5e6; break;
 			}
 
-			if (GCSettings.sfxOverclock > 0)
-			S9xResetSuperFX();
-			else
-			S9xReset();
+			GCSettings.sfxOverclock > 0 ? S9xResetSuperFX() : S9xReset();
 
 			switch (GCSettings.Interpolation)
 			{
-			case 0: Settings.InterpolationMethod = DSP_INTERPOLATION_GAUSSIAN; break;
-			case 1: Settings.InterpolationMethod = DSP_INTERPOLATION_LINEAR; break;
-			case 2: Settings.InterpolationMethod = DSP_INTERPOLATION_NONE; break;
+				case 0: Settings.InterpolationMethod = DSP_INTERPOLATION_GAUSSIAN; break;
+				case 1: Settings.InterpolationMethod = DSP_INTERPOLATION_LINEAR; break;
+				case 2: Settings.InterpolationMethod = DSP_INTERPOLATION_NONE; break;
 			}
 		}
 
@@ -529,29 +522,28 @@ int main(int argc, char *argv[])
 		Settings.SuperScopeMaster = (GCSettings.Controller == CTRL_SCOPE ? true : false);
 		Settings.MouseMaster = (GCSettings.Controller == CTRL_MOUSE ? true : false);
 		Settings.JustifierMaster = (GCSettings.Controller == CTRL_JUST ? true : false);
-		SetControllers ();
+		SetControllers();
 
 		// stop checking if devices were removed/inserted
 		// since we're starting emulation again
 		HaltDeviceThread();
 
-		AudioStart ();
+		AudioStart();
 
 		FrameTimer = 0;
-		setFrameTimerMethod (); // set frametimer method every time a ROM is loaded
+		setFrameTimerMethod(); // set frametimer method every time a ROM is loaded
 
 		CheckVideo = 2;		// force video update
 		prevRenderedFrameCount = IPPU.RenderedFramesCount;
-		currentMode = GCSettings.render;
 
 		while(1) // emulation loop
 		{
-			S9xMainLoop ();
-			ReportButtons ();
+			S9xMainLoop();
+			ReportButtons();
 
-			if(ResetRequested)
+			if (ResetRequested)
 			{
-				S9xSoftReset (); // reset game
+				S9xSoftReset(); // reset game
 				ResetRequested = 0;
 			}
 			if (ConfigRequested)

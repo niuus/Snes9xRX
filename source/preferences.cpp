@@ -168,6 +168,7 @@ preparePrefsData ()
 	createXMLSetting("DisplayVM", "Display Virtual Memory", toStr(GCSettings.DisplayVM));
 	createXMLSetting("language", "Language", toStr(GCSettings.language));
 	createXMLSetting("PreviewImage", "Preview Image", toStr(GCSettings.PreviewImage));
+	createXMLSetting("HideSRAMSaving", "Hide SRAM Saving", toStr(GCSettings.HideSRAMSaving));
 	
 	createXMLSection("Controller", "Controller Settings");
 
@@ -361,6 +362,7 @@ decodePrefsData ()
 			loadXMLSetting(&GCSettings.DisplayVM, "DisplayVM");
 			loadXMLSetting(&GCSettings.language, "language");
 			loadXMLSetting(&GCSettings.PreviewImage, "PreviewImage");
+			loadXMLSetting(&GCSettings.HideSRAMSaving, "HideSRAMSaving");
 
 			// Controller Settings
 
@@ -468,6 +470,7 @@ DefaultSettings ()
 	GCSettings.SFXVolume = 40;
 	GCSettings.DisplayVM = 0; // Disabled
 	GCSettings.PreviewImage = 0;
+	GCSettings.HideSRAMSaving = 0;
 	
 #ifdef HW_RVL
 	GCSettings.language = CONF_GetLanguage();
