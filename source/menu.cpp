@@ -2236,6 +2236,11 @@ static int MenuGameSettings()
 	closeBtn.SetTrigger(&trigHome);
 	closeBtn.SetEffectGrow();
 
+	GuiTrigger trigBack;
+	GuiTrigger trigBack2;
+	trigBack.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
+	trigBack2.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
+
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
 	GuiImage backBtnImgOver(&btnOutlineOver);
@@ -2249,6 +2254,8 @@ static int MenuGameSettings()
 	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
+	backBtn.SetTrigger(&trigBack);
+	backBtn.SetTrigger(&trigBack2);
 	backBtn.SetEffectGrow();
 
 	HaltGui();
@@ -2523,6 +2530,11 @@ static int MenuSettingsMappings()
 	otherBtn.SetTrigger(trig2);
 	otherBtn.SetEffectGrow();
 
+	GuiTrigger trigBack;
+	GuiTrigger trigBack2;
+	trigBack.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
+	trigBack2.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
+
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
 	GuiImage backBtnImgOver(&btnOutlineOver);
@@ -2536,6 +2548,8 @@ static int MenuSettingsMappings()
 	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
+	backBtn.SetTrigger(&trigBack);
+	backBtn.SetTrigger(&trigBack2);
 	backBtn.SetEffectGrow();
 
 	HaltGui();
@@ -2732,6 +2746,11 @@ static int MenuSettingsMappingsController()
 	wiiuproBtn.SetTrigger(trig2);
 	wiiuproBtn.SetEffectGrow();
 
+	GuiTrigger trigBack;
+	GuiTrigger trigBack2;
+	trigBack.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
+	trigBack2.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
+
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
 	GuiImage backBtnImgOver(&btnOutlineOver);
@@ -2745,6 +2764,8 @@ static int MenuSettingsMappingsController()
 	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
+	backBtn.SetTrigger(&trigBack);
+	backBtn.SetTrigger(&trigBack2);
 	backBtn.SetEffectGrow();
 
 	HaltGui();
@@ -3941,6 +3962,11 @@ static int MenuSettings()
 	networkBtn.SetTrigger(trig2);
 	networkBtn.SetEffectGrow();
 
+	GuiTrigger trigBack;
+	GuiTrigger trigBack2;
+	trigBack.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
+	trigBack2.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
+
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
 	GuiImage backBtnImgOver(&btnOutlineOver);
@@ -3954,6 +3980,8 @@ static int MenuSettings()
 	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
+	backBtn.SetTrigger(&trigBack);
+	backBtn.SetTrigger(&trigBack2);
 	backBtn.SetEffectGrow();
 
 	GuiText resetBtnTxt("Reset Settings", 22, (GXColor){0, 0, 0, 255});
