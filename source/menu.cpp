@@ -764,7 +764,6 @@ SettingWindow(const char * title, GuiWindow * w)
 	cancelBtn.SetTrigger(trigA);
 	cancelBtn.SetTrigger(trig2);
 	cancelBtn.SetEffectGrow();
-	cancelBtn.SetState(STATE_SELECTED);
 
 	promptWindow.Append(&dialogBoxImg);
 	promptWindow.Append(&titleTxt);
