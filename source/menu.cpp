@@ -94,6 +94,7 @@ static lwp_t guithread = LWP_THREAD_NULL;
 static lwp_t progressthread = LWP_THREAD_NULL;
 static bool guiHalt = true;
 static int showProgress = 0;
+static bool showCredits = false;
 
 static char progressTitle[101];
 static char progressMsg[201];
@@ -801,7 +802,7 @@ SettingWindow(const char * title, GuiWindow * w)
  ***************************************************************************/
 static void WindowCredits(void * ptr)
 {
-	if(btnLogo->GetState() != STATE_CLICKED)
+	if(btnLogo->GetState() != STATE_CLICKED && !showCredits)
 		return;
 
 	btnLogo->ResetState();
@@ -819,7 +820,7 @@ static void WindowCredits(void * ptr)
 	creditsBoxImg.SetAlignment(ALIGN_CENTRE, ALIGN_MIDDLE);
 	creditsWindowBox.Append(&creditsBoxImg);
 
-	int numEntries = 24;
+	int numEntries = 25;
 	GuiText * txt[numEntries];
 
 	txt[i] = new GuiText("Credits", 28, (GXColor){0, 0, 0, 255});
@@ -835,7 +836,9 @@ static void WindowCredits(void * ptr)
 	txt[i]->SetPosition(330,y); i++; y+=24;
 	txt[i] = new GuiText("Additional improvements");
 	txt[i]->SetPosition(50,y); i++;
-	txt[i] = new GuiText("NiuuS, bladeoner, Zopenko");
+	txt[i] = new GuiText("NiuuS, bladeoner,");
+	txt[i]->SetPosition(330,y); i++; y+=24;
+	txt[i] = new GuiText("Zopenko, InfiniteBlue");
 	txt[i]->SetPosition(330,y); i++; y+=24;
 	txt[i] = new GuiText("Menu artwork");
 	txt[i]->SetPosition(50,y); i++;
@@ -844,7 +847,7 @@ static void WindowCredits(void * ptr)
 	txt[i] = new GuiText("Logo");
 	txt[i]->SetPosition(50,y); i++;
 	txt[i] = new GuiText("NiuuS");
-	txt[i]->SetPosition(330,y); i++; y+=48;
+	txt[i]->SetPosition(330,y); i++; y+=24;
 
 	txt[i] = new GuiText("Snes9x GX GameCube");
 	txt[i]->SetPosition(50,y); i++;
@@ -889,16 +892,16 @@ static void WindowCredits(void * ptr)
 	txt[i]->SetPosition(20,-60); i++;
 	txt[i] = new GuiText(wiiDetails, 14, (GXColor){0, 0, 0, 255});
 	txt[i]->SetAlignment(ALIGN_RIGHT, ALIGN_BOTTOM);
-	txt[i]->SetPosition(-20,-60); i++;
+	txt[i]->SetPosition(-20,-75); i++;
 
 	GuiText::SetPresets(12, (GXColor){0, 0, 0, 255}, 0, FTGX_JUSTIFY_CENTER | FTGX_ALIGN_TOP, ALIGN_CENTRE, ALIGN_BOTTOM);
 
-	txt[i] = new GuiText("Snes9x - Copyright (c) Snes9x Team 1996 - 2021");
-	txt[i]->SetPosition(0,-44); i++;
+	txt[i] = new GuiText("Snes9x - Copyright (c) Snes9x Team 1996 - 2022");
+	txt[i]->SetPosition(0,-56); i++;
 	txt[i] = new GuiText("This software is open source and may be copied, distributed, or modified");
-	txt[i]->SetPosition(0,-32); i++;
+	txt[i]->SetPosition(0,-44); i++;
 	txt[i] = new GuiText("under the terms of the GNU General Public License (GPL) Version 2.");
-	txt[i]->SetPosition(0,-20);
+	txt[i]->SetPosition(0,-32);
 
 	for(i=0; i < numEntries; i++)
 		creditsWindowBox.Append(txt[i]);
@@ -932,6 +935,7 @@ static void WindowCredits(void * ptr)
 		   (userInput[3].wpad->btns_d || userInput[3].pad.btns_d || userInput[3].wiidrcdata.btns_d))
 		{
 			exit = true;
+			showCredits = false;
 		}
 		usleep(THREAD_SLEEP);
 	}
@@ -3958,7 +3962,7 @@ static int MenuSettings()
 	GuiImage networkBtnIcon(&iconNetwork);
 	GuiButton networkBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
 	networkBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
-	networkBtn.SetPosition(0, 250);
+	networkBtn.SetPosition(-125, 250);
 	networkBtn.SetLabel(&networkBtnTxt);
 	networkBtn.SetImage(&networkBtnImg);
 	networkBtn.SetImageOver(&networkBtnImgOver);
@@ -3968,6 +3972,23 @@ static int MenuSettings()
 	networkBtn.SetTrigger(trigA);
 	networkBtn.SetTrigger(trig2);
 	networkBtn.SetEffectGrow();
+
+	GuiText creditsBtnTxt("Credits", 22, (GXColor){0, 0, 0, 255});
+	creditsBtnTxt.SetWrap(true, btnLargeOutline.GetWidth()-20);
+	GuiImage creditsBtnImg(&btnLargeOutline);
+	GuiImage creditsBtnImgOver(&btnLargeOutlineOver);
+	GuiButton creditsBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
+	creditsBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
+	creditsBtn.SetPosition(125, 250);
+	creditsBtn.SetLabel(&creditsBtnTxt);
+	creditsBtn.SetImage(&creditsBtnImg);
+	creditsBtn.SetImageOver(&creditsBtnImgOver);
+	creditsBtn.SetSoundOver(&btnSoundOver);
+	creditsBtn.SetSoundClick(&btnSoundClick);
+	creditsBtn.SetTrigger(trigA);
+	creditsBtn.SetTrigger(trig2);
+	creditsBtn.SetEffectGrow();
+	creditsBtn.SetUpdateCallback(WindowCredits);
 
 	GuiTrigger trigBack;
 	GuiTrigger trigBack2;
@@ -4012,6 +4033,7 @@ static int MenuSettings()
 	w.Append(&savingBtn);
 	w.Append(&menuBtn);
 	w.Append(&networkBtn);
+	w.Append(&creditsBtn);
 	w.Append(&backBtn);
 	w.Append(&resetBtn);
 
@@ -4034,6 +4056,11 @@ static int MenuSettings()
 		else if(networkBtn.GetState() == STATE_CLICKED)
 		{
 			menu = MENU_SETTINGS_NETWORK;
+		}
+		else if(creditsBtn.GetState() == STATE_CLICKED)
+		{
+			showCredits = true;
+			creditsBtn.SetState(STATE_SELECTED);
 		}
 		else if(backBtn.GetState() == STATE_CLICKED)
 		{
@@ -4761,6 +4788,11 @@ MainMenu (int menu)
 				break;
 		}
 		lastMenu = currentMenu;
+		if (btnLogo->GetState() == STATE_CLICKED)
+		{
+			showCredits = true;
+			btnLogo->ResetState();
+		}
 		usleep(THREAD_SLEEP);
 	}
 
