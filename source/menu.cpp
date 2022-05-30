@@ -889,11 +889,11 @@ static void WindowCredits(void * ptr)
 	txt[i]->SetPosition(20,-60); i++;
 	txt[i] = new GuiText(wiiDetails, 14, (GXColor){0, 0, 0, 255});
 	txt[i]->SetAlignment(ALIGN_RIGHT, ALIGN_BOTTOM);
-	txt[i]->SetPosition(-20,-60); i++;
+	txt[i]->SetPosition(-20,-40); i++;
 
 	GuiText::SetPresets(12, (GXColor){0, 0, 0, 255}, 0, FTGX_JUSTIFY_CENTER | FTGX_ALIGN_TOP, ALIGN_CENTRE, ALIGN_BOTTOM);
 
-	txt[i] = new GuiText("Snes9x - Copyright (c) Snes9x Team 1996 - 2021");
+	txt[i] = new GuiText("Snes9x - Copyright (c) Snes9x Team 1996 - 2022");
 	txt[i]->SetPosition(0,-44); i++;
 	txt[i] = new GuiText("This software is open source and may be copied, distributed, or modified");
 	txt[i]->SetPosition(0,-32); i++;
@@ -1067,7 +1067,7 @@ static int MenuGameSelection()
 	gameBrowser.fileList[0]->SetState(STATE_SELECTED);
 	gameBrowser.TriggerUpdate();
 	titleTxt.SetText(inSz ? szname : "Choose Game");
-			
+
 	while(menu == MENU_NONE)
 	{
 		usleep(THREAD_SLEEP);
@@ -1120,7 +1120,7 @@ static int MenuGameSelection()
 				}
 			}
 		}
-		
+
 		//update gamelist image
 		if(previousBrowserIndex != browser.selIndex || previousPreviewImg != GCSettings.PreviewImage)
 		{
@@ -4131,11 +4131,11 @@ static int MenuSettingsFile()
 			case 4:
 				OnScreenKeyboard(GCSettings.CheatFolder, MAXPATHLEN);
 				break;
-				
+
 			case 5:
 				OnScreenKeyboard(GCSettings.ScreenshotsFolder, MAXPATHLEN);
 				break;
-				
+
 			case 6:
 				OnScreenKeyboard(GCSettings.CoverFolder, MAXPATHLEN);
 				break;
@@ -4143,7 +4143,7 @@ static int MenuSettingsFile()
 			case 7:
 				OnScreenKeyboard(GCSettings.ArtworkFolder, MAXPATHLEN);
 				break;
-				
+
 			case 8:
 				GCSettings.AutoLoad++;
 				if (GCSettings.AutoLoad > 2)
@@ -4356,7 +4356,6 @@ static int MenuSettingsMenu()
 					GCSettings.language = LANG_KOREAN;
 	
 				break;
-
 			case 6:
 				GCSettings.PreviewImage++;
 				if(GCSettings.PreviewImage > 2)
@@ -4448,7 +4447,7 @@ static int MenuSettingsMenu()
 						sprintf(options.value[6], "Artwork");
 						break;
 			}
-			
+
 			optionBrowser.TriggerUpdate();
 		}
 
@@ -4580,7 +4579,7 @@ MainMenu (int menu)
 	static bool firstRun = true;
 	int currentMenu = menu;
 	lastMenu = MENU_NONE;
-	
+
 	if(firstRun)
 	{
 		#ifdef HW_RVL
