@@ -523,6 +523,8 @@ int main(int argc, char *argv[])
 		SwitchAudioMode(0);
 
 		Settings.ReverseStereo = (GCSettings.ReverseStereo == 1);
+		Settings.SupportHiRes = (GCSettings.HiResolution == 1);
+		Settings.MaxSpriteTilesPerLine = (GCSettings.SpriteLimit ? 34 : 128);
 		Settings.DisplayFrameRate = (GCSettings.ShowFrameRate == 1);
 		Settings.DisplayTime = (GCSettings.ShowLocalTime == 1);
 		Settings.AutoDisplayMessages = (Settings.DisplayFrameRate || Settings.DisplayTime ? true : false);

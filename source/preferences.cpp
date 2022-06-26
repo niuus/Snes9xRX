@@ -128,7 +128,7 @@ preparePrefsData ()
 	createXMLSetting("LoadFolder", "Load Folder", GCSettings.LoadFolder);
 	createXMLSetting("LastFileLoaded", "Last File Loaded", GCSettings.LastFileLoaded);
 	createXMLSetting("SaveFolder", "Save Folder", GCSettings.SaveFolder);
-	createXMLSetting("AppendAuto", "Append Auto to .SAV files", toStr(GCSettings.AppendAuto));
+	createXMLSetting("AppendAuto", "Append Auto to .SRM files", toStr(GCSettings.AppendAuto));
 	createXMLSetting("CheatFolder", "Cheats Folder", GCSettings.CheatFolder);
 	createXMLSetting("ScreenshotsFolder", "Screenshots Folder", GCSettings.ScreenshotsFolder);
 	createXMLSetting("CoverFolder", "Covers Folder", GCSettings.CoverFolder);
@@ -150,12 +150,14 @@ preparePrefsData ()
 	createXMLSetting("widescreen", "Aspect Ratio Correction", toStr(GCSettings.widescreen));
 	createXMLSetting("crosshair", "Crosshair", toStr(GCSettings.crosshair));
 	createXMLSetting("FilterMethod", "Filter Method", toStr(GCSettings.FilterMethod));
+	createXMLSetting("HiResolution", "SNES Hi-Res Mode", toStr(GCSettings.HiResolution));
+	createXMLSetting("SpriteLimit", "Sprites per-line Limit", toStr(GCSettings.SpriteLimit));
 	createXMLSetting("ShowFrameRate", "Show Framerate", toStr(GCSettings.ShowFrameRate));
 	createXMLSetting("ShowLocalTime", "Show Local Time", toStr(GCSettings.ShowLocalTime));
 	createXMLSetting("xshift", "Horizontal Video Shift", toStr(GCSettings.xshift));
 	createXMLSetting("yshift", "Vertical Video Shift", toStr(GCSettings.yshift));
-	createXMLSetting("sfxOverclock", "SuperFX Overclock", toStr(GCSettings.sfxOverclock));
-	createXMLSetting("TurboModeEnabled", "Turbo Mode Enabled", toStr(GCSettings.TurboModeEnabled));
+	createXMLSetting("sfxOverclock", "Super FX Overclock", toStr(GCSettings.sfxOverclock));
+	createXMLSetting("TurboModeEnabled", "Turbo Mode", toStr(GCSettings.TurboModeEnabled));
 	createXMLSetting("TurboModeButton", "Turbo Mode Button", toStr(GCSettings.TurboModeButton));
 
 	createXMLSection("Audio", "Audio Settings");
@@ -174,7 +176,7 @@ preparePrefsData ()
 	createXMLSetting("DisplayVM", "Display Virtual Memory", toStr(GCSettings.DisplayVM));
 	createXMLSetting("language", "Language", toStr(GCSettings.language));
 	createXMLSetting("PreviewImage", "Preview Image", toStr(GCSettings.PreviewImage));
-	createXMLSetting("HideSRAMSaving", "Hide SRAM Saving", toStr(GCSettings.HideSRAMSaving));
+	createXMLSetting("HideSRAMSaving", "Hide New SRAM button", toStr(GCSettings.HideSRAMSaving));
 	
 	createXMLSection("Controller", "Controller Settings");
 
@@ -346,6 +348,8 @@ decodePrefsData ()
 			loadXMLSetting(&GCSettings.widescreen, "widescreen");
 			loadXMLSetting(&GCSettings.crosshair, "crosshair");
 			loadXMLSetting(&GCSettings.FilterMethod, "FilterMethod");
+			loadXMLSetting(&GCSettings.HiResolution, "HiResolution");
+			loadXMLSetting(&GCSettings.SpriteLimit, "SpriteLimit");
 			loadXMLSetting(&GCSettings.ShowFrameRate, "ShowFrameRate");
 			loadXMLSetting(&GCSettings.ShowLocalTime, "ShowLocalTime");
 			loadXMLSetting(&GCSettings.xshift, "xshift");
@@ -453,7 +457,7 @@ DefaultSettings ()
 	GCSettings.AutoLoad = 1;
 	GCSettings.AutoSave = 1;
 
-	GCSettings.Controller = CTRL_PAD2;
+	GCSettings.Controller = CTRL_PAD2; // SNES Pad, Super Multitap, SNES Mouse, Super Scope, Justifier
 
 	GCSettings.videomode = 0; // automatic video mode detection
 	GCSettings.render = 2; // Unfiltered
@@ -470,14 +474,14 @@ DefaultSettings ()
 	GCSettings.zoomVert = 1.0; // vertical zoom level
 	GCSettings.xshift = 0; // horizontal video shift
 	GCSettings.yshift = 0; // vertical video shift
-	GCSettings.crosshair = 1;
+	GCSettings.crosshair = 1; // Enabled by default
 
 	GCSettings.WiimoteOrientation = 0;
 	GCSettings.ExitAction = 0; // Auto
 	GCSettings.AutoloadGame = 0;
 	GCSettings.MusicVolume = 20;
 	GCSettings.SFXVolume = 40;
-	GCSettings.DisplayVM = 0; // Disabled
+	GCSettings.DisplayVM = 0; // Disabled by default
 	GCSettings.PreviewImage = 0;
 	GCSettings.HideSRAMSaving = 0;
 	
@@ -500,10 +504,10 @@ DefaultSettings ()
 
 	// General
 
-	Settings.MouseMaster = true;
-	Settings.SuperScopeMaster = true;
-	Settings.JustifierMaster = true;
-	Settings.MultiPlayer5Master = true;
+	Settings.MouseMaster = false;
+	Settings.SuperScopeMaster = false;
+	Settings.JustifierMaster = false;
+	Settings.MultiPlayer5Master = false;
 	Settings.DontSaveOopsSnapshot = true;
 	Settings.ApplyCheats = true;
 
@@ -526,13 +530,14 @@ DefaultSettings ()
 
 	// Graphics
 	Settings.Transparency = true;
-	Settings.SupportHiRes = true;
 	Settings.SkipFrames = AUTO_FRAMERATE;
 	Settings.TurboSkipFrames = 19;
 	Settings.AutoDisplayMessages = false;
 	Settings.InitialInfoStringTimeout = 200; // # frames to display messages for
-	GCSettings.ShowFrameRate = 0;
-	GCSettings.ShowLocalTime = 0;
+	GCSettings.ShowFrameRate = 0; // Disabled by default
+	GCSettings.ShowLocalTime = 0; // Disabled by default
+	GCSettings.HiResolution = 1; // Enabled by default
+	GCSettings.SpriteLimit = 1; // Enabled by default
 
 	// Frame timings in 50hz and 60hz cpu mode
 	Settings.FrameTimePAL = 20000;

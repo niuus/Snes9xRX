@@ -60,7 +60,7 @@ enum
 };
 
 const char ctrlName[6][24] =
-{ "SNES Controller", "SNES Mouse", "Superscope", "Justifier", "SNES Controllers (2)", "SNES Controllers (4)" };
+{ "SNES Controller", "SNES Mouse", "Super Scope", "Justifier", "SNES Controllers (2)", "SNES Controllers (4)" };
 
 enum {
 	TURBO_BUTTON_RSTICK = 0,
@@ -126,9 +126,11 @@ struct SGCSettings{
 	int		render;		// 0 - original, 1 - filtered, 2 - unfiltered
 	int		FilterMethod; // convert to RenderFilter
 	int		Controller;
-	int		crosshair;
+	int		HiResolution;
+	int		SpriteLimit;
 	int		ShowFrameRate;
 	int		ShowLocalTime;
+	int		crosshair;
 	int		widescreen;	// 0 - 4:3 aspect, 1 - 16:9 aspect
 	int		xshift;	// video output shift
 	int		yshift;

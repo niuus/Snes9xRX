@@ -4,7 +4,6 @@
    For further information, consult the LICENSE file in the root directory.
 \*****************************************************************************/
 
-
 #ifndef _SNES9X_H_
 #define _SNES9X_H_
 
@@ -284,6 +283,8 @@ struct SSettings
 	bool8	UpAndDown;
 
 	float	SuperFXSpeedPerLine;
+
+	int	MaxSpriteTilesPerLine;
 };
 
 struct SSNESGameFixes

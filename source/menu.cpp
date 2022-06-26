@@ -841,7 +841,7 @@ static void WindowCredits(void * ptr)
 	txt[i]->SetPosition(50,y); i++;
 	txt[i] = new GuiText("NiuuS, the3seashells");
 	txt[i]->SetPosition(330,y); i++; y+=24;
-	txt[i] = new GuiText("Logo");
+	txt[i] = new GuiText("Logotype");
 	txt[i]->SetPosition(50,y); i++;
 	txt[i] = new GuiText("NiuuS");
 	txt[i]->SetPosition(330,y); i++; y+=48;
@@ -2021,7 +2021,7 @@ static int MenuGameSaves(int action)
 						menu = MENU_GAME_SAVE;
 					}
 				}
-				else if(ret == -1 && GCSettings.HideSRAMSaving == 0) // new SRAM
+				else if(ret == -1 && GCSettings.HideSRAMSaving == 0) // Hide New SRAM button
 				{
 					for(i=1; i < 100; i++)
 						if(saves.files[FILE_SRAM][i] == 0)
@@ -2186,7 +2186,8 @@ static int MenuGameSettings()
 	controllerBtn.SetTrigger(trig2);
 	controllerBtn.SetEffectGrow();
 
-	GuiText screenshotBtnTxt("ScreenShot", 22, (GXColor){0, 0, 0, 255});
+	GuiText screenshotBtnTxt("Screenshot", 22, (GXColor){0, 0, 0, 255});
+	screenshotBtnTxt.SetWrap(true, btnLargeOutline.GetWidth()-20);
 	GuiImage screenshotBtnImg(&btnLargeOutline);
 	GuiImage screenshotBtnImgOver(&btnLargeOutlineOver);
 	GuiImage screenshotBtnIcon(&iconScreenshot);
@@ -2509,6 +2510,7 @@ static int MenuSettingsMappings()
 	justifierBtn.SetEffectGrow();
 
 	GuiText otherBtnTxt("Other Mappings", 22, (GXColor){0, 0, 0, 255});
+	otherBtnTxt.SetWrap(true, btnLargeOutline.GetWidth()-20);
 	GuiImage otherBtnImg(&btnLargeOutline);
 	GuiImage otherBtnImgOver(&btnLargeOutlineOver);
 	GuiButton otherBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
@@ -3064,7 +3066,7 @@ static int MenuSettingsMappingsMap()
 	GuiOptionBrowser optionBrowser(552, 248, &options);
 	optionBrowser.SetPosition(0, 108);
 	optionBrowser.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
-	optionBrowser.SetCol2Position(245);
+	optionBrowser.SetCol2Position(280);
 
 	HaltGui();
 	GuiWindow w(screenwidth, screenheight);
@@ -3420,7 +3422,7 @@ static int MenuSettingsOtherMappings()
 	bool firstRun = true;
 	OptionList options;
 
-	sprintf(options.name[i++], "Enable Turbo Mode");
+	sprintf(options.name[i++], "Turbo Mode");
 	sprintf(options.name[i++], "Turbo Mode Button");
 
 	options.length = i;
@@ -3458,7 +3460,7 @@ static int MenuSettingsOtherMappings()
 
 	GuiOptionBrowser optionBrowser(552, 248, &options);
 	optionBrowser.SetPosition(0, 108);
-	optionBrowser.SetCol2Position(200);
+	optionBrowser.SetCol2Position(250);
 	optionBrowser.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
 
 	HaltGui();
@@ -3497,7 +3499,7 @@ static int MenuSettingsOtherMappings()
 			switch(GCSettings.TurboModeButton)
 			{
 				case 0:
-					sprintf (options.value[1], "Right Stick (default)"); break;
+					sprintf (options.value[1], "Right Stick (Default)"); break;
 				case 1:
 					sprintf (options.value[1], "A"); break;
 				case 2:
@@ -3523,9 +3525,9 @@ static int MenuSettingsOtherMappings()
 				case 12:
 					sprintf (options.value[1], "2"); break;
 				case 13:
-					sprintf (options.value[1], "Plus"); break;
+					sprintf (options.value[1], "PLUS (+)"); break;
 				case 14:
-					sprintf (options.value[1], "Minus"); break;
+					sprintf (options.value[1], "MINUS (-)"); break;
 			}
 
 			optionBrowser.TriggerUpdate();
@@ -3557,11 +3559,13 @@ static int MenuSettingsVideo()
 	sprintf(options.name[i++], "Filtering");
 	sprintf(options.name[i++], "Screen Zoom");
 	sprintf(options.name[i++], "Screen Position");
-	sprintf(options.name[i++], "Crosshair");
 	sprintf(options.name[i++], "Video Mode");
+	sprintf(options.name[i++], "SNES Hi-Res Mode");
+	sprintf(options.name[i++], "Sprites per-line Limit");
+	sprintf(options.name[i++], "Crosshair");
 	sprintf(options.name[i++], "Show Framerate");
 	sprintf(options.name[i++], "Show Local Time");
-	sprintf(options.name[i++], "SuperFX Overclock");
+	sprintf(options.name[i++], "Super FX Overclock");
 	options.length = i;
 
 #ifdef HW_DOL
@@ -3597,7 +3601,7 @@ static int MenuSettingsVideo()
 
 	GuiOptionBrowser optionBrowser(552, 248, &options);
 	optionBrowser.SetPosition(0, 108);
-	optionBrowser.SetCol2Position(200);
+	optionBrowser.SetCol2Position(250);
 	optionBrowser.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
 
 	HaltGui();
@@ -3641,24 +3645,32 @@ static int MenuSettingsVideo()
 				break;
 
 			case 5:
-				GCSettings.crosshair ^= 1;
-				break;
-
-			case 6:
 				GCSettings.videomode++;
 				if(GCSettings.videomode > 4)
 					GCSettings.videomode = 0;
 				break;
 
+			case 6:
+				GCSettings.HiResolution ^= 1;
+				break;
+
 			case 7:
-				GCSettings.ShowFrameRate ^= 1;
+				GCSettings.SpriteLimit ^= 1;
 				break;
 
 			case 8:
-				GCSettings.ShowLocalTime ^= 1;
+				GCSettings.crosshair ^= 1;
 				break;
 
 			case 9:
+				GCSettings.ShowFrameRate ^= 1;
+				break;
+
+			case 10:
+				GCSettings.ShowLocalTime ^= 1;
+				break;
+
+			case 11:
 				#ifdef HW_RVL
 				GCSettings.sfxOverclock++;
 				if (GCSettings.sfxOverclock > 6) {
@@ -3709,40 +3721,42 @@ static int MenuSettingsVideo()
 #endif
 			sprintf (options.value[3], "%.2f%%, %.2f%%", GCSettings.zoomHor*100, GCSettings.zoomVert*100);
 			sprintf (options.value[4], "%d, %d", GCSettings.xshift, GCSettings.yshift);
-			sprintf (options.value[5], "%s", GCSettings.crosshair == 1 ? "On" : "Off");
 
 			switch(GCSettings.videomode)
 			{
 				case 0:
-					sprintf (options.value[6], "Automatic (Recommended)"); break;
+					sprintf (options.value[5], "Auto (Recommended)"); break;
 				case 1:
-					sprintf (options.value[6], "NTSC (480i)"); break;
+					sprintf (options.value[5], "NTSC (480i)"); break;
 				case 2:
-					sprintf (options.value[6], "Progressive (480p)"); break;
+					sprintf (options.value[5], "Progressive (480p)"); break;
 				case 3:
-					sprintf (options.value[6], "PAL (50Hz)"); break;
+					sprintf (options.value[5], "PAL (50Hz)"); break;
 				case 4:
-					sprintf (options.value[6], "PAL (60Hz)"); break;
+					sprintf (options.value[5], "PAL (60Hz)"); break;
 			}
-			sprintf (options.value[7], "%s", GCSettings.ShowFrameRate ? "On" : "Off");
-			sprintf (options.value[8], "%s", GCSettings.ShowLocalTime ? "On" : "Off");
+			sprintf (options.value[6], "%s", GCSettings.HiResolution == 1 ? "On" : "Off");
+			sprintf (options.value[7], "%s", GCSettings.SpriteLimit == 1 ? "On" : "Off");
+			sprintf (options.value[8], "%s", GCSettings.crosshair == 1 ? "On" : "Off");
+			sprintf (options.value[9], "%s", GCSettings.ShowFrameRate ? "On" : "Off");
+			sprintf (options.value[10], "%s", GCSettings.ShowLocalTime ? "On" : "Off");
 
 			switch(GCSettings.sfxOverclock)
 			{
 				case 0:
-					sprintf (options.value[9], "Default"); break;
+					sprintf (options.value[11], "Default"); break;
 				case 1:
-					sprintf (options.value[9], "20 MHz"); break;
+					sprintf (options.value[11], "20 MHz"); break;
 				case 2:
-					sprintf (options.value[9], "40 MHz"); break;
+					sprintf (options.value[11], "40 MHz"); break;
 				case 3:
-					sprintf (options.value[9], "60 MHz"); break;
+					sprintf (options.value[11], "60 MHz"); break;
 				case 4:
-					sprintf (options.value[9], "80 MHz"); break;
+					sprintf (options.value[11], "80 MHz"); break;
 				case 5:
-					sprintf (options.value[9], "100 MHz"); break;
+					sprintf (options.value[11], "100 MHz"); break;
 				case 6:
-					sprintf (options.value[9], "120 MHz"); break;
+					sprintf (options.value[11], "120 MHz"); break;
 			}
 			optionBrowser.TriggerUpdate();
 		}
@@ -3771,7 +3785,7 @@ static int MenuSettingsAudio()
 	OptionList options;
 
 	sprintf(options.name[i++], "Stereo Reverse");
-	sprintf(options.name[i++], "Interpolation");
+	sprintf(options.name[i++], "Interpolation Filter");
 	options.length = i;
 
 	for(i=0; i < options.length; i++)
@@ -3803,7 +3817,7 @@ static int MenuSettingsAudio()
 
 	GuiOptionBrowser optionBrowser(552, 248, &options);
 	optionBrowser.SetPosition(0, 108);
-	optionBrowser.SetCol2Position(200);
+	optionBrowser.SetCol2Position(250);
 	optionBrowser.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
 
 	HaltGui();
@@ -4061,7 +4075,7 @@ static int MenuSettingsFile()
 	sprintf(options.name[i++], "Artwork Folder");
 	sprintf(options.name[i++], "Auto Load");
 	sprintf(options.name[i++], "Auto Save");
-	sprintf(options.name[i++], "Append 'Auto' to .SAV files");
+	sprintf(options.name[i++], "Append 'Auto' to .SRM files");
 	options.length = i;
 
 	for(i=0; i < options.length; i++)
@@ -4273,7 +4287,7 @@ static int MenuSettingsMenu()
 	sprintf(options.name[i++], "Display Virtual Memory");
 	sprintf(options.name[i++], "Language");
 	sprintf(options.name[i++], "Preview Image");
-	sprintf(options.name[i++], "Hide SRAM Saving");
+	sprintf(options.name[i++], "Hide New SRAM button");
 	options.length = i;
 
 	for(i=0; i < options.length; i++)
