@@ -18,7 +18,8 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 
 ## FEATURES
 
-* Core based on Snes9x 1.52
+* Core based on Snes9x 1.52 for max performance.
+* MSU-1 co-processor support, for full-motion video & CD-quality audio!
 * Wiimote, Nunchuk, Wii Classic/Classic Pro, and Gamecube controller support
 * Wii U Pro, Wii U GamePad, NES and SNES Classic controller support
 * Retrode 2 USB adapter support, so you can use the real controllers!
@@ -34,8 +35,10 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 * UStealth USB devices support
 * Autodetect PAL/NTSC, 16:9 widescreen support
 * Video modes: Original (240p) / Filtered (Sharp & Soft) / Unfiltered
-* Filtering modes: None, Scale2x, HQ2x, Scanlines 25%/50%
-* Turbo Mode - up to 2x the normal speed
+* Video filtering modes: None, Scale2x, HQ2x, Scanlines 25%/50%
+* Audio filtering modes: None, Sinc, Cubic, Linear, Gaussian
+* Remappable Turbo Mode feature - up to 2x the normal speed
+* Enable or disable the Sprite per-scanline original console limit!
 * Zoom option to zoom in/out
 * Available in various skins/colors
 * Open Source!
@@ -43,54 +46,39 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 
 ## RECENT CHANGELOG
 
-[5.0.0 - Abril 22, 2022]
-* Use I4 instead of RGBA8 for fonts (much less memory). [Daryl]
-* When unable to load the default rom directory, just drop into device
-root. Don't show an error when unable to find a load device. [Daryl]
-* Silence a few warnings. [Daryl]
-* Remove S9xChooseMovieFilename. [bearoso]
-* Remove S9xSetPalette. [bearoso]
-* Remove S9xChooseFilename. [bearoso]
-This is integration of the frontend with the core. Disable
-the snapshot button mappings that use it. Any frontend should
-implement those port commands its own.
-* Load cover images directly from file instead of an
-intermediary buffer. [Daryl]
-* Correct aspect ratio by changing viWidth to 644. [vaguerant]
-* Add ability to change the player mapped to a
-connected (Wireless) controller. [Tantric]
-* Change max game image dimensions to 640x480, fix bug
-in png loading. [Tantric]
-* Add support for Mayflash 2-port SNES USB adapter. [EthanArmbrust]
-* New scanlines filter setting. (thanks Tanooki16!)
-Now nicknamed 50% and 25% for RX, I added the option to select between both,
-so you can choose whether you like darker scanlines (old method)
-or subtler ones (new method).
-* Add A+B+SELECT+START for back to menu on Wiimote controller extensions.
-Based on the similar commit by Tantric for Snes9xGX.
-* If arguments are passed to the emu to autoboot a game, then the main
-menu button should be labelled Exit, and leave the emu instead of going
-back to the main menu. Cleanup autoboot code. [Tantric]
-* Add support for mapping more than 128KByte SRAM. [cout/qwertymodo]
-* Add 128KByte SRAM support in cheats. [qwertymodo]
-* New Scale2x filter added. (thanks Tanooki16!)
-Originally developed by Andrea Mazzoleni for the AdvanceMAME project.
-http://www.scale2x.it/
-* Add support for Speedlink Hornet Gamepad USB. (thanks revvv!)
-* Prevent cheat name overflow. [Daryl]
-* Support forwarders that pass in sd1:/ [Tantric]
-* Add ability of FastROM hacks to use SuperFX. [bladeoner]
-* Set SRAM initialization to set whole buffer. [bearoso]
-...not just a few bytes. Add a TODO comment at allocation.
-These never change, so they should ideally be static.
-* Add heuristic to detect 6MB Earthbound hack.
-Makes "Mother 2 Deluxe" romhack playable.
-* UStealth support.
-* Wii 480p video fix. [Extrems]
-* More 3rd party controllers support. [Tantric]
-Fix 3rd party classic controllers that don't send calibration data.
-For those controllers, use default values.
+[5.1.0 - June 26, 2022]
+* Reset settings if an older config file is found
+Preferences XML file will be reset if it is older than 5.1.0, in order to
+start clean and avoid possible conflicts.
+* Korean language update, minor cleanup. [DDinghoya]
+* Remove unused logger.cpp and logger.h. [bladeoner]
+* Fix the logic for the Display Virtual Memory toggle. [InfiniteBlueGX]
+* Cleanups backported from the Libretro cores.
+* dsp: Fix assignment of Op11Xr. [jonathan-teh]
+* apu/dsp: Mark function-scope const arrays as static. [jSTE0]
+* Fix some memory leaks. [jdgleaver]
+* Remove OpenGL options. Not needed here.
+* Remap Turbo Mode and add a submenu. (Thanks InfiniteBlueGX!)
+* Fix an edge case where Turbo Mode could be activated on Dpad Up/Left
+when Nunchuk's Z/C button is mapped. [InfiniteBlueGX]
+* Some renaming for TurboMode. [InfiniteBlueGX]
+* Add an enumeration for the remappable buttons
+for Turbo Mode. [InfiniteBlueGX]
+* SuperFX OC value will properly load on next boot. [InfiniteBlueGX]
+* Fix some formatting. [InfiniteBlueGX]
+* Add a toggle to hide/show the SRAM save button
+in the save menu UI. [InfiniteBlueGX]
+* Remove an unused variable? [InfiniteBlueGX]
+* New audio filters (CUBIC/SINC) taken from Snes9x 1.61.
+* Invert L/R audio channels, save more settings. [Tanooki16]
+You can now swap Left and Right audio channels with a toggle.
+* New speeds for Super FX overclocking, Wii U recommended
+Added 80 MHz / 100 MHz / 120 MHz. These will stay hidden on the
+Gamecube port's GUI, as the CPU is not powerful enough.
+* SNES Hi-Res Mode ON/OFF and Sprite Limit ON/OFF (thanks Tanooki16!)
 * Important readme updates.
+* Updates for the Spanish language.
+* Other tweaks.
 
 [older update history at the bottom]
 
@@ -106,36 +94,45 @@ directory. Optionally, you can place cheat code files and artwork/covers
 in their respectively named folders inside the "\snes9xgx\" directory.
 If they are not present, the folders will be created at second run, in case
 you want to acquire the files later. Once you are done, you can proceed to
-run the emulator. Optionally, you can install the Snes9x RX Forwarder
-Channel in your Wii or vWii System Menu (which points to "\apps\Snes9xRX",
+run the emulator. Additionally, you can install the Snes9x RX Forwarder
+Channel in your Wii or vWii System Menu (it points to "\apps\Snes9xRX"),
 or the special Snes9x RX Channel for Wii U, which fully installs to your
 console and reads the configuration and necessary files from your device
 "\snes9xgx" folder, be it SD or USB.
 
-In the case of the Wii U, you could use the Wii U Channel version, which
-installs directly to the console, and also allows you to take advantage
-of the extra CPU power (when and if you run sign_c2w_patcher first). With
-this, you only need the folder "snes9xgx", which also comes pre-packaged in
-the respective .zip archive. To install, you need to use WUP Installer GX2
-or WUP Installer Y Mod, through the Homebrew Launcher.
+In the case of the Wii U Channel version, it has the added benefit of taking
+advantage of the extra CPU power available, on the condition that you run
+the Wii U homebrew app "sign_c2w_patcher" first, to unlock the so-called
+"Wii U Overclocked Mode", which simply makes the console avoid the CPU
+underclock (729 MHz) to run Wii software at the native Wii U's speed
+(1.24 GHz), so it is completely safe to use.
+
+By using the Wii U channel, you only need the folder "snes9xgx", which also
+comes pre-packaged in the respective .zip archive. To install, you need to
+use WUP Installer GX2 or the WUP Installer Y Mod, through the
+Wii U's Homebrew Launcher.
+
+It is important to note, when you use the Wii U's overclocked mode, you
+are limited to use the SD as the storage medium for all your files.
+No workarounds, as this is a current console limitation.
 
 
 ## INITIAL SETUP
 
 The first time you run Snes9x RX it will create a new "settingsRX.xml" file
 on the SD/USB Card which stores the configuration of the emulator. So when
-you run Snes9x RX it will automatically detect your storage medium and will
+you run Snes9x RX, it will automatically detect your storage medium and
 bring you to the ROM selection screen. If you want to run a game with the
-default settings then just highlight the game and press "A" on it and it
+default settings, then just highlight the game and press 'A' on it and it
 will load. However, you can configure Snes9x RX to your liking.
 
 
 ## CONFIGURATION
 
-To configure Snes9x RX, press "A" on the "Settings" box. This will bring
+To configure Snes9x RX, press 'A' on the "Settings" box. This will bring
 up the "Settings" screen where you can configure the "Saving & Loading",
 "Menu", and "Network". You can also restore the settings to their initial 
-values by clicking on the "Reset Settings", or you can return to the ROM 
+values by clicking on the "Reset Settings", or you can just return to the ROM 
 selection screen by clicking on "Go Back".
 
 
@@ -145,21 +142,21 @@ selection screen by clicking on "Go Back".
 
 From this setup option you can configure the way Snes9x RX loads and saves.
 Your options are Load Device, Save Device, Load Folder, Save Folder, Auto
-Load and Auto Save. Clicking on all of the options except the ones about
-folders, will let you toggle through their settings. Clicking on the folder
-options will bring up a text box where you can enter any other path you wish
-to use, in case you have the need to customize it. This is also true for the
-Cheats, Screenshots, Covers, and Artwork options.
+Load and Auto Save. Clicking on all of the options will let you toggle
+through their settings. Those labeled with "folder" will bring up a text
+box where you can enter any other path you wish to use, in case you have
+the need to customize it. This is also true for the Cheats, Screenshots,
+Covers, and Artwork options.
 
-Snes9x RX has two types of saves - one is the SRAM which is
-the save game data (this is only applicable if the game you're playing 
-supports battery saving) and the other is Snapshots, which are real time saves.
-Real time saves allow you to save your game in it's current state and resume it
-at a later time.
+Snes9x RX has two types of saves - one is the SRAM, which is the save game
+data (this is only applicable if the game you're playing supports
+battery saving), and the other is Snapshots, which are real time saves.
+Real time saves allow you to save your game in it's current state and resume
+it at a later time.
 
 ```
 	• Load Device -	SD, USB, DVD, Network and Auto Detect
-	
+
 	• Save Device - SD, USB, Network and Auto Detect
 
 	• Auto Load - SRAM, Snapshot and Off
@@ -167,18 +164,19 @@ at a later time.
 	• Auto Save - SRAM, Snapshot, Both and Off
 ```
 
-You can also toggle the option to append "Auto" into the filename of all the
-automatic SRAM saves that the emulator creates whenever you play a supported
-battery saving cartridge.
+You can also toggle the option to append 'Auto' into the filename of all the
+automatic SRAM saves that the emulator creates, whenever you play a
+supported battery saving cartridge.
 
 ### MENU
 
 This settings screen will allow you to customize a few aspects on how the 
 Menu works including the Exit Action, Wiimote Orientation (for navigating
-through the menues), Music Volume, Sound Effects Volume, Display Virtual
-Memory (inside the Game Menu), Language, and the type of Preview Image
-you'd like on the Choose Game screen. The Exit Action can be set to
-"Return to Loader", "Return to Wii Menu" and "Power off Wii".
+through the menus), Music Volume, Sound Effects Volume, Display Virtual
+Memory (inside the Game Menu), Language, the type of Preview Image you'd
+like on the Choose Game screen, and a toggle to show or hide the "New SRAM"
+button. The Exit Action can be set to "Return to Loader",
+"Return to Wii Menu" and "Power off Wii".
 
 ### NETWORK
 
@@ -196,8 +194,8 @@ will list the contents of the "\snes9xgx\roms\" directory on your SD card.
 You can specify a different default directory to load games from (Settings
 -> Saving & Loading -> Load Folder), or simply navigate to another one by
 pressing on "Up One Level", going back as far as the Device Selection. It
-will autosave that directory for you if you happen to load any ROM from
-there. To launch a game (which can be either uncompressed or inside a
+will autosave the current directory for you, if you happen to load any ROM
+from it. To launch a game (which can be either uncompressed or inside a
 ZIP archive) simply click on the title and it will load. In the case of
 7z compressed files, you will be presented first with a list of all the
 supported games inside the archive.
@@ -206,43 +204,46 @@ supported games inside the archive.
 ## GAMEPLAY MENU
 
 Once you load a game, you can access a special menu by pressing the 
-Wii/Wii U controller's "Home" button / Gamecube controller's C-stick left.
+Wii/Wii U controller's 'Home' button / Gamecube controller's 'C-stick left'.
 If you're using any other input controller on the Wiimote extension that
-doesn't have a "Home" button, or a special converter to use other types of
-controllers on the Gamecube ports, simply press the button combination
-Start+A+B plus Select/Z. This will bring up the Save, Load, Delete,
-Game Settings and Reset options.
+doesn't have a 'Home' button, press 'Select + Start + A + B'. If you use an
+special converter to connect other types of controllers on the Gamecube
+ports, simply press the button combination 'Start + A + B' plus 'Select/Z'.
+This will bring up a special Game Menu that contains the "Save", "Load",
+"Delete", "Game Settings" and "Reset" options.
 
 From this menu you can also return to the Choose Game screen by selecting
 "Main Menu". To leave the menu and resume game play, select "Close".
 
-The Save option will allow you to save either your SRAM or a Snapshot. Once
-you've selected Save, two options will appear named "New SRAM" and "New 
-Snapshot". Clicking on either these will create a new save. Once you have
-a save, you can save over it by selecting it instead of the "New" option.
-The Load option will allow you to load your saved SRAM or Snapshot.
-Finally, the Delete option allows you to delete any of your snapshots or
-SRAM saves. Reset will just reset the game, as in the real console.
+The "Save" option will allow you to save either your SRAM or a Snapshot.
+Once you've selected "Save", two options will appear named "New SRAM" and
+"New Snapshot". Clicking on either of these will create a new save, which
+you can overwrite if you need to by selecting it. The "Load" option will
+allow you to load any saved SRAM or Snapshot. Finally, the "Delete" option
+allows you to delete any of your snapshots or SRAM saves. "Reset" will
+just reset the game, as the real console behavior.
 
-If you pick Game Settings, you can adjust other special options, which are
-covered in the following sections.
+If you pick "Game Settings", you can adjust other special options, which
+are covered in the following sections.
 
 
 ## GAME SETTINGS
 
 ### BUTTON MAPPINGS
 
-Once in the Button Mappings settings menu, you'll have the option to configure
-almost all the controllers already supported (except the Retrode 2 USB, Xbox
-360 controller or the DualShock 3). You can also configure SNES peripherals
-like the Mouse, Super Scope, and the Konami's Justifier, although you can
-only alter the mappings for these on the GameCube controller and Wiimote
-sections. Once you select a controller to configure, you will be presented
-with which input device you would like to remap. To set any buttons, simply
-click on the input device you wish to use and then pick the button. After
-you select a button to configure, Snes9x RX will prompt you to press the
-button you want to assign to the button you've selected. Below is a list of
-each controller, followed by the input devices and the default values
+Inside the "Button Mappings" settings menu, you can configure the button
+mappings for SNES peripherals like the SNES Controller, Mouse, Super Scope,
+																		   
+and the Konami's Justifier. You'll have the option to remap almost all the
+controllers already supported by the emulator (except the Retrode 2 USB,
+Xbox 360 controller, Hornet Gamepad, or the DualShock 3).
+
+Once you select a controller to configure, you will be presented with a
+complete list of the SNES Gamepad buttons you can remap. To set any buttons,
+																		 
+simply pick and click. Snes9x RX will prompt you to press the new physical
+button you want to assign to the virtual button you've selected. Below is a
+list of each controller, followed by the input devices and the default values
 for those devices.
 
 ### SNES Controller
@@ -417,20 +418,64 @@ for those devices.
 			AIM OFFSCREEN = A
 			START = PLUS
 
+### BUTTON MAPPINGS / OTHER MAPPINGS
+
+This sub-menu offers you two options:
+
+"Turbo Mode" allows you to turn ON (Default) or OFF the Turbo Mode feature.
+
+"Turbo Mode Button" allows you to remap the feature to any other button, by
+cycling through the available labeled options represented on the supported
+physical controllers.
+
 ### AUDIO
 
-Here you can choose between audio interpolation filters:
+The Super Nintendo / Super Famicom creates audio through the Nintendo S-SMP,
+a wavetable synthesizer and dedicated sound module designed and manufactured
+by Sony.
+
+This APU (Audio Processing Unit), which functions as a sound co-processor to
+offload the work done by the console's main CPU, mixes up to 8 simultaneous
+voices in 16-bit Stereo, at a max sample rate of 32,000 kHz. Sound samples
+are stored in the APU's 64KB PSRAM in compressed (BRR) format.
+
+All these samples together are output with a specific process of
+audio interpolation, named Gaussian filtering, the APU's native method,
+with its own set of pros and cons.
+
+Audio interpolation is a method of making digital audio sound better than
+it really is, to improve the listening experience.
+
+The audio interpolation options presented in this menu allow you to fine
+tune the produced sound with other filters, which subtly alter the source,
+so it's up to your preferences to change it. Below is a short explanation
+for each option:
 
 ```
 • Gaussian: the most accurate representation to how the console sounded.
-Might produce better bass in certain sound effects. However, the sound
-will overall be a bit more muffled or soft.
+It minimizes / limits aliasing and might produce better bass in certain
+sounds. However, the sound will overall be a bit more muffled or soft,
+because of the low-pass filter applied to the sound output.
 
-• Linear: the simplest form of interpolation. Might improve the sound
-while being a bit clearer, depending on your taste.
+• Linear: the simplest form of interpolation. Sounds a bit clearer.
+The problem with linear interpolation is that it makes straight lines
+between each sound sample, and sound waves don't follow straight paths.
+
+• Cubic: might give the brightest sound, it tries to reproduce a more
+natural waveform by "bending" the interpolated points around the original
+samples. This method gives an interpolating polynomial that is smoother
+and has smaller error than some other interpolating polynomials.
+
+• Sinc: Linear and Cubic allow aliasing (this is the misidentification
+of a signal frequency, which might introduce distortion or other artifacts
+into the recording). Sinc leaves samples sounding essentially as they
+do in their raw form.
 
 • None: entirely disables interpolation.
 ```
+Last but not least, the Stereo Reverse option will allow you to swap
+the Left/Right audio channels, in case your cables are wired different
+or they've been swapped.
 
 ### VIDEO
 
@@ -463,8 +508,18 @@ To use the "Original" rendering, make sure your LCD/LED display supports
 your display will warn you that there is no signal. This is the most
 accurate rendition for the resolution from the original Super Nintendo,
 and will give you crisp unfiltered pixels, most ideally suited to enjoy
-on CRT TVs or monitors. Can even be coupled with modern TVs for use with
-scanline generators or line doublers (Framemeister, OSSC, RetroTink).
+on CRT TVs / CRT monitors. This rendering mode can even be coupled with
+modern TVs for use with scanline generators or line doublers, like the
+Framemeister, OSSC, or RetroTink.
+
+Something to keep in mind, the Scanlines 25%/50% filters are not meant
+to be used with "Original" rendering, due to the lower resolution that's
+being output. They will make the screen flicker badly.
+
+Also important to note, the Scanlines 25%/50% filtering modes will not
+work on games that utilize the Super Nintendo Hi-Res Mode. It will
+result in broken graphics (i.e.: A.S.P. Air Strike Patrol) or just no
+difference at all (i.e.: Super Buster Bros).
 
 ```
 • Screen Zoom: this will bring up a menu where you can adjust the Zoom level
@@ -475,22 +530,45 @@ you to move the position of the video output. You'll only need to use this
 option if the screen is not centered. Combining this with the Zoom and
 Scaling you should be able to get a proper display on your television.
 
-• Crosshair: this will disable the emulator's on-screen crosshair for all
-Superscope/Lightgun games.
-
 • Video mode: manually choose between the supported video standards for
 your display. NTSC (480i), Progressive (480p), PAL (50Hz), PAL (60Hz),
 or Automatic, the latter one being the recommended setting.
 
-• Show Framerate: show the frames per second on-screen.
+• SNES Hi-Res Mode: this will disable the games capacity to use the
+SNES Hi-Res Mode, if you want to use the Scanlines filtering in those
+games. It will of course break games that were intended to use the
+feature (i.e.: texts in Secret of Mana).
+
+• Sprites per-line Limit: when disabled, this will allow the emulated
+console to break the original hardware limitation of 32 sprites per-scanline
+limit, so sprites don't dissappear or flicker. Specially useful for games
+that show lots of sprites on screen (i.e.: Gradius III).
+
+• Crosshair: this will disable the emulator's on-screen crosshair for all
+Super Scope / Justifier games.
+
+• Show Framerate: show the frames per second (FPS) on-screen.
 
 • Show Local Time: show the the local time set on your Wii on-screen.
 
-• SuperFX Overclock: this special setting will overclock the speed of
-the GSU-1 & GSU-2 -most commonly known as the SuperFX chip- on every
-supported game, which improves games with faster or smoother framerates.
+• Super FX Overclock: this special setting will overclock the speed of
+the GSU-1 & GSU-2 chips -most commonly known as the Super FX chip- on every
+supported title, which improves games with faster or smoother framerates.
+This effect is most notable in heavy games like Star Fox or Doom, for
+example. When playing on the Gamecube, which is understandably slower
+than the succeeding consoles, it can give you better speeds on light FX
+games as Super Mario World 2: Yoshi's Island.
+
 You can have it at the Default chip speed (10.7 MHz), or set it to 20 MHz,
-40 MHz, or 60 MHz.
+40 MHz, or 60 MHz. Keep in mind that the majority of the Super FX games and
+overclock don't mix well on the Gamecube, which will slow the games to a
+crawl, as the console's CPU is not powerful enough.
+
+If you use the Snes9x RX Wii U Channel version along with the console's
+"overclocked mode", you can now enjoy Super FX overclock speeds of 80 MHz,
+100 MHz, and up to 120 MHz, which give a very nice boost in framerate for
+these special games. These last three speed options are hidden on the
+Gamecube port, as they are unusable for the reason explained above.
 ```
 
 ### CONTROLLER
@@ -516,18 +594,37 @@ Cheats are loaded from the "\snes9xgx\cheats" directory and must be in the
 SNES9X .CHT file format. They also must be named the same name as the game
 you're playing with the .cht extension. An example would be if you have a 
 ROM called "Super Mario World.smc" you would need to name your .cht file to
-"Super Mario World.cht". You can find a link to a massive collection of Super
-NES cheat codes in the Links section below.
+"Super Mario World.cht". You can find a link to a massive collection of
+Super Nintendo cheat codes in the Links section below.
+
+
+## MSU-1 CO-PROCESSOR
+
+The MSU-1 is a custom coprocessor that sits inside the game cartridge,
+not entirely unlike the Super FX, SDD-1, CX4, SA-1 or the DSP series, used
+in games such as Doom, Star Ocean, Mega Man X2, Kirby's Dream Land 3,
+or Top Gear 3000, respectively. This expansion chip was designed by byuu
+(later known as Near), the author of bsnes and higan, the most accurate to
+hardware, Super Nintendo / Super Famicom emulators ever made.
+
+The enhancement chip enables playback of CD-quality audio (uncompressed
+16-bit PCM at 44,100 kHz), along with full-motion video, and even the
+streaming of new graphic frames into games. Another neat trick is to
+store program data on it, copy this data into the SNES main RAM and
+execute it from there. All of this is possible as the MSU-1 addresses
+up to 4GB of data, far more than a typical SNES cartridge could ever hold.
 
 
 ## USB CONTROLLERS
 
-To enable the Xbox 360 (wired) controller, there are two ways available:
+To enable the Speedlink Hornet Gamepad or the Xbox 360 (wired) controller,
+there are two ways available:
+
 Before loading Snes9x RX, connect your Xbox 360 wired controller. If the
 other USB port is populated (example: USB HDD, flash drive, DualShock 3)
 it should work the moment you start a game. For manual detection, when
 you're at the main screen (Choose a game), click on the emulator logo at
-the corner and read the status info at the bottom, to confirm detection.
+the corner and check the status info at the bottom, to confirm detection.
 Remember, the controller only works when in-game. You can swap your
 player/port number by simply pressing on the Xbox Guide button.
 
@@ -541,26 +638,30 @@ by now. You can do this before loading any game, for example.
 
 ## TURBO MODE
 
-TurboMode increases the playback speed of the game by about 2x. To use it,
-simply press and hold right on the C-stick (yellow control stick on the
-Gamecube controller) or the right analog stick on the Wii Classic Controller
-/ Wii Classic Controller Pro / Wii U Pro Controller for as long as you want
-gameplay to be faster. Release the stick/button whenever you want normal
-playback speed to resume.
+Turbo Mode increases the playback speed of the game by about 2x. By default,
+to use it simply press and hold right on the 'C-stick' (yellow control stick
+on the Gamecube controller) or the right analog stick on the Wii Classic
+Controller / Wii Classic Controller Pro / Wii U Pro Controller for as long
+as you want gameplay to be faster. Release the stick/button whenever you
+want normal playback speed to resume.
+
+Remember that this function can be disabled or remapped to other buttons
+inside the Game Menu (Game Settings -> Button Mappings -> Other Mappings).
 
 
 ## IMPORTING AND EXPORTING SRAM
 
-Snes9x RX now includes the ability to load SRAM from Snes9x on other
-platforms (Mac/PC/Linux/etc) and to save back to those platforms.
+Snes9x RX includes the ability to load SRAM from Snes9x version 1.52 on
+other platforms (Mac/PC/Linux/etc.) and to save back to those platforms.
 
 To load a SRAM file on the Wii or Gamecube from another platform, ensure the
-name of the SRM file matches the filename of the ROM (except with an SRM 
-extension).
+name of the new .SRM file matches the filename of the ROM on your device.
+		   
 
 To use a Wii/GameCube SRAM file on another platform just do the opposite: 
 copy the saved SRAM file to the other platform. You may have to rename the 
-file to be what that version of snes9x expects it to be.
+file or the extension to be what that version of Snes9x expects it to be,
+like .SRM to .SAV, for example.
 
 
 ## AUTOBOOT MODE
@@ -591,6 +692,55 @@ Settings menu at the emulator's Main Menu / Game browser.
 
 
 ## UPDATE HISTORY
+
+[5.0.0 - Abril 22, 2022]
+* Use I4 instead of RGBA8 for fonts (much less memory). [Daryl]
+* When unable to load the default rom directory, just drop into device
+root. Don't show an error when unable to find a load device. [Daryl]
+* Silence a few warnings. [Daryl]
+* Remove S9xChooseMovieFilename. [bearoso]
+* Remove S9xSetPalette. [bearoso]
+* Remove S9xChooseFilename. [bearoso]
+This is integration of the frontend with the core. Disable
+the snapshot button mappings that use it. Any frontend should
+implement those port commands its own.
+* Load cover images directly from file instead of an
+intermediary buffer. [Daryl]
+* Correct aspect ratio by changing viWidth to 644. [vaguerant]
+* Add ability to change the player mapped to a
+connected (Wireless) controller. [Tantric]
+* Change max game image dimensions to 640x480, fix bug
+in png loading. [Tantric]
+* Add support for Mayflash 2-port SNES USB adapter. [EthanArmbrust]
+* New scanlines filter setting. (thanks Tanooki16!)
+Now nicknamed 50% and 25% for RX, I added the option to select between both,
+so you can choose whether you like darker scanlines (old method)
+or subtler ones (new method).
+* Add A+B+SELECT+START for back to menu on Wiimote controller extensions.
+Based on the similar commit by Tantric for Snes9xGX.
+* If arguments are passed to the emu to autoboot a game, then the main
+menu button should be labelled Exit, and leave the emu instead of going
+back to the main menu. Cleanup autoboot code. [Tantric]
+* Add support for mapping more than 128KByte SRAM. [cout/qwertymodo]
+* Add 128KByte SRAM support in cheats. [qwertymodo]
+* New Scale2x filter added. (thanks Tanooki16!)
+Originally developed by Andrea Mazzoleni for the AdvanceMAME project.
+http://www.scale2x.it/
+* Add support for Speedlink Hornet Gamepad USB. (thanks revvv!)
+* Prevent cheat name overflow. [Daryl]
+* Support forwarders that pass in sd1:/ [Tantric]
+* Add ability of FastROM hacks to use SuperFX. [bladeoner]
+* Set SRAM initialization to set whole buffer. [bearoso]
+...not just a few bytes. Add a TODO comment at allocation.
+These never change, so they should ideally be static.
+* Add heuristic to detect 6MB Earthbound hack.
+Makes "Mother 2 Deluxe" romhack playable.
+* UStealth support.
+* Wii 480p video fix. [Extrems]
+* More 3rd party controllers support. [Tantric]
+Fix 3rd party classic controllers that don't send calibration data.
+For those controllers, use default values.
+* Important readme updates.
 
 [4.9.0 - July 15, 2020]
 * Reduce save buffer size on GCN. Should fix preview glitch. [Tantric]
