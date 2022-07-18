@@ -39,6 +39,7 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 * Audio filtering modes: None, Sinc, Cubic, Linear, Gaussian
 * Remappable Turbo Mode feature - up to 2x the normal speed
 * Enable or disable the Sprite per-scanline original console limit!
+* Overclock the SNES CPU & Super FX chip at will to smooth gameplay!
 * Zoom option to zoom in/out
 * Available in various skins/colors
 * Open Source!
@@ -46,37 +47,14 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 
 ## RECENT CHANGELOG
 
-[5.1.0 - June 26, 2022]
-* Reset settings if an older config file is found
-Preferences XML file will be reset if it is older than 5.1.0, in order to
-start clean and avoid possible conflicts.
-* Korean language update, minor cleanup. [DDinghoya]
-* Remove unused logger.cpp and logger.h. [bladeoner]
-* Fix the logic for the Display Virtual Memory toggle. [InfiniteBlueGX]
-* Cleanups backported from the Libretro cores.
-* dsp: Fix assignment of Op11Xr. [jonathan-teh]
-* apu/dsp: Mark function-scope const arrays as static. [jSTE0]
-* Fix some memory leaks. [jdgleaver]
-* Remove OpenGL options. Not needed here.
-* Remap Turbo Mode and add a submenu. (Thanks InfiniteBlueGX!)
-* Fix an edge case where Turbo Mode could be activated on Dpad Up/Left
-when Nunchuk's Z/C button is mapped. [InfiniteBlueGX]
-* Some renaming for TurboMode. [InfiniteBlueGX]
-* Add an enumeration for the remappable buttons
-for Turbo Mode. [InfiniteBlueGX]
-* SuperFX OC value will properly load on next boot. [InfiniteBlueGX]
-* Fix some formatting. [InfiniteBlueGX]
-* Add a toggle to hide/show the SRAM save button
-in the save menu UI. [InfiniteBlueGX]
-* Remove an unused variable? [InfiniteBlueGX]
-* New audio filters (CUBIC/SINC) taken from Snes9x 1.61.
-* Invert L/R audio channels, save more settings. [Tanooki16]
-You can now swap Left and Right audio channels with a toggle.
-* New speeds for Super FX overclocking, Wii U recommended
-Added 80 MHz / 100 MHz / 120 MHz. These will stay hidden on the
-Gamecube port's GUI, as the CPU is not powerful enough.
-* SNES Hi-Res Mode ON/OFF and Sprite Limit ON/OFF (thanks Tanooki16!)
-* Important readme updates.
+[5.2.0 - June 18, 2022]
+* SNES CPU overclock setting exposed (thanks Tanooki16!)
+Inside the "Video" section, you can now choose three settings to overclock
+the virtual SNES CPU, to improve or smooth the framerate in games that
+originally struggled (i.e.: cutscenes in Flashback). It may also change the
+flow of the game entirely (i.e.: Skulljagger - Revolt of the Westicans).
+Experiment with the setting on your favorite games or other uncommon titles
+in your library.
 * Updates for the Spanish language.
 * Other tweaks.
 
@@ -569,6 +547,12 @@ If you use the Snes9x RX Wii U Channel version along with the console's
 100 MHz, and up to 120 MHz, which give a very nice boost in framerate for
 these special games. These last three speed options are hidden on the
 Gamecube port, as they are unusable for the reason explained above.
+
+• SNES CPU Overclock: this special setting will overclock the speed of
+the virtual SNES CPU being emulated, which will mostly improve and/or
+smooth framerates in games. Drastic examples of improvement are
+Out of this World, NCAA Basketball, and the Top Gear series.
+Set the setting to Default, Low, Medium, or Max.
 ```
 
 ### CONTROLLER
@@ -692,6 +676,40 @@ Settings menu at the emulator's Main Menu / Game browser.
 
 
 ## UPDATE HISTORY
+
+[5.1.0 - June 26, 2022]
+* Reset settings if an older config file is found
+Preferences XML file will be reset if it is older than 5.1.0, in order to
+start clean and avoid possible conflicts.
+* Korean language update, minor cleanup. [DDinghoya]
+* Remove unused logger.cpp and logger.h. [bladeoner]
+* Fix the logic for the Display Virtual Memory toggle. [InfiniteBlueGX]
+* Cleanups backported from the Libretro cores.
+* dsp: Fix assignment of Op11Xr. [jonathan-teh]
+* apu/dsp: Mark function-scope const arrays as static. [jSTE0]
+* Fix some memory leaks. [jdgleaver]
+* Remove OpenGL options. Not needed here.
+* Remap Turbo Mode and add a submenu. (Thanks InfiniteBlueGX!)
+* Fix an edge case where Turbo Mode could be activated on Dpad Up/Left
+when Nunchuk's Z/C button is mapped. [InfiniteBlueGX]
+* Some renaming for TurboMode. [InfiniteBlueGX]
+* Add an enumeration for the remappable buttons
+for Turbo Mode. [InfiniteBlueGX]
+* SuperFX OC value will properly load on next boot. [InfiniteBlueGX]
+* Fix some formatting. [InfiniteBlueGX]
+* Add a toggle to hide/show the SRAM save button
+in the save menu UI. [InfiniteBlueGX]
+* Remove an unused variable? [InfiniteBlueGX]
+* New audio filters (CUBIC/SINC) taken from Snes9x 1.61.
+* Invert L/R audio channels, save more settings. [Tanooki16]
+You can now swap Left and Right audio channels with a toggle.
+* New speeds for Super FX overclocking, Wii U recommended
+Added 80 MHz / 100 MHz / 120 MHz. These will stay hidden on the
+Gamecube port's GUI, as the CPU is not powerful enough.
+* SNES Hi-Res Mode ON/OFF and Sprite Limit ON/OFF (thanks Tanooki16!)
+* Important readme updates.
+* Updates for the Spanish language.
+* Other tweaks.
 
 [5.0.0 - Abril 22, 2022]
 * Use I4 instead of RGBA8 for fonts (much less memory). [Daryl]
