@@ -507,6 +507,30 @@ int main(int argc, char *argv[])
 
 			GCSettings.sfxOverclock > 0 ? S9xResetSuperFX() : S9xReset();
 
+			switch (GCSettings.cpuOverclock)
+			{
+				case 0:
+					Settings.OneClockCycle = 6;
+					Settings.OneSlowClockCycle = 8;
+					Settings.TwoClockCycles = 12;
+					break;
+				case 1:
+					Settings.OneClockCycle = 6;
+					Settings.OneSlowClockCycle = 6;
+					Settings.TwoClockCycles = 12;
+					break;
+				case 2:
+					Settings.OneClockCycle = 4;
+					Settings.OneSlowClockCycle = 5;
+					Settings.TwoClockCycles = 6;
+					break;
+				case 3:
+					Settings.OneClockCycle = 3;
+					Settings.OneSlowClockCycle = 3;
+					Settings.TwoClockCycles = 3;
+					break;
+			}
+
 			switch (GCSettings.Interpolation)
 			{
 				case 0: Settings.InterpolationMethod = DSP_INTERPOLATION_GAUSSIAN; break;

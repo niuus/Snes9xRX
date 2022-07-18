@@ -3566,6 +3566,7 @@ static int MenuSettingsVideo()
 	sprintf(options.name[i++], "Show Framerate");
 	sprintf(options.name[i++], "Show Local Time");
 	sprintf(options.name[i++], "Super FX Overclock");
+	sprintf(options.name[i++], "SNES CPU Overclock");
 	options.length = i;
 
 #ifdef HW_DOL
@@ -3695,6 +3696,36 @@ static int MenuSettingsVideo()
 				S9xResetSuperFX();
 				S9xReset();
 				break;
+
+			case 12:
+				GCSettings.cpuOverclock++;
+				if (GCSettings.cpuOverclock > 3) {
+					GCSettings.cpuOverclock = 0;
+				}
+				switch(GCSettings.cpuOverclock)
+				{
+					case 0:
+						Settings.OneClockCycle = 6;
+						Settings.OneSlowClockCycle = 8;
+						Settings.TwoClockCycles = 12;
+						break;
+					case 1:
+						Settings.OneClockCycle = 6;
+						Settings.OneSlowClockCycle = 6;
+						Settings.TwoClockCycles = 12;
+						break;
+					case 2:
+						Settings.OneClockCycle = 4;
+						Settings.OneSlowClockCycle = 5;
+						Settings.TwoClockCycles = 6;
+						break;
+					case 3:
+						Settings.OneClockCycle = 3;
+						Settings.OneSlowClockCycle = 3;
+						Settings.TwoClockCycles = 3;
+						break;
+				}
+				break;
 		}
 
 		if(ret >= 0 || firstRun)
@@ -3757,6 +3788,18 @@ static int MenuSettingsVideo()
 					sprintf (options.value[11], "100 MHz"); break;
 				case 6:
 					sprintf (options.value[11], "120 MHz"); break;
+			}
+
+			switch(GCSettings.cpuOverclock)
+			{
+				case 0:
+					sprintf (options.value[12], "Default"); break;
+				case 1:
+					sprintf (options.value[12], "Low"); break;
+				case 2:
+					sprintf (options.value[12], "Medium"); break;
+				case 3:
+					sprintf (options.value[12], "Max"); break;
 			}
 			optionBrowser.TriggerUpdate();
 		}

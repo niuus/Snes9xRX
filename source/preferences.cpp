@@ -157,6 +157,7 @@ preparePrefsData ()
 	createXMLSetting("xshift", "Horizontal Video Shift", toStr(GCSettings.xshift));
 	createXMLSetting("yshift", "Vertical Video Shift", toStr(GCSettings.yshift));
 	createXMLSetting("sfxOverclock", "Super FX Overclock", toStr(GCSettings.sfxOverclock));
+	createXMLSetting("cpuOverclock", "SNES CPU Overclock", toStr(GCSettings.cpuOverclock));
 	createXMLSetting("TurboModeEnabled", "Turbo Mode", toStr(GCSettings.TurboModeEnabled));
 	createXMLSetting("TurboModeButton", "Turbo Mode Button", toStr(GCSettings.TurboModeButton));
 
@@ -365,6 +366,7 @@ decodePrefsData ()
 			// Emulation Settings
 
 			loadXMLSetting(&GCSettings.sfxOverclock, "sfxOverclock");
+			loadXMLSetting(&GCSettings.cpuOverclock, "cpuOverclock");
 
 			// Menu Settings
 
@@ -546,6 +548,7 @@ DefaultSettings ()
 	GCSettings.sfxOverclock = 0;
 	/* Initialize SuperFX CPU to normal speed by default */
 	Settings.SuperFXSpeedPerLine = 0.417 * 10.5e6;
+	GCSettings.cpuOverclock = 0; // Disabled by default
 
 	GCSettings.TurboModeEnabled = 1; // Enabled by default
 	GCSettings.TurboModeButton = 0; // Default is Right Analog Stick (0)
