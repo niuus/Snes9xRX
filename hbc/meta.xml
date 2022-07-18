@@ -2,8 +2,8 @@
  <app version="2">
    <name>Snes9x RX</name>
    <coder>NiuuS</coder>
-   <version>5.1.0</version>
-   <release_date>202205301337</release_date>
+   <version>5.2.0</version>
+   <release_date>202207181137</release_date>
    <short_description>Super Nintendo Emulator</short_description>
    <long_description>
 
@@ -17,11 +17,12 @@ Featuring:
 - Wii U Gamepad controller support through VC injects.
 - Retrode 2 USB adapter support.
 - Turbo Mode/Fast-Forward button feature.
-- Screenshot/Cover/Artwork display.
+- Screenshot / Cover / Artwork display.
 Cycle between them with the +/Z button!
 
 - Video filters: Sharp / Soft / HQ2X / Scale2x / Scanlines
 - Audio filters: Gaussian / Linear / Cubic / Sinc
+- SNES CPU overclock. (Low/Medium/Max)
 - Super FX overclock (20/40/60/80/100/120 MHz).
 - Wiiflow plugin mode.
    </long_description>
