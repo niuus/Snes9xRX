@@ -141,6 +141,10 @@ struct SGCSettings{
 	int		PreviewImage;
 
 	int		sfxOverclock;
+	
+	int		HiResolution;
+	int		SpriteLimit;
+	int		cpuOverclock;
 
 	int		ReverseStereo;
 	int		Interpolation;
