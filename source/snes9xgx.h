@@ -20,7 +20,7 @@
 #include "filelist.h"
 
 #define APPNAME 			"Snes9x RX"
-#define APPVERSION 			"5.1.0"
+#define APPVERSION 			"5.2.0"
 #define APPFOLDER 			"snes9xgx"
 #define PREF_FILE_NAME		"settingsRX.xml"
 
@@ -60,7 +60,7 @@ enum
 };
 
 const char ctrlName[6][24] =
-{ "SNES Controller", "SNES Mouse", "Superscope", "Justifier", "SNES Controllers (2)", "SNES Controllers (4)" };
+{ "SNES Controller", "SNES Mouse", "Super Scope", "Justifier", "SNES Controllers (2)", "SNES Controllers (4)" };
 
 enum {
 	TURBO_BUTTON_RSTICK = 0,
@@ -126,9 +126,11 @@ struct SGCSettings{
 	int		render;		// 0 - original, 1 - filtered, 2 - unfiltered
 	int		FilterMethod; // convert to RenderFilter
 	int		Controller;
-	int		crosshair;
+	int		HiResolution;
+	int		SpriteLimit;
 	int		ShowFrameRate;
 	int		ShowLocalTime;
+	int		crosshair;
 	int		widescreen;	// 0 - 4:3 aspect, 1 - 16:9 aspect
 	int		xshift;	// video output shift
 	int		yshift;
@@ -141,6 +143,7 @@ struct SGCSettings{
 	int		PreviewImage;
 
 	int		sfxOverclock;
+	int		cpuOverclock;
 
 	int		ReverseStereo;
 	int		Interpolation;
