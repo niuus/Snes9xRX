@@ -546,9 +546,14 @@ DefaultSettings ()
 	Settings.FrameTimeNTSC = 16667;
 
 	GCSettings.sfxOverclock = 0;
-	/* Initialize SuperFX CPU to normal speed by default */
+	/* Initialize SuperFX chip to normal speed by default */
 	Settings.SuperFXSpeedPerLine = 0.417 * 10.5e6;
+
 	GCSettings.cpuOverclock = 0; // Disabled by default
+	/* Initialize CPU to normal speed by default */
+	Settings.OneClockCycle = 6;
+	Settings.OneSlowClockCycle = 8;
+	Settings.TwoClockCycles = 12;
 
 	GCSettings.TurboModeEnabled = 1; // Enabled by default
 	GCSettings.TurboModeButton = 0; // Default is Right Analog Stick (0)
