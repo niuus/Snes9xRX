@@ -614,11 +614,11 @@ To emulate the St. GIGA's satellite service and play its exclusive games,
 you're going to need the BIOS file now. While I recommend you to use the
 english translated (No DRM) version, you're free to use the japanese BIOS.
 
-The correct values for the file (English+No DRM) are:
+The correct values for the file (English+No DRM, version 1.3) are:
 Size: 1.048.576 bytes
-CRC32: 8c573c7e
-MD5: 4ed9648505ab33a4daec93707b16caba
-SHA-1: 7996bd1c01b99800e0d5d34beff93db283784864
+CRC32: E5A91AD4
+MD5: 96CF17BF589FCBFA6F8DE2DC84F19FA2
+SHA-1: 4891D739A8A8B67923681BAD4FB67EDAB2E90E50
 
 Rename the file and its extension to "BS-X.BIN", then put it inside
 the "snes9xgx" folder at the root of the device. (SD or USB)
