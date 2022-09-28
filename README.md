@@ -47,14 +47,23 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 
 ## RECENT CHANGELOG
 
-[5.2.0 - June 18, 2022]
-* SNES CPU overclock setting exposed (thanks Tanooki16!)
-Inside the "Video" section, you can now choose three settings to overclock
-the virtual SNES CPU, to improve or smooth the framerate in games that
-originally struggled (i.e.: cutscenes in Flashback). It may also change the
-flow of the game entirely (i.e.: Skulljagger - Revolt of the Westicans).
-Experiment with the setting on your favorite games or other uncommon titles
-in your library.
+* Upgraded Satellaview (BS-X) engine to latest Snes9x to date.
+This furthers up the game compatibility, by making use of the Satellaview
+BIOS. Though the file is optional, you'll want to use it for titles that
+make exclusive use of its functions. Some of the titles now playable are:
+- BS Fire Emblem: Akaneia Saga (Episodes 1 to 4)
+- Chou Aniki - Bakuretsu Rantou Hen
+- Konae-chan no Dokidoki Penguin Kazoku Event-ban
+
+And a lot of the digital magazines available that were distributed through
+the Satellite's service can be read in its original language now,
+as the BIOS embedded font is mostly used for these.
+
+Check the instructions on where to place the BIOS file by reading the new
+Satellaview section down below, here in the readme.
+
+* MSU-1 refinements.
+* Fix for compiling error.
 * Updates for the Spanish language.
 * Other tweaks.
 
@@ -599,6 +608,28 @@ execute it from there. All of this is possible as the MSU-1 addresses
 up to 4GB of data, far more than a typical SNES cartridge could ever hold.
 
 
+## SATELLAVIEW (BS-X)
+
+To emulate the St. GIGA's satellite service and play its exclusive games,
+you're going to need the BIOS file now. While I recommend you to use the
+english translated (No DRM) version, you're free to use the japanese BIOS.
+
+The correct values for the file (English+No DRM) are:
+Size: 1.048.576 bytes
+CRC32: 8c573c7e
+MD5: 4ed9648505ab33a4daec93707b16caba
+SHA-1: 7996bd1c01b99800e0d5d34beff93db283784864
+
+Rename the file and its extension to "BS-X.BIN", then put it inside
+the "snes9xgx" folder at the root of the device. (SD or USB)
+
+Remember that the BIOS use is optional, though required for a good deal
+of the games and digital magazines.
+
+If you need a place to get the correct file, check the Links section
+down below, and visit the BS-X Project website.
+
+
 ## USB CONTROLLERS
 
 To enable the Speedlink Hornet Gamepad or the Xbox 360 (wired) controller,
@@ -676,6 +707,17 @@ Settings menu at the emulator's Main Menu / Game browser.
 
 
 ## UPDATE HISTORY
+
+[5.2.0 - June 18, 2022]
+* SNES CPU overclock setting exposed (thanks Tanooki16!)
+Inside the "Video" section, you can now choose three settings to overclock
+the virtual SNES CPU, to improve or smooth the framerate in games that
+originally struggled (i.e.: cutscenes in Flashback). It may also change the
+flow of the game entirely (i.e.: Skulljagger - Revolt of the Westicans).
+Experiment with the setting on your favorite games or other uncommon titles
+in your library.
+* Updates for the Spanish language.
+* Other tweaks.
 
 [5.1.0 - June 26, 2022]
 * Reset settings if an older config file is found
