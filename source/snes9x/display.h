@@ -4,7 +4,6 @@
    For further information, consult the LICENSE file in the root directory.
 \*****************************************************************************/
 
-
 #ifndef _DISPLAY_H_
 #define _DISPLAY_H_
 
@@ -17,6 +16,7 @@ enum s9x_getdirtype
 	CHEAT_DIR,
 	IPS_DIR,
 	BIOS_DIR,
+	SAT_DIR,
 	LAST_DIR
 };
 

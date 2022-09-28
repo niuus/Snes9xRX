@@ -15,7 +15,7 @@
 #include <gccore.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string>
+#include <string.h>
 #include <wiiuse/wpad.h>
 #include <sys/dir.h>
 #include <malloc.h>
@@ -53,6 +53,9 @@ bool inSz = false;
 
 unsigned long SNESROMSize = 0;
 bool loadingFile = false;
+bool bsxBiosLoadFailed;
+
+extern bool isBSX();
 
 /****************************************************************************
 * autoLoadMethod()
@@ -372,11 +375,11 @@ static bool IsValidROM()
 
 			if(p != NULL)
 			{
-				if (stricmp(p, ".smc") == 0 ||
+				if (stricmp(p, ".bs") == 0 ||
 					stricmp(p, ".fig") == 0 ||
 					stricmp(p, ".sfc") == 0 ||
-					stricmp(p, ".swc") == 0 ||
-					stricmp(p, ".bs") == 0)
+					stricmp(p, ".smc") == 0 ||
+					stricmp(p, ".swc") == 0)
 				{
 					if(zippedFilename) free(zippedFilename);
 					return true;
@@ -483,6 +486,15 @@ int WiiFileLoader()
 		return 0;
 
 	SNESROMSize = Memory.HeaderRemove(size, Memory.HeaderCount, Memory.ROM);
+	bsxBiosLoadFailed = false;
+
+	if(isBSX()) {
+		sprintf (filepath, "%s%s/BS-X.bin", pathPrefix[GCSettings.LoadMethod], APPFOLDER);
+		if(LoadFile ((char *)Memory.BIOSROM, filepath, 0, 0x100000, SILENT) == 0) {
+			bsxBiosLoadFailed = true;
+		}
+	}
+
 	return SNESROMSize;
 }
 
@@ -512,7 +524,7 @@ int BrowserLoadFile()
 	S9xDeleteCheats();
 	Memory.LoadROM("ROM");
 
-	if (SNESROMSize <= 0)
+	if (SNESROMSize == 0)
 	{
 		ErrorPrompt("Error loading game!");
 	}
