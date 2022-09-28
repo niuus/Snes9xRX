@@ -2,8 +2,8 @@
  <app version="2">
    <name>Snes9x RX</name>
    <coder>NiuuS</coder>
-   <version>5.2.0</version>
-   <release_date>202207181137</release_date>
+   <version>5.3.0</version>
+   <release_date>20220928011922</release_date>
    <short_description>Super Nintendo Emulator</short_description>
    <long_description>
 
@@ -16,6 +16,7 @@ Featuring:
 - Wii U Pro Controller support.
 - Wii U Gamepad controller support through VC injects.
 - Retrode 2 USB adapter support.
+- Broadcast Satellaview-X support (BIOS optional).
 - Turbo Mode/Fast-Forward button feature.
 - Screenshot / Cover / Artwork display.
 Cycle between them with the +/Z button!
