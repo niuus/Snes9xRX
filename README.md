@@ -94,14 +94,19 @@ the Wii U homebrew app "sign_c2w_patcher" first, to unlock the so-called
 underclock (729 MHz) to run Wii software at the native Wii U's speed
 (1.24 GHz), so it is completely safe to use.
 
-By using the Wii U channel, you only need the folder "snes9xgx", which also
-comes pre-packaged in the respective .zip archive. To install, you need to
-use WUP Installer GX2 or the WUP Installer Y Mod, through the
-Wii U's Homebrew Launcher.
+You can use WUP Installer GX2 or the WUP Installer Y Mod to install the
+channel, loaded through the Wii U's Homebrew Launcher or through a
+WUHB package (Aroma).
+
+After installing the Wii U channel (forwarder) onto your console, proceed
+to use whatever special build suits your preference, by unzipping
+it to the root of your SD card or USB drive (both on FAT16 or FAT32),
+where it will extract the folder "apps" and "snes9xgx", pre-packaged
+in their respective .zip archive.
 
 It is important to note, when you use the Wii U's overclocked mode, you
 are limited to use the SD as the storage medium for all your files.
-No workarounds, as this is a current console limitation.
+No workarounds, as this is currently a console limitation.
 
 
 ## INITIAL SETUP
