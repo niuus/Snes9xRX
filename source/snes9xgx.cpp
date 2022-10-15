@@ -75,7 +75,6 @@ extern uint32 prevRenderedFrameCount;
 /****************************************************************************
  * Shutdown / Reboot / Exit
  ***************************************************************************/
-
 void ExitCleanup()
 {
 	ShutdownAudio();
@@ -121,7 +120,7 @@ void ExitApp()
 	}
 	else {
 		#ifdef HW_RVL
-			if(GCSettings.ExitAction == 0) // Auto
+		if(GCSettings.ExitAction == 0) // Auto
 		{
 			char * sig = (char *)0x80001804;
 			if(
@@ -180,7 +179,6 @@ void ResetCB()
  * ipl_set_config
  * lowlevel Qoob Modchip disable
  ***************************************************************************/
-
 void ipl_set_config(unsigned char c)
 {
 	volatile unsigned long* exi = (volatile unsigned long*)0xCC006800;
@@ -205,7 +203,6 @@ void ipl_set_config(unsigned char c)
  * setFrameTimerMethod()
  * change frametimer method depending on whether ROM is NTSC or PAL
  ***************************************************************************/
-
 void setFrameTimerMethod()
 {
 	/*
@@ -300,7 +297,6 @@ bool SaneIOS(u32 ios)
 /****************************************************************************
  * USB Gecko Debugging
  ***************************************************************************/
-
 static bool gecko = false;
 static mutex_t gecko_mutex = 0;
 
@@ -373,7 +369,7 @@ void InitializeSnes9x() {
 	S9xInitSound(64, 0); // Initialise Sound System
 
 	// Initialise Graphics
-	setGFX();
+	setGFX ();
 	if (!S9xGraphicsInit())
 		ExitApp();
 
@@ -494,6 +490,15 @@ int main(int argc, char *argv[])
 		if (firstRun)
 		{
 			firstRun = false;
+			switch (GCSettings.Interpolation)
+			{
+				case 0: Settings.InterpolationMethod = DSP_INTERPOLATION_GAUSSIAN; break;
+				case 1: Settings.InterpolationMethod = DSP_INTERPOLATION_LINEAR; break;
+				case 2: Settings.InterpolationMethod = DSP_INTERPOLATION_CUBIC; break;
+				case 3: Settings.InterpolationMethod = DSP_INTERPOLATION_SINC; break;
+				case 4: Settings.InterpolationMethod = DSP_INTERPOLATION_NONE; break;
+			}
+
 			switch (GCSettings.sfxOverclock)
 			{
 				case 0: Settings.SuperFXSpeedPerLine = 0.417 * 10.5e6; break;
@@ -530,15 +535,6 @@ int main(int argc, char *argv[])
 					Settings.TwoClockCycles = 3;
 					break;
 			}
-
-			switch (GCSettings.Interpolation)
-			{
-				case 0: Settings.InterpolationMethod = DSP_INTERPOLATION_GAUSSIAN; break;
-				case 1: Settings.InterpolationMethod = DSP_INTERPOLATION_LINEAR; break;
-				case 2: Settings.InterpolationMethod = DSP_INTERPOLATION_CUBIC; break;
-				case 3: Settings.InterpolationMethod = DSP_INTERPOLATION_SINC; break;
-				case 4: Settings.InterpolationMethod = DSP_INTERPOLATION_NONE; break;
-			}
 		}
 
 		autoboot = false;
@@ -547,11 +543,12 @@ int main(int argc, char *argv[])
 		SwitchAudioMode(0);
 
 		Settings.ReverseStereo = (GCSettings.ReverseStereo == 1);
+		Settings.Mute = (GCSettings.MuteAudio == 1);
 		Settings.SupportHiRes = (GCSettings.HiResolution == 1);
-		Settings.MaxSpriteTilesPerLine = (GCSettings.SpriteLimit ? 34 : 128);
 		Settings.DisplayFrameRate = (GCSettings.ShowFrameRate == 1);
 		Settings.DisplayTime = (GCSettings.ShowLocalTime == 1);
 		Settings.AutoDisplayMessages = (Settings.DisplayFrameRate || Settings.DisplayTime ? true : false);
+		Settings.MaxSpriteTilesPerLine = (GCSettings.SpriteLimit ? 34 : 128);
 		Settings.MultiPlayer5Master = (GCSettings.Controller == CTRL_PAD4 ? true : false);
 		Settings.SuperScopeMaster = (GCSettings.Controller == CTRL_SCOPE ? true : false);
 		Settings.MouseMaster = (GCSettings.Controller == CTRL_MOUSE ? true : false);

@@ -488,13 +488,17 @@ int WiiFileLoader()
 	SNESROMSize = Memory.HeaderRemove(size, Memory.HeaderCount, Memory.ROM);
 	bsxBiosLoadFailed = false;
 
-	if(isBSX()) {
-		sprintf (filepath, "%s%s/BS-X.bin", pathPrefix[GCSettings.LoadMethod], APPFOLDER);
+	if(isBSX())
+	{
+		if(GCSettings.Satellaview)
+			sprintf (filepath, "%s%s/BS-X.bin", pathPrefix[GCSettings.LoadMethod], APPFOLDER);
+		else
+			sprintf (filepath, "%s%s/", pathPrefix[GCSettings.LoadMethod], APPFOLDER);
+
 		if(LoadFile ((char *)Memory.BIOSROM, filepath, 0, 0x100000, SILENT) == 0) {
 			bsxBiosLoadFailed = true;
 		}
 	}
-
 	return SNESROMSize;
 }
 

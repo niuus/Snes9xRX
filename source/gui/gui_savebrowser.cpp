@@ -48,7 +48,7 @@ GuiSaveBrowser::GuiSaveBrowser(int w, int h, SaveList * s, int a)
 	scrollbarImg = new GuiImage(scrollbar);
 	scrollbarImg->SetParent(this);
 	scrollbarImg->SetAlignment(ALIGN_RIGHT, ALIGN_TOP);
-	scrollbarImg->SetPosition(0, 30);
+	scrollbarImg->SetPosition(0, 29);
 
 	arrowDown = new GuiImageData(scrollbar_arrowdown_png);
 	arrowDownImg = new GuiImage(arrowDown);
@@ -64,6 +64,7 @@ GuiSaveBrowser::GuiSaveBrowser(int w, int h, SaveList * s, int a)
 	arrowUpBtn->SetImage(arrowUpImg);
 	arrowUpBtn->SetImageOver(arrowUpOverImg);
 	arrowUpBtn->SetAlignment(ALIGN_RIGHT, ALIGN_TOP);
+	arrowUpBtn->SetPosition(0, -1);
 	arrowUpBtn->SetSelectable(false);
 	arrowUpBtn->SetTrigger(trigA);
 	arrowUpBtn->SetSoundOver(btnSoundOver);
@@ -74,6 +75,7 @@ GuiSaveBrowser::GuiSaveBrowser(int w, int h, SaveList * s, int a)
 	arrowDownBtn->SetImage(arrowDownImg);
 	arrowDownBtn->SetImageOver(arrowDownOverImg);
 	arrowDownBtn->SetAlignment(ALIGN_RIGHT, ALIGN_BOTTOM);
+	arrowDownBtn->SetPosition(0, -1);
 	arrowDownBtn->SetSelectable(false);
 	arrowDownBtn->SetTrigger(trigA);
 	arrowDownBtn->SetSoundOver(btnSoundOver);
@@ -269,7 +271,10 @@ void GuiSaveBrowser::Update(GuiTrigger * t)
 		}
 		else
 		{
-			selectedItem -= 1;
+			if(saveBtn[selectedItem-1]->IsVisible())
+			{
+				selectedItem -= 1;
+			}
 		}
 	}
 	else if(t->Down() || arrowDownBtn->GetState() == STATE_CLICKED)
@@ -307,7 +312,10 @@ void GuiSaveBrowser::Update(GuiTrigger * t)
 		}
 		else
 		{
-			selectedItem -= 2;
+			if(saveBtn[selectedItem-2]->IsVisible())
+			{
+				selectedItem -= 2;
+			}
 		}
 	}
 
@@ -323,7 +331,7 @@ void GuiSaveBrowser::Update(GuiTrigger * t)
 	{
 		if(listOffset+i < 0 && action == 1)
 		{
-			
+
 			saveDate[0]->SetText(NULL);
 			saveTime[0]->SetText("New");
 			saveType[0]->SetText("Snapshot");
@@ -332,7 +340,7 @@ void GuiSaveBrowser::Update(GuiTrigger * t)
 
 			if(saveBtn[0]->GetState() == STATE_DISABLED)
 				saveBtn[0]->SetState(STATE_DEFAULT);
-			
+
 			if (GCSettings.HideSRAMSaving == 0)
 			{
 				saveDate[1]->SetText(NULL);

@@ -77,7 +77,7 @@ enum {
 	TURBO_BUTTON_1,
 	TURBO_BUTTON_2,
 	TURBO_BUTTON_PLUS,
-	TURBO_BUTTON_MINUS,
+	TURBO_BUTTON_MINUS
 };
 
 enum {
@@ -120,20 +120,33 @@ struct SGCSettings{
 	char	smbpwd[20];
 	char	smbshare[20];
 
-	float	zoomHor; // horizontal zoom amount
-	float	zoomVert; // vertical zoom amount
-	int		videomode; // 0 - automatic, 1 - NTSC (480i), 2 - Progressive (480p), 3 - PAL (50Hz), 4 - PAL (60Hz)
-	int		render;		// 0 - original, 1 - filtered, 2 - unfiltered
-	int		FilterMethod; // convert to RenderFilter
-	int		Controller;
+	float	zoomHor; // Horizontal zoom amount
+	float	zoomVert; // Vertical zoom amount
+	int		videomode; // 0 - Automatic, 1 - NTSC (480i), 2 - Progressive (480p), 3 - PAL (50Hz), 4 - PAL (60Hz)
+	int		render;		// 0 - Original, 1 - Filtered, 2 - Unfiltered
+	int		widescreen;	// 0 - 4:3 aspect, 1 - 16:9 aspect
+	int		FilterMethod; // Convert to rendering filter
+
+	int		xshift; // Video output shift
+	int		yshift;
 	int		HiResolution;
-	int		SpriteLimit;
+	int		crosshair;
 	int		ShowFrameRate;
 	int		ShowLocalTime;
-	int		crosshair;
-	int		widescreen;	// 0 - 4:3 aspect, 1 - 16:9 aspect
-	int		xshift;	// video output shift
-	int		yshift;
+
+	int		Controller;
+	int		TurboModeEnabled; // 0 - disabled, 1 - enabled
+	int		TurboModeButton;
+
+	int		ReverseStereo;
+	int		Interpolation;
+	int		MuteAudio;
+
+	int		SpriteLimit;
+	int		Satellaview;
+	int		sfxOverclock;
+	int		cpuOverclock;
+
 	int		ExitAction;
 	int		WiimoteOrientation;
 	int		MusicVolume;
@@ -141,15 +154,6 @@ struct SGCSettings{
 	int		DisplayVM;
 	int		language;
 	int		PreviewImage;
-
-	int		sfxOverclock;
-	int		cpuOverclock;
-
-	int		ReverseStereo;
-	int		Interpolation;
-
-	int		TurboModeEnabled; // 0 - disabled, 1 - enabled
-	int		TurboModeButton;
 };
 
 void ExitApp();
@@ -163,7 +167,6 @@ extern int ShutdownRequested;
 extern int ExitRequested;
 extern char appPath[];
 extern FreeTypeGX *fontSystem[];
-
 extern bool isWiiVC;
 static inline bool IsWiiU(void)
 {

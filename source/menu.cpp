@@ -99,6 +99,7 @@ static char progressTitle[101];
 static char progressMsg[201];
 static int progressDone = 0;
 static int progressTotal = 0;
+static bool showCredits = false;
 
 u8 * bg_music;
 u32 bg_music_size;
@@ -316,7 +317,6 @@ WindowPrompt(const char *title, const char *msg, const char *btn1Label, const ch
  *
  * Primary thread to allow GUI to respond to state changes, and draws GUI
  ***************************************************************************/
-
 static void *
 UpdateGUI (void *arg)
 {
@@ -720,6 +720,7 @@ SettingWindow(const char * title, GuiWindow * w)
 
 	GuiWindow promptWindow(448,288);
 	promptWindow.SetAlignment(ALIGN_CENTRE, ALIGN_MIDDLE);
+	promptWindow.SetPosition(0, -10);
 	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
 	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_png);
@@ -801,7 +802,7 @@ SettingWindow(const char * title, GuiWindow * w)
  ***************************************************************************/
 static void WindowCredits(void * ptr)
 {
-	if(btnLogo->GetState() != STATE_CLICKED)
+	if(btnLogo->GetState() != STATE_CLICKED && !showCredits)
 		return;
 
 	btnLogo->ResetState();
@@ -932,6 +933,7 @@ static void WindowCredits(void * ptr)
 		   (userInput[3].wpad->btns_d || userInput[3].pad.btns_d || userInput[3].wiidrcdata.btns_d))
 		{
 			exit = true;
+			showCredits = false;
 		}
 		usleep(THREAD_SLEEP);
 	}
@@ -970,7 +972,7 @@ static int MenuGameSelection()
 	bool res;
 	int i;
 
-	GuiText titleTxt("Choose Game", 26, (GXColor){255, 255, 255, 255});
+	GuiText titleTxt("Choose Game", 22, (GXColor){255, 255, 255, 255});
 	titleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
 	titleTxt.SetPosition(50,50);
 
@@ -1202,6 +1204,7 @@ static void ControllerWindow()
 {
 	GuiWindow * w = new GuiWindow(300,250);
 	w->SetAlignment(ALIGN_CENTRE, ALIGN_MIDDLE);
+	w->SetPosition(0, -10);
 
 	GuiTrigger trigLeft;
 	trigLeft.SetButtonOnlyInFocusTrigger(-1, WPAD_BUTTON_LEFT | WPAD_CLASSIC_BUTTON_LEFT, PAD_BUTTON_LEFT, WIIDRC_BUTTON_LEFT);
@@ -1349,7 +1352,8 @@ static void PlayerMappingWindow(int chan)
 static int MenuGame()
 {
 	int menu = MENU_NONE;
-	
+	char filepath[1024];
+
 	GuiText titleTxt((char *)Memory.ROMFilename, 22, (GXColor){255, 255, 255, 255});
 	titleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
 	titleTxt.SetPosition(50,40);
@@ -1388,6 +1392,7 @@ static int MenuGame()
 	GuiImageData iconSave(icon_game_save_png);
 	GuiImageData iconDelete(icon_game_delete_png);
 	GuiImageData iconReset(icon_game_reset_png);
+	GuiImageData iconScreenshot(icon_game_screenshot_png);
 
 	GuiImageData battery(battery_png);
 	GuiImageData batteryRed(battery_red_png);
@@ -1453,7 +1458,7 @@ static int MenuGame()
 	GuiImage resetBtnIcon(&iconReset);
 	GuiButton resetBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
 	resetBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
-	resetBtn.SetPosition(125, 250);
+	resetBtn.SetPosition(200, 250);
 	resetBtn.SetLabel(&resetBtnTxt);
 	resetBtn.SetImage(&resetBtnImg);
 	resetBtn.SetImageOver(&resetBtnImgOver);
@@ -1464,6 +1469,23 @@ static int MenuGame()
 	resetBtn.SetTrigger(trig2);
 	resetBtn.SetEffectGrow();
 
+	GuiText screenshotBtnTxt("Screenshot", 22, (GXColor){0, 0, 0, 255});
+	GuiImage screenshotBtnImg(&btnLargeOutline);
+	GuiImage screenshotBtnImgOver(&btnLargeOutlineOver);
+	GuiImage screenshotBtnIcon(&iconScreenshot);
+	GuiButton screenshotBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
+	screenshotBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
+	screenshotBtn.SetPosition(0, 250);
+	screenshotBtn.SetLabel(&screenshotBtnTxt);
+	screenshotBtn.SetImage(&screenshotBtnImg);
+	screenshotBtn.SetImageOver(&screenshotBtnImgOver);
+	screenshotBtn.SetIcon(&screenshotBtnIcon);
+	screenshotBtn.SetSoundOver(&btnSoundOver);
+	screenshotBtn.SetSoundClick(&btnSoundClick);
+	screenshotBtn.SetTrigger(trigA);
+	screenshotBtn.SetTrigger(trig2);
+	screenshotBtn.SetEffectGrow();
+
 	GuiText gameSettingsBtnTxt("Game Settings", 22, (GXColor){0, 0, 0, 255});
 	gameSettingsBtnTxt.SetWrap(true, btnLargeOutline.GetWidth()-20);
 	GuiImage gameSettingsBtnImg(&btnLargeOutline);
@@ -1471,7 +1493,7 @@ static int MenuGame()
 	GuiImage gameSettingsBtnIcon(&iconGameSettings);
 	GuiButton gameSettingsBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
 	gameSettingsBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
-	gameSettingsBtn.SetPosition(-125, 250);
+	gameSettingsBtn.SetPosition(-200, 250);
 	gameSettingsBtn.SetLabel(&gameSettingsBtnTxt);
 	gameSettingsBtn.SetImage(&gameSettingsBtnImg);
 	gameSettingsBtn.SetImageOver(&gameSettingsBtnImgOver);
@@ -1567,6 +1589,7 @@ static int MenuGame()
 	w.Append(&loadBtn);
 	w.Append(&deleteBtn);
 	w.Append(&resetBtn);
+	w.Append(&screenshotBtn);
 	w.Append(&gameSettingsBtn);
 	
 	if(GCSettings.DisplayVM == 1) //show memory usage
@@ -1676,6 +1699,14 @@ static int MenuGame()
 			{
 				S9xSoftReset ();
 				menu = MENU_EXIT;
+			}
+		}
+		else if(screenshotBtn.GetState() == STATE_CLICKED)
+		{
+			if (WindowPrompt("Preview Screenshot", "Save a new Preview Screenshot? Current Screenshot image will be overwritten.", "OK", "Cancel"))
+			{
+				snprintf(filepath, 1024, "%s%s/%s", pathPrefix[GCSettings.SaveMethod], GCSettings.ScreenshotsFolder, Memory.ROMFilename);
+				SavePreviewImg(filepath, NOTSILENT); 
 			}
 		}
 		else if(gameSettingsBtn.GetState() == STATE_CLICKED)
@@ -2108,7 +2139,7 @@ static int MenuGameSettings()
 	GuiImageData iconAudio(icon_settings_audio_png);
 	GuiImageData iconController(icon_game_controllers_png);
 	GuiImageData iconCheats(icon_game_cheats_png);
-	GuiImageData iconScreenshot(icon_settings_screenshot_png);
+	GuiImageData iconHacks(icon_settings_hacks_png);
 	GuiImageData btnCloseOutline(button_small_png);
 	GuiImageData btnCloseOutlineOver(button_small_over_png);
 
@@ -2186,31 +2217,13 @@ static int MenuGameSettings()
 	controllerBtn.SetTrigger(trig2);
 	controllerBtn.SetEffectGrow();
 
-	GuiText screenshotBtnTxt("Screenshot", 22, (GXColor){0, 0, 0, 255});
-	screenshotBtnTxt.SetWrap(true, btnLargeOutline.GetWidth()-20);
-	GuiImage screenshotBtnImg(&btnLargeOutline);
-	GuiImage screenshotBtnImgOver(&btnLargeOutlineOver);
-	GuiImage screenshotBtnIcon(&iconScreenshot);
-	GuiButton screenshotBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
-	screenshotBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
-	screenshotBtn.SetPosition(0, 250);
-	screenshotBtn.SetLabel(&screenshotBtnTxt);
-	screenshotBtn.SetImage(&screenshotBtnImg);
-	screenshotBtn.SetImageOver(&screenshotBtnImgOver);
-	screenshotBtn.SetIcon(&screenshotBtnIcon);
-	screenshotBtn.SetSoundOver(&btnSoundOver);
-	screenshotBtn.SetSoundClick(&btnSoundClick);
-	screenshotBtn.SetTrigger(trigA);
-	screenshotBtn.SetTrigger(trig2);
-	screenshotBtn.SetEffectGrow();
-	
 	GuiText cheatsBtnTxt("Cheats", 22, (GXColor){0, 0, 0, 255});
 	GuiImage cheatsBtnImg(&btnLargeOutline);
 	GuiImage cheatsBtnImgOver(&btnLargeOutlineOver);
 	GuiImage cheatsBtnIcon(&iconCheats);
 	GuiButton cheatsBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
 	cheatsBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
-	cheatsBtn.SetPosition(200, 250);
+	cheatsBtn.SetPosition(0, 250);
 	cheatsBtn.SetLabel(&cheatsBtnTxt);
 	cheatsBtn.SetImage(&cheatsBtnImg);
 	cheatsBtn.SetImageOver(&cheatsBtnImgOver);
@@ -2220,6 +2233,24 @@ static int MenuGameSettings()
 	cheatsBtn.SetTrigger(trigA);
 	cheatsBtn.SetTrigger(trig2);
 	cheatsBtn.SetEffectGrow();
+
+	GuiText hacksBtnTxt("Emulator Hacks", 22, (GXColor){0, 0, 0, 255});
+	hacksBtnTxt.SetWrap(true, btnLargeOutline.GetWidth()-20);
+	GuiImage hacksBtnImg(&btnLargeOutline);
+	GuiImage hacksBtnImgOver(&btnLargeOutlineOver);
+	GuiImage hacksBtnIcon(&iconHacks);
+	GuiButton hacksBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
+	hacksBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
+	hacksBtn.SetPosition(200, 250);
+	hacksBtn.SetLabel(&hacksBtnTxt);
+	hacksBtn.SetImage(&hacksBtnImg);
+	hacksBtn.SetImageOver(&hacksBtnImgOver);
+	hacksBtn.SetIcon(&hacksBtnIcon);
+	hacksBtn.SetSoundOver(&btnSoundOver);
+	hacksBtn.SetSoundClick(&btnSoundClick);
+	hacksBtn.SetTrigger(trigA);
+	hacksBtn.SetTrigger(trig2);
+	hacksBtn.SetEffectGrow();
 
 	GuiText closeBtnTxt("Close", 20, (GXColor){0, 0, 0, 255});
 	GuiImage closeBtnImg(&btnCloseOutline);
@@ -2259,7 +2290,7 @@ static int MenuGameSettings()
 	w.Append(&videoBtn);
 	w.Append(&audioBtn);
 	w.Append(&controllerBtn);
-	w.Append(&screenshotBtn);
+	w.Append(&hacksBtn);
 	w.Append(&cheatsBtn);
 	w.Append(&closeBtn);
 	w.Append(&backBtn);
@@ -2296,13 +2327,9 @@ static int MenuGameSettings()
 			else
 				InfoPrompt("Cheats file not found!");
 		}
-		else if(screenshotBtn.GetState() == STATE_CLICKED)
+		else if(hacksBtn.GetState() == STATE_CLICKED)
 		{
-			if (WindowPrompt("Preview Screenshot", "Save a new Preview Screenshot? Current Screenshot image will be overwritten.", "OK", "Cancel"))
-			{
-				snprintf(filepath, 1024, "%s%s/%s", pathPrefix[GCSettings.SaveMethod], GCSettings.ScreenshotsFolder, Memory.ROMFilename);
-				SavePreviewImg(filepath, NOTSILENT); 
-			}
+			menu = MENU_GAMESETTINGS_HACKS;
 		}
 		else if(closeBtn.GetState() == STATE_CLICKED)
 		{
@@ -2434,9 +2461,10 @@ static int MenuSettingsMappings()
 	GuiImageData btnLargeOutline(button_large_png);
 	GuiImageData btnLargeOutlineOver(button_large_over_png);
 	GuiImageData iconSNESController(icon_settings_snescontroller_png);
+	GuiImageData iconMouse(icon_settings_mouse_png);
 	GuiImageData iconSuperscope(icon_settings_superscope_png);
 	GuiImageData iconJustifier(icon_settings_justifier_png);
-	GuiImageData iconMouse(icon_settings_mouse_png);
+	GuiImageData iconOther(icon_settings_other_png);
 
 	GuiText snesBtnTxt("SNES Controller", 22, (GXColor){0, 0, 0, 255});
 	snesBtnTxt.SetWrap(true, btnLargeOutline.GetWidth()-40);
@@ -2456,24 +2484,6 @@ static int MenuSettingsMappings()
 	snesBtn.SetTrigger(trig2);
 	snesBtn.SetEffectGrow();
 
-	GuiText superscopeBtnTxt("Super Scope", 22, (GXColor){0, 0, 0, 255});
-	superscopeBtnTxt.SetWrap(true, btnLargeOutline.GetWidth()-20);
-	GuiImage superscopeBtnImg(&btnLargeOutline);
-	GuiImage superscopeBtnImgOver(&btnLargeOutlineOver);
-	GuiImage superscopeBtnIcon(&iconSuperscope);
-	GuiButton superscopeBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
-	superscopeBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
-	superscopeBtn.SetPosition(125, 120);
-	superscopeBtn.SetLabel(&superscopeBtnTxt);
-	superscopeBtn.SetImage(&superscopeBtnImg);
-	superscopeBtn.SetImageOver(&superscopeBtnImgOver);
-	superscopeBtn.SetIcon(&superscopeBtnIcon);
-	superscopeBtn.SetSoundOver(&btnSoundOver);
-	superscopeBtn.SetSoundClick(&btnSoundClick);
-	superscopeBtn.SetTrigger(trigA);
-	superscopeBtn.SetTrigger(trig2);
-	superscopeBtn.SetEffectGrow();
-
 	GuiText mouseBtnTxt("SNES Mouse", 22, (GXColor){0, 0, 0, 255});
 	mouseBtnTxt.SetWrap(true, btnLargeOutline.GetWidth()-55);
 	GuiImage mouseBtnImg(&btnLargeOutline);
@@ -2481,7 +2491,7 @@ static int MenuSettingsMappings()
 	GuiImage mouseBtnIcon(&iconMouse);
 	GuiButton mouseBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
 	mouseBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
-	mouseBtn.SetPosition(-200, 250);
+	mouseBtn.SetPosition(125, 120);
 	mouseBtn.SetLabel(&mouseBtnTxt);
 	mouseBtn.SetImage(&mouseBtnImg);
 	mouseBtn.SetImageOver(&mouseBtnImgOver);
@@ -2491,6 +2501,24 @@ static int MenuSettingsMappings()
 	mouseBtn.SetTrigger(trigA);
 	mouseBtn.SetTrigger(trig2);
 	mouseBtn.SetEffectGrow();
+
+	GuiText superscopeBtnTxt("Super Scope", 22, (GXColor){0, 0, 0, 255});
+	superscopeBtnTxt.SetWrap(true, btnLargeOutline.GetWidth()-20);
+	GuiImage superscopeBtnImg(&btnLargeOutline);
+	GuiImage superscopeBtnImgOver(&btnLargeOutlineOver);
+	GuiImage superscopeBtnIcon(&iconSuperscope);
+	GuiButton superscopeBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
+	superscopeBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
+	superscopeBtn.SetPosition(-200, 250);
+	superscopeBtn.SetLabel(&superscopeBtnTxt);
+	superscopeBtn.SetImage(&superscopeBtnImg);
+	superscopeBtn.SetImageOver(&superscopeBtnImgOver);
+	superscopeBtn.SetIcon(&superscopeBtnIcon);
+	superscopeBtn.SetSoundOver(&btnSoundOver);
+	superscopeBtn.SetSoundClick(&btnSoundClick);
+	superscopeBtn.SetTrigger(trigA);
+	superscopeBtn.SetTrigger(trig2);
+	superscopeBtn.SetEffectGrow();
 
 	GuiText justifierBtnTxt("Justifier", 22, (GXColor){0, 0, 0, 255});
 	GuiImage justifierBtnImg(&btnLargeOutline);
@@ -2513,12 +2541,14 @@ static int MenuSettingsMappings()
 	otherBtnTxt.SetWrap(true, btnLargeOutline.GetWidth()-20);
 	GuiImage otherBtnImg(&btnLargeOutline);
 	GuiImage otherBtnImgOver(&btnLargeOutlineOver);
+	GuiImage otherBtnIcon(&iconOther);
 	GuiButton otherBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
 	otherBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
 	otherBtn.SetPosition(200, 250);
 	otherBtn.SetLabel(&otherBtnTxt);
 	otherBtn.SetImage(&otherBtnImg);
 	otherBtn.SetImageOver(&otherBtnImgOver);
+	otherBtn.SetIcon(&otherBtnIcon);
 	otherBtn.SetSoundOver(&btnSoundOver);
 	otherBtn.SetSoundClick(&btnSoundClick);
 	otherBtn.SetTrigger(trigA);
@@ -2544,8 +2574,8 @@ static int MenuSettingsMappings()
 	GuiWindow w(screenwidth, screenheight);
 	w.Append(&titleTxt);
 	w.Append(&snesBtn);
-	w.Append(&superscopeBtn);
 	w.Append(&mouseBtn);
+	w.Append(&superscopeBtn);
 	w.Append(&justifierBtn);
 	w.Append(&otherBtn);
 
@@ -2824,7 +2854,6 @@ static int MenuSettingsMappingsController()
 /****************************************************************************
  * ButtonMappingWindow
  ***************************************************************************/
-
 static u32
 ButtonMappingWindow()
 {
@@ -3147,7 +3176,6 @@ static int MenuSettingsMappingsMap()
 /****************************************************************************
  * MenuSettingsVideo
  ***************************************************************************/
-
 static void ScreenZoomWindowUpdate(void * ptr, float h, float v)
 {
 	GuiButton * b = (GuiButton *)ptr;
@@ -3424,7 +3452,6 @@ static int MenuSettingsOtherMappings()
 
 	sprintf(options.name[i++], "Turbo Mode");
 	sprintf(options.name[i++], "Turbo Mode Button");
-
 	options.length = i;
 
 	for(i=0; i < options.length; i++)
@@ -3555,18 +3582,15 @@ static int MenuSettingsVideo()
 	OptionList options;
 
 	sprintf(options.name[i++], "Rendering");
-	sprintf(options.name[i++], "Scaling");
+	sprintf(options.name[i++], "Aspect Ratio");
 	sprintf(options.name[i++], "Filtering");
 	sprintf(options.name[i++], "Screen Zoom");
 	sprintf(options.name[i++], "Screen Position");
 	sprintf(options.name[i++], "Video Mode");
 	sprintf(options.name[i++], "SNES Hi-Res Mode");
-	sprintf(options.name[i++], "Sprites per-line Limit");
 	sprintf(options.name[i++], "Crosshair");
 	sprintf(options.name[i++], "Show Framerate");
 	sprintf(options.name[i++], "Show Local Time");
-	sprintf(options.name[i++], "Super FX Overclock");
-	sprintf(options.name[i++], "SNES CPU Overclock");
 	options.length = i;
 
 #ifdef HW_DOL
@@ -3656,75 +3680,15 @@ static int MenuSettingsVideo()
 				break;
 
 			case 7:
-				GCSettings.SpriteLimit ^= 1;
-				break;
-
-			case 8:
 				GCSettings.crosshair ^= 1;
 				break;
 
-			case 9:
+			case 8:
 				GCSettings.ShowFrameRate ^= 1;
 				break;
 
-			case 10:
+			case 9:
 				GCSettings.ShowLocalTime ^= 1;
-				break;
-
-			case 11:
-				#ifdef HW_RVL
-				GCSettings.sfxOverclock++;
-				if (GCSettings.sfxOverclock > 6) {
-					GCSettings.sfxOverclock = 0;
-				}
-				#else
-				GCSettings.sfxOverclock++;
-				if (GCSettings.sfxOverclock > 3) {
-					GCSettings.sfxOverclock = 0;
-				}
-				#endif
-				switch(GCSettings.sfxOverclock)
-				{
-					case 0: Settings.SuperFXSpeedPerLine = 0.417 * 10.5e6; break;
-					case 1: Settings.SuperFXSpeedPerLine = 0.417 * 20.5e6; break;
-					case 2: Settings.SuperFXSpeedPerLine = 0.417 * 40.5e6; break;
-					case 3: Settings.SuperFXSpeedPerLine = 0.417 * 60.5e6; break;
-					case 4: Settings.SuperFXSpeedPerLine = 0.417 * 80.5e6; break;
-					case 5: Settings.SuperFXSpeedPerLine = 0.417 * 100.5e6; break;
-					case 6: Settings.SuperFXSpeedPerLine = 0.417 * 120.5e6; break;
-				}
-				S9xResetSuperFX();
-				S9xReset();
-				break;
-
-			case 12:
-				GCSettings.cpuOverclock++;
-				if (GCSettings.cpuOverclock > 3) {
-					GCSettings.cpuOverclock = 0;
-				}
-				switch(GCSettings.cpuOverclock)
-				{
-					case 0:
-						Settings.OneClockCycle = 6;
-						Settings.OneSlowClockCycle = 8;
-						Settings.TwoClockCycles = 12;
-						break;
-					case 1:
-						Settings.OneClockCycle = 6;
-						Settings.OneSlowClockCycle = 6;
-						Settings.TwoClockCycles = 12;
-						break;
-					case 2:
-						Settings.OneClockCycle = 4;
-						Settings.OneSlowClockCycle = 5;
-						Settings.TwoClockCycles = 6;
-						break;
-					case 3:
-						Settings.OneClockCycle = 3;
-						Settings.OneSlowClockCycle = 3;
-						Settings.TwoClockCycles = 3;
-						break;
-				}
 				break;
 		}
 
@@ -3733,20 +3697,20 @@ static int MenuSettingsVideo()
 			firstRun = false;
 
 			if (GCSettings.render == 0)
-				sprintf (options.value[0], "Original");
+				sprintf (options.value[0], "Original (240p)");
 			else if (GCSettings.render == 1)
 				sprintf (options.value[0], "Filtered");
 			else if (GCSettings.render == 2)
-				sprintf (options.value[0], "Unfiltered");
+				sprintf (options.value[0], "Unfiltered (Raw pixels)");
 			else if (GCSettings.render == 3)
 				sprintf (options.value[0], "Filtered (Soft)");
 			else if (GCSettings.render == 4)
 				sprintf (options.value[0], "Filtered (Sharp)");
 
 			if(GCSettings.widescreen)
-				sprintf (options.value[1], "16:9 Correction");
+				sprintf (options.value[1], "16:9 correction");
 			else
-				sprintf (options.value[1], "Default");
+				sprintf (options.value[1], "4:3 (original)");
 #ifdef HW_RVL
 			sprintf (options.value[2], "%s", GetFilterName((RenderFilter)GCSettings.FilterMethod));
 #endif
@@ -3767,40 +3731,10 @@ static int MenuSettingsVideo()
 					sprintf (options.value[5], "PAL (60Hz)"); break;
 			}
 			sprintf (options.value[6], "%s", GCSettings.HiResolution == 1 ? "On" : "Off");
-			sprintf (options.value[7], "%s", GCSettings.SpriteLimit == 1 ? "On" : "Off");
-			sprintf (options.value[8], "%s", GCSettings.crosshair == 1 ? "On" : "Off");
-			sprintf (options.value[9], "%s", GCSettings.ShowFrameRate ? "On" : "Off");
-			sprintf (options.value[10], "%s", GCSettings.ShowLocalTime ? "On" : "Off");
+			sprintf (options.value[7], "%s", GCSettings.crosshair == 1 ? "On" : "Off");
+			sprintf (options.value[8], "%s", GCSettings.ShowFrameRate ? "On" : "Off");
+			sprintf (options.value[9], "%s", GCSettings.ShowLocalTime ? "On" : "Off");
 
-			switch(GCSettings.sfxOverclock)
-			{
-				case 0:
-					sprintf (options.value[11], "Default"); break;
-				case 1:
-					sprintf (options.value[11], "20 MHz"); break;
-				case 2:
-					sprintf (options.value[11], "40 MHz"); break;
-				case 3:
-					sprintf (options.value[11], "60 MHz"); break;
-				case 4:
-					sprintf (options.value[11], "80 MHz"); break;
-				case 5:
-					sprintf (options.value[11], "100 MHz"); break;
-				case 6:
-					sprintf (options.value[11], "120 MHz"); break;
-			}
-
-			switch(GCSettings.cpuOverclock)
-			{
-				case 0:
-					sprintf (options.value[12], "Default"); break;
-				case 1:
-					sprintf (options.value[12], "Low"); break;
-				case 2:
-					sprintf (options.value[12], "Medium"); break;
-				case 3:
-					sprintf (options.value[12], "Max"); break;
-			}
 			optionBrowser.TriggerUpdate();
 		}
 
@@ -3829,6 +3763,7 @@ static int MenuSettingsAudio()
 
 	sprintf(options.name[i++], "Stereo Reverse");
 	sprintf(options.name[i++], "Interpolation Filter");
+	sprintf(options.name[i++], "Mute");
 	options.length = i;
 
 	for(i=0; i < options.length; i++)
@@ -3898,6 +3833,10 @@ static int MenuSettingsAudio()
 				}
 				break;
 				S9xReset();
+
+			case 2:
+				GCSettings.MuteAudio ^= 1;
+				break;
 		}
 
 		if(ret >= 0 || firstRun)
@@ -3919,6 +3858,192 @@ static int MenuSettingsAudio()
 				case 4:
 					sprintf (options.value[1], "None"); break;
 			}
+
+			sprintf (options.value[2], "%s", GCSettings.MuteAudio == 1 ? "On" : "Off");
+
+			optionBrowser.TriggerUpdate();
+		}
+
+		if(backBtn.GetState() == STATE_CLICKED)
+		{
+			menu = MENU_GAMESETTINGS;
+		}
+	}
+	HaltGui();
+	mainWindow->Remove(&optionBrowser);
+	mainWindow->Remove(&w);
+	mainWindow->Remove(&titleTxt);
+	return menu;
+}
+
+/****************************************************************************
+ * MenuSettingsHacks
+ ***************************************************************************/
+static int MenuSettingsHacks()
+{
+	int menu = MENU_NONE;
+	int ret;
+	int i = 0;
+	bool firstRun = true;
+	OptionList options;
+
+	sprintf(options.name[i++], "Super FX Overclock");
+	sprintf(options.name[i++], "SNES CPU Overclock");
+	sprintf(options.name[i++], "Sprites per-line Limit");
+	sprintf(options.name[i++], "Satellaview BIOS");
+	options.length = i;
+
+	for(i=0; i < options.length; i++)
+		options.value[i][0] = 0;
+
+	GuiText titleTxt("Game Settings - Emulator Hacks", 26, (GXColor){255, 255, 255, 255});
+	titleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
+	titleTxt.SetPosition(50,50);
+
+	GuiSound btnSoundOver(button_over_pcm, button_over_pcm_size, SOUND_PCM);
+	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
+	GuiImageData btnOutline(button_png);
+	GuiImageData btnOutlineOver(button_over_png);
+
+	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
+	GuiImage backBtnImg(&btnOutline);
+	GuiImage backBtnImgOver(&btnOutlineOver);
+	GuiButton backBtn(btnOutline.GetWidth(), btnOutline.GetHeight());
+	backBtn.SetAlignment(ALIGN_LEFT, ALIGN_BOTTOM);
+	backBtn.SetPosition(50, -35);
+	backBtn.SetLabel(&backBtnTxt);
+	backBtn.SetImage(&backBtnImg);
+	backBtn.SetImageOver(&backBtnImgOver);
+	backBtn.SetSoundOver(&btnSoundOver);
+	backBtn.SetSoundClick(&btnSoundClick);
+	backBtn.SetTrigger(trigA);
+	backBtn.SetTrigger(trig2);
+	backBtn.SetEffectGrow();
+
+	GuiOptionBrowser optionBrowser(552, 248, &options);
+	optionBrowser.SetPosition(0, 108);
+	optionBrowser.SetCol2Position(250);
+	optionBrowser.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
+
+	HaltGui();
+	GuiWindow w(screenwidth, screenheight);
+	w.Append(&backBtn);
+	mainWindow->Append(&optionBrowser);
+	mainWindow->Append(&w);
+	mainWindow->Append(&titleTxt);
+	ResumeGui();
+
+	while(menu == MENU_NONE)
+	{
+		usleep(THREAD_SLEEP);
+
+		ret = optionBrowser.GetClickedOption();
+
+		switch (ret)
+		{
+			case 0:
+				#ifdef HW_RVL
+				GCSettings.sfxOverclock++;
+				if (GCSettings.sfxOverclock > 6) {
+					GCSettings.sfxOverclock = 0;
+				}
+				#else
+				GCSettings.sfxOverclock++;
+				if (GCSettings.sfxOverclock > 3) {
+					GCSettings.sfxOverclock = 0;
+				}
+				#endif
+				switch(GCSettings.sfxOverclock)
+				{
+					case 0: Settings.SuperFXSpeedPerLine = 0.417 * 10.5e6; break;
+					case 1: Settings.SuperFXSpeedPerLine = 0.417 * 20.5e6; break;
+					case 2: Settings.SuperFXSpeedPerLine = 0.417 * 40.5e6; break;
+					case 3: Settings.SuperFXSpeedPerLine = 0.417 * 60.5e6; break;
+					case 4: Settings.SuperFXSpeedPerLine = 0.417 * 80.5e6; break;
+					case 5: Settings.SuperFXSpeedPerLine = 0.417 * 100.5e6; break;
+					case 6: Settings.SuperFXSpeedPerLine = 0.417 * 120.5e6; break;
+				}
+				S9xResetSuperFX();
+				S9xReset();
+				break;
+
+			case 1:
+				GCSettings.cpuOverclock++;
+				if (GCSettings.cpuOverclock > 3) {
+					GCSettings.cpuOverclock = 0;
+				}
+				switch(GCSettings.cpuOverclock)
+				{
+					case 0:
+						Settings.OneClockCycle = 6;
+						Settings.OneSlowClockCycle = 8;
+						Settings.TwoClockCycles = 12;
+						break;
+					case 1:
+						Settings.OneClockCycle = 6;
+						Settings.OneSlowClockCycle = 6;
+						Settings.TwoClockCycles = 12;
+						break;
+					case 2:
+						Settings.OneClockCycle = 4;
+						Settings.OneSlowClockCycle = 5;
+						Settings.TwoClockCycles = 6;
+						break;
+					case 3:
+						Settings.OneClockCycle = 3;
+						Settings.OneSlowClockCycle = 3;
+						Settings.TwoClockCycles = 3;
+						break;
+				}
+				break;
+
+			case 2:
+				GCSettings.SpriteLimit ^= 1;
+				break;
+
+			case 3:
+				GCSettings.Satellaview ^= 1;
+				break;
+		}
+
+		if(ret >= 0 || firstRun)
+		{
+			firstRun = false;
+
+			switch(GCSettings.sfxOverclock)
+			{
+				case 0:
+					sprintf (options.value[0], "None"); break;
+				case 1:
+					sprintf (options.value[0], "20 MHz"); break;
+				case 2:
+					sprintf (options.value[0], "40 MHz"); break;
+				case 3:
+					sprintf (options.value[0], "60 MHz"); break;
+				case 4:
+					sprintf (options.value[0], "80 MHz"); break;
+				case 5:
+					sprintf (options.value[0], "100 MHz"); break;
+				case 6:
+					sprintf (options.value[0], "120 MHz"); break;
+			}
+
+			switch(GCSettings.cpuOverclock)
+			{
+				case 0:
+					sprintf (options.value[1], "None"); break;
+				case 1:
+					sprintf (options.value[1], "Low"); break;
+				case 2:
+					sprintf (options.value[1], "Medium"); break;
+				case 3:
+					sprintf (options.value[1], "Max"); break;
+			}
+
+			sprintf (options.value[2], "%s", GCSettings.SpriteLimit == 1 ? "On" : "Off");
+
+			sprintf (options.value[3], "%s", GCSettings.Satellaview == 1 ? "On" : "Off");
+
 			optionBrowser.TriggerUpdate();
 		}
 
@@ -3954,6 +4079,7 @@ static int MenuSettings()
 	GuiImageData iconFile(icon_settings_file_png);
 	GuiImageData iconMenu(icon_settings_menu_png);
 	GuiImageData iconNetwork(icon_settings_network_png);
+	GuiImageData iconCredits(icon_settings_credits_png);
 
 	GuiText savingBtnTxt1("Saving", 22, (GXColor){0, 0, 0, 255});
 	GuiText savingBtnTxt2("&", 18, (GXColor){0, 0, 0, 255});
@@ -4003,7 +4129,7 @@ static int MenuSettings()
 	GuiImage networkBtnIcon(&iconNetwork);
 	GuiButton networkBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
 	networkBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
-	networkBtn.SetPosition(0, 250);
+	networkBtn.SetPosition(-125, 250);
 	networkBtn.SetLabel(&networkBtnTxt);
 	networkBtn.SetImage(&networkBtnImg);
 	networkBtn.SetImageOver(&networkBtnImgOver);
@@ -4013,6 +4139,25 @@ static int MenuSettings()
 	networkBtn.SetTrigger(trigA);
 	networkBtn.SetTrigger(trig2);
 	networkBtn.SetEffectGrow();
+
+	GuiText creditsBtnTxt("Credits", 22, (GXColor){0, 0, 0, 255});
+	creditsBtnTxt.SetWrap(true, btnLargeOutline.GetWidth()-20);
+	GuiImage creditsBtnImg(&btnLargeOutline);
+	GuiImage creditsBtnImgOver(&btnLargeOutlineOver);
+	GuiImage creditsBtnIcon(&iconCredits);
+	GuiButton creditsBtn(btnLargeOutline.GetWidth(), btnLargeOutline.GetHeight());
+	creditsBtn.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
+	creditsBtn.SetPosition(125, 250);
+	creditsBtn.SetLabel(&creditsBtnTxt);
+	creditsBtn.SetImage(&creditsBtnImg);
+	creditsBtn.SetImageOver(&creditsBtnImgOver);
+	creditsBtn.SetIcon(&creditsBtnIcon);
+	creditsBtn.SetSoundOver(&btnSoundOver);
+	creditsBtn.SetSoundClick(&btnSoundClick);
+	creditsBtn.SetTrigger(trigA);
+	creditsBtn.SetTrigger(trig2);
+	creditsBtn.SetEffectGrow();
+	creditsBtn.SetUpdateCallback(WindowCredits);
 
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
@@ -4050,6 +4195,7 @@ static int MenuSettings()
 	w.Append(&savingBtn);
 	w.Append(&menuBtn);
 	w.Append(&networkBtn);
+	w.Append(&creditsBtn);
 	w.Append(&backBtn);
 	w.Append(&resetBtn);
 
@@ -4072,6 +4218,11 @@ static int MenuSettings()
 		else if(networkBtn.GetState() == STATE_CLICKED)
 		{
 			menu = MENU_SETTINGS_NETWORK;
+		}
+		else if(creditsBtn.GetState() == STATE_CLICKED)
+		{
+			showCredits = true;
+			creditsBtn.SetState(STATE_SELECTED);
 		}
 		else if(backBtn.GetState() == STATE_CLICKED)
 		{
@@ -4100,7 +4251,6 @@ static int MenuSettings()
 /****************************************************************************
  * MenuSettingsFile
  ***************************************************************************/
-
 static int MenuSettingsFile()
 {
 	int menu = MENU_NONE;
@@ -4313,7 +4463,6 @@ static int MenuSettingsFile()
 /****************************************************************************
  * MenuSettingsMenu
  ***************************************************************************/
-
 static int MenuSettingsMenu()
 {
 	int menu = MENU_NONE;
@@ -4327,10 +4476,11 @@ static int MenuSettingsMenu()
 	sprintf(options.name[i++], "Wiimote Orientation");
 	sprintf(options.name[i++], "Music Volume");
 	sprintf(options.name[i++], "Sound Effects Volume");
-	sprintf(options.name[i++], "Display Virtual Memory");
+	sprintf(options.name[i++], "Satellaview BIOS");
 	sprintf(options.name[i++], "Language");
 	sprintf(options.name[i++], "Preview Image");
 	sprintf(options.name[i++], "Hide New SRAM button");
+	sprintf(options.name[i++], "Display Virtual Memory");
 	options.length = i;
 
 	for(i=0; i < options.length; i++)
@@ -4401,7 +4551,7 @@ static int MenuSettingsMenu()
 					GCSettings.SFXVolume = 0;
 				break;
 			case 4:
-				GCSettings.DisplayVM ^= 1;
+				GCSettings.Satellaview ^= 1;
 				break;
 			case 5:
 				GCSettings.language++;
@@ -4411,7 +4561,6 @@ static int MenuSettingsMenu()
 
 				if(GCSettings.language == LANG_SIMP_CHINESE)
 					GCSettings.language = LANG_KOREAN;
-	
 				break;
 			case 6:
 				GCSettings.PreviewImage++;
@@ -4420,6 +4569,9 @@ static int MenuSettingsMenu()
 				break;
 			case 7:
 				GCSettings.HideSRAMSaving ^= 1;
+				break;
+			case 8:
+				GCSettings.DisplayVM ^= 1;
 				break;
 		}
 
@@ -4464,15 +4616,7 @@ static int MenuSettingsMenu()
 			else
 				sprintf(options.value[3], "Mute");
 
-			if (GCSettings.DisplayVM == 1)
-				sprintf (options.value[4], "Enabled");
-			else
-				sprintf (options.value[4], "Disabled");
-
-			if (GCSettings.HideSRAMSaving == 1)
-				sprintf (options.value[7], "On");
-			else
-				sprintf (options.value[7], "Off");
+			sprintf (options.value[4], "%s", GCSettings.Satellaview == 1 ? "On" : "Off");
 
 			switch(GCSettings.language)
 			{
@@ -4495,15 +4639,25 @@ static int MenuSettingsMenu()
 			switch(GCSettings.PreviewImage)
 			{
 				case 0:
-						sprintf(options.value[6], "Screenshots");
-						break; 
+					sprintf(options.value[6], "Screenshots");
+					break; 
 				case 1:
-						sprintf(options.value[6], "Covers");
-						break; 
+					sprintf(options.value[6], "Covers");
+					break; 
 				case 2:
-						sprintf(options.value[6], "Artwork");
-						break;
+					sprintf(options.value[6], "Artwork");
+					break;
 			}
+
+			if (GCSettings.HideSRAMSaving == 1)
+				sprintf (options.value[7], "On");
+			else
+				sprintf (options.value[7], "Off");
+
+			if (GCSettings.DisplayVM == 1)
+				sprintf (options.value[8], "Enabled");
+			else
+				sprintf (options.value[8], "Disabled");
 
 			optionBrowser.TriggerUpdate();
 		}
@@ -4629,7 +4783,6 @@ static int MenuSettingsNetwork()
 /****************************************************************************
  * MainMenu
  ***************************************************************************/
-
 void
 MainMenu (int menu)
 {
@@ -4766,6 +4919,9 @@ MainMenu (int menu)
 			case MENU_GAMESETTINGS_MAPPINGS_CTRL:
 				currentMenu = MenuSettingsMappingsController();
 				break;
+			case MENU_GAMESETTINGS_MAPPINGS_OTHER:
+				currentMenu = MenuSettingsOtherMappings();
+				break;
 			case MENU_GAMESETTINGS_MAPPINGS_MAP:
 				currentMenu = MenuSettingsMappingsMap();
 				break;
@@ -4777,6 +4933,9 @@ MainMenu (int menu)
 				break;
 			case MENU_GAMESETTINGS_CHEATS:
 				currentMenu = MenuGameCheats();
+				break;
+			case MENU_GAMESETTINGS_HACKS:
+				currentMenu = MenuSettingsHacks();
 				break;
 			case MENU_SETTINGS:
 				currentMenu = MenuSettings();
@@ -4790,14 +4949,16 @@ MainMenu (int menu)
 			case MENU_SETTINGS_NETWORK:
 				currentMenu = MenuSettingsNetwork();
 				break;
-			case MENU_GAMESETTINGS_MAPPINGS_OTHER:
-				currentMenu = MenuSettingsOtherMappings();
-				break;
 			default: // unrecognized menu
 				currentMenu = MenuGameSelection();
 				break;
 		}
 		lastMenu = currentMenu;
+		if (btnLogo->GetState() == STATE_CLICKED)
+		{
+			showCredits = true;
+			btnLogo->ResetState();
+		}
 		usleep(THREAD_SLEEP);
 	}
 

@@ -97,6 +97,8 @@ extern const u8		icon_game_delete_png[];
 extern const u32	icon_game_delete_png_size;
 extern const u8		icon_game_reset_png[];
 extern const u32	icon_game_reset_png_size;
+extern const u8		icon_game_screenshot_png[];
+extern const u32	icon_game_screenshot_png_size;
 
 extern const u8		icon_settings_wiimote_png[];
 extern const u32	icon_settings_wiimote_png_size;
@@ -119,6 +121,8 @@ extern const u8		icon_settings_justifier_png[];
 extern const u32	icon_settings_justifier_png_size;
 extern const u8		icon_settings_mouse_png[];
 extern const u32	icon_settings_mouse_png_size;
+extern const u8		icon_settings_other_png[];
+extern const u32	icon_settings_other_png_size;
 
 extern const u8		icon_settings_file_png[];
 extern const u32	icon_settings_file_png_size;
@@ -128,12 +132,14 @@ extern const u8		icon_settings_menu_png[];
 extern const u32	icon_settings_menu_png_size;
 extern const u8		icon_settings_network_png[];
 extern const u32	icon_settings_network_png_size;
+extern const u8		icon_settings_credits_png[];
+extern const u32	icon_settings_credits_png_size;
 extern const u8		icon_settings_video_png[];
 extern const u32	icon_settings_video_png_size;
 extern const u8		icon_settings_audio_png[];
 extern const u32	icon_settings_audio_png_size;
-extern const u8		icon_settings_screenshot_png[];
-extern const u32	icon_settings_screenshot_png_size;
+extern const u8		icon_settings_hacks_png[];
+extern const u32	icon_settings_hacks_png_size;
 
 extern const u8		button_png[];
 extern const u32	button_png_size;
