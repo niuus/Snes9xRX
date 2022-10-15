@@ -188,6 +188,7 @@ preparePrefsData ()
 	createXMLSetting("TurboModeEnabled", "Turbo Mode", toStr(GCSettings.TurboModeEnabled));
 	createXMLSetting("TurboModeButton", "Turbo Mode Button", toStr(GCSettings.TurboModeButton));
 	createXMLSetting("GamepadMenuToggle", "Gamepad Menu Toggle", toStr(GCSettings.GamepadMenuToggle));
+	createXMLSetting("MapABXYRightStick", "Map YXBA Right Stick", toStr(GCSettings.MapABXYRightStick));
 
 	createXMLController(btnmap[CTRL_PAD][CTRLR_GCPAD], "btnmap_pad_gcpad", "SNES Pad - GameCube Controller");
 #ifdef HW_RVL
@@ -388,6 +389,7 @@ decodePrefsData ()
 			loadXMLSetting(&GCSettings.TurboModeEnabled, "TurboModeEnabled");
 			loadXMLSetting(&GCSettings.TurboModeButton, "TurboModeButton");
 			loadXMLSetting(&GCSettings.GamepadMenuToggle, "GamepadMenuToggle");
+			loadXMLSetting(&GCSettings.MapABXYRightStick, "MapABXYRightStick");
 
 			loadXMLController(btnmap[CTRL_PAD][CTRLR_GCPAD], "btnmap_pad_gcpad");
 			loadXMLController(btnmap[CTRL_PAD][CTRLR_WIIMOTE], "btnmap_pad_wiimote");
@@ -458,6 +460,7 @@ DefaultSettings ()
 	GCSettings.TurboModeEnabled = 1; // Enabled by default
 	GCSettings.TurboModeButton = 0; // Default is Right Analog Stick (0)
 	GCSettings.GamepadMenuToggle = 0; // 0 = All options (default), 1 = C-Stick left, 2 = Start+B+A
+	GCSettings.MapABXYRightStick = 0; // Default is OFF (0)
 
 	GCSettings.videomode = 0; // Automatic video mode detection
 	GCSettings.render = 2; // Unfiltered by default

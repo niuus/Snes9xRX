@@ -3453,6 +3453,7 @@ static int MenuSettingsOtherMappings()
 	sprintf(options.name[i++], "Turbo Mode");
 	sprintf(options.name[i++], "Turbo Mode Button");
 	sprintf(options.name[i++], "Menu Toggle");
+	sprintf(options.name[i++], "Map YXBA to Right Stick");
 	options.length = i;
 
 	for(i=0; i < options.length; i++)
@@ -3522,6 +3523,9 @@ static int MenuSettingsOtherMappings()
 				if (GCSettings.GamepadMenuToggle > 2)
 					GCSettings.GamepadMenuToggle = 0;
 				break;
+			case 3:
+				GCSettings.MapABXYRightStick ^= 1;
+				break;
 		}
 
 		if(ret >= 0 || firstRun)
@@ -3572,6 +3576,8 @@ static int MenuSettingsOtherMappings()
 				case 2:
 					sprintf (options.value[2], "Start (PLUS)+B+A"); break;
 			}
+
+			sprintf (options.value[3], "%s", GCSettings.MapABXYRightStick == 1 ? "On" : "Off");
 
 			optionBrowser.TriggerUpdate();
 		}
