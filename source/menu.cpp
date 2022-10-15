@@ -820,7 +820,7 @@ static void WindowCredits(void * ptr)
 	creditsBoxImg.SetAlignment(ALIGN_CENTRE, ALIGN_MIDDLE);
 	creditsWindowBox.Append(&creditsBoxImg);
 
-	int numEntries = 24;
+	int numEntries = 25;
 	GuiText * txt[numEntries];
 
 	txt[i] = new GuiText("Credits", 28, (GXColor){0, 0, 0, 255});
@@ -836,7 +836,9 @@ static void WindowCredits(void * ptr)
 	txt[i]->SetPosition(330,y); i++; y+=24;
 	txt[i] = new GuiText("Additional improvements");
 	txt[i]->SetPosition(50,y); i++;
-	txt[i] = new GuiText("NiuuS, bladeoner, Zopenko");
+	txt[i] = new GuiText("NiuuS, bladeoner,");
+	txt[i]->SetPosition(330,y); i++; y+=24;
+	txt[i] = new GuiText("Zopenko, InfiniteBlue");
 	txt[i]->SetPosition(330,y); i++; y+=24;
 	txt[i] = new GuiText("Menu artwork");
 	txt[i]->SetPosition(50,y); i++;
@@ -985,7 +987,7 @@ static int MenuGameSelection()
 	GuiImageData bgPreviewImg(bg_preview_png);
 
 	GuiTrigger trigHome;
-	trigHome.SetButtonOnlyTrigger(-1, WPAD_BUTTON_HOME | WPAD_CLASSIC_BUTTON_HOME, 0, WIIDRC_BUTTON_HOME);
+	trigHome.SetButtonOnlyTrigger(-1, WPAD_BUTTON_HOME | WPAD_CLASSIC_BUTTON_HOME, PAD_BUTTON_START, WIIDRC_BUTTON_HOME);
 
 	GuiText settingsBtnTxt("Settings", 22, (GXColor){0, 0, 0, 255});
 	GuiImage settingsBtnIcon(&iconSettings);
@@ -1399,7 +1401,7 @@ static int MenuGame()
 	GuiImageData batteryBar(battery_bar_png);
 
 	GuiTrigger trigHome;
-	trigHome.SetButtonOnlyTrigger(-1, WPAD_BUTTON_HOME | WPAD_CLASSIC_BUTTON_HOME, 0, WIIDRC_BUTTON_HOME);
+	trigHome.SetButtonOnlyTrigger(-1, WPAD_BUTTON_HOME | WPAD_CLASSIC_BUTTON_HOME, PAD_BUTTON_START, WIIDRC_BUTTON_HOME);
 
 	GuiText saveBtnTxt("Save", 22, (GXColor){0, 0, 0, 255});
 	GuiImage saveBtnImg(&btnLargeOutline);
@@ -1871,8 +1873,10 @@ static int MenuGameSaves(int action)
 	GuiImageData btnCloseOutline(button_small_png);
 	GuiImageData btnCloseOutlineOver(button_small_over_png);
 
-	GuiTrigger trigHome;
-	trigHome.SetButtonOnlyTrigger(-1, WPAD_BUTTON_HOME | WPAD_CLASSIC_BUTTON_HOME, 0, WIIDRC_BUTTON_HOME);
+	GuiTrigger trigB;
+	GuiTrigger trig1;
+	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
+	trig1.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
 
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
@@ -1887,7 +1891,12 @@ static int MenuGameSaves(int action)
 	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
+	backBtn.SetTrigger(&trigB);
+	backBtn.SetTrigger(&trig1);
 	backBtn.SetEffectGrow();
+
+	GuiTrigger trigHome;
+	trigHome.SetButtonOnlyTrigger(-1, WPAD_BUTTON_HOME | WPAD_CLASSIC_BUTTON_HOME, PAD_BUTTON_START, WIIDRC_BUTTON_HOME);
 
 	GuiText closeBtnTxt("Close", 20, (GXColor){0, 0, 0, 255});
 	GuiImage closeBtnImg(&btnCloseOutline);
@@ -2144,7 +2153,7 @@ static int MenuGameSettings()
 	GuiImageData btnCloseOutlineOver(button_small_over_png);
 
 	GuiTrigger trigHome;
-	trigHome.SetButtonOnlyTrigger(-1, WPAD_BUTTON_HOME | WPAD_CLASSIC_BUTTON_HOME, 0, WIIDRC_BUTTON_HOME);
+	trigHome.SetButtonOnlyTrigger(-1, WPAD_BUTTON_HOME | WPAD_CLASSIC_BUTTON_HOME, PAD_BUTTON_START, WIIDRC_BUTTON_HOME);
 
 	GuiText mappingBtnTxt("Button Mappings", 22, (GXColor){0, 0, 0, 255});
 	mappingBtnTxt.SetWrap(true, btnLargeOutline.GetWidth()-30);
@@ -2268,6 +2277,11 @@ static int MenuGameSettings()
 	closeBtn.SetTrigger(&trigHome);
 	closeBtn.SetEffectGrow();
 
+	GuiTrigger trigB;
+	GuiTrigger trig1;
+	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
+	trig1.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
+
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
 	GuiImage backBtnImgOver(&btnOutlineOver);
@@ -2281,6 +2295,8 @@ static int MenuGameSettings()
 	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
+	backBtn.SetTrigger(&trigB);
+	backBtn.SetTrigger(&trig1);
 	backBtn.SetEffectGrow();
 
 	HaltGui();
@@ -2388,6 +2404,11 @@ static int MenuGameCheats()
 	GuiImageData btnOutline(button_png);
 	GuiImageData btnOutlineOver(button_over_png);
 
+	GuiTrigger trigB;
+	GuiTrigger trig1;
+	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
+	trig1.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
+
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
 	GuiImage backBtnImgOver(&btnOutlineOver);
@@ -2401,6 +2422,8 @@ static int MenuGameCheats()
 	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
+	backBtn.SetTrigger(&trigB);
+	backBtn.SetTrigger(&trig1);
 	backBtn.SetEffectGrow();
 
 	GuiOptionBrowser optionBrowser(552, 248, &options);
@@ -2554,6 +2577,11 @@ static int MenuSettingsMappings()
 	otherBtn.SetTrigger(trigA);
 	otherBtn.SetTrigger(trig2);
 	otherBtn.SetEffectGrow();
+	
+	GuiTrigger trigB;
+	GuiTrigger trig1;
+	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
+	trig1.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
 
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
@@ -2568,6 +2596,8 @@ static int MenuSettingsMappings()
 	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
+	backBtn.SetTrigger(&trigB);
+	backBtn.SetTrigger(&trig1);
 	backBtn.SetEffectGrow();
 
 	HaltGui();
@@ -2763,6 +2793,11 @@ static int MenuSettingsMappingsController()
 	wiiuproBtn.SetTrigger(trigA);
 	wiiuproBtn.SetTrigger(trig2);
 	wiiuproBtn.SetEffectGrow();
+	
+	GuiTrigger trigB;
+	GuiTrigger trig1;
+	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
+	trig1.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
 
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
@@ -2777,6 +2812,8 @@ static int MenuSettingsMappingsController()
 	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
+	backBtn.SetTrigger(&trigB);
+	backBtn.SetTrigger(&trig1);
 	backBtn.SetEffectGrow();
 
 	HaltGui();
@@ -3471,6 +3508,11 @@ static int MenuSettingsOtherMappings()
 	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_png);
 	GuiImageData btnOutlineOver(button_over_png);
+	
+	GuiTrigger trigB;
+	GuiTrigger trig1;
+	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
+	trig1.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
 
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
@@ -3483,8 +3525,8 @@ static int MenuSettingsOtherMappings()
 	backBtn.SetImageOver(&backBtnImgOver);
 	backBtn.SetSoundOver(&btnSoundOver);
 	backBtn.SetSoundClick(&btnSoundClick);
-	backBtn.SetTrigger(trigA);
-	backBtn.SetTrigger(trig2);
+	backBtn.SetTrigger(&trigB);
+	backBtn.SetTrigger(&trig1);
 	backBtn.SetEffectGrow();
 
 	GuiOptionBrowser optionBrowser(552, 248, &options);
@@ -3631,6 +3673,11 @@ static int MenuSettingsVideo()
 	GuiImageData btnOutline(button_png);
 	GuiImageData btnOutlineOver(button_over_png);
 
+	GuiTrigger trigB;
+	GuiTrigger trig1;
+	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
+	trig1.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
+
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
 	GuiImage backBtnImgOver(&btnOutlineOver);
@@ -3644,6 +3691,8 @@ static int MenuSettingsVideo()
 	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
+	backBtn.SetTrigger(&trigB);
+	backBtn.SetTrigger(&trig1);
 	backBtn.SetEffectGrow();
 
 	GuiOptionBrowser optionBrowser(552, 248, &options);
@@ -3800,6 +3849,11 @@ static int MenuSettingsAudio()
 	GuiImageData btnOutline(button_png);
 	GuiImageData btnOutlineOver(button_over_png);
 
+	GuiTrigger trigB;
+	GuiTrigger trig1;
+	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
+	trig1.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
+
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
 	GuiImage backBtnImgOver(&btnOutlineOver);
@@ -3813,6 +3867,8 @@ static int MenuSettingsAudio()
 	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
+	backBtn.SetTrigger(&trigB);
+	backBtn.SetTrigger(&trig1);
 	backBtn.SetEffectGrow();
 
 	GuiOptionBrowser optionBrowser(552, 248, &options);
@@ -3927,6 +3983,11 @@ static int MenuSettingsHacks()
 	GuiImageData btnOutline(button_png);
 	GuiImageData btnOutlineOver(button_over_png);
 
+	GuiTrigger trigB;
+	GuiTrigger trig1;
+	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
+	trig1.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
+
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
 	GuiImage backBtnImgOver(&btnOutlineOver);
@@ -3940,6 +4001,8 @@ static int MenuSettingsHacks()
 	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
+	backBtn.SetTrigger(&trigB);
+	backBtn.SetTrigger(&trig1);
 	backBtn.SetEffectGrow();
 
 	GuiOptionBrowser optionBrowser(552, 248, &options);
@@ -4181,6 +4244,11 @@ static int MenuSettings()
 	creditsBtn.SetEffectGrow();
 	creditsBtn.SetUpdateCallback(WindowCredits);
 
+	GuiTrigger trigB;
+	GuiTrigger trig1;
+	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
+	trig1.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
+
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
 	GuiImage backBtnImgOver(&btnOutlineOver);
@@ -4194,6 +4262,8 @@ static int MenuSettings()
 	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
+	backBtn.SetTrigger(&trigB);
+	backBtn.SetTrigger(&trig1);
 	backBtn.SetEffectGrow();
 
 	GuiText resetBtnTxt("Reset Settings", 22, (GXColor){0, 0, 0, 255});
@@ -4305,6 +4375,11 @@ static int MenuSettingsFile()
 	GuiImageData btnOutline(button_long_png);
 	GuiImageData btnOutlineOver(button_long_over_png);
 
+	GuiTrigger trigB;
+	GuiTrigger trig1;
+	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
+	trig1.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
+
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
 	GuiImage backBtnImgOver(&btnOutlineOver);
@@ -4318,6 +4393,8 @@ static int MenuSettingsFile()
 	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
+	backBtn.SetTrigger(&trigB);
+	backBtn.SetTrigger(&trig1);
 	backBtn.SetEffectGrow();
 
 	GuiOptionBrowser optionBrowser(552, 248, &options);
@@ -4517,6 +4594,11 @@ static int MenuSettingsMenu()
 	GuiImageData btnOutline(button_long_png);
 	GuiImageData btnOutlineOver(button_long_over_png);
 
+	GuiTrigger trigB;
+	GuiTrigger trig1;
+	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
+	trig1.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
+
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
 	GuiImage backBtnImgOver(&btnOutlineOver);
@@ -4530,6 +4612,8 @@ static int MenuSettingsMenu()
 	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
+	backBtn.SetTrigger(&trigB);
+	backBtn.SetTrigger(&trig1);
 	backBtn.SetEffectGrow();
 
 	GuiOptionBrowser optionBrowser(552, 248, &options);
@@ -4726,6 +4810,11 @@ static int MenuSettingsNetwork()
 	GuiImageData btnOutline(button_long_png);
 	GuiImageData btnOutlineOver(button_long_over_png);
 
+	GuiTrigger trigB;
+	GuiTrigger trig1;
+	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
+	trig1.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
+
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
 	GuiImage backBtnImgOver(&btnOutlineOver);
@@ -4739,6 +4828,8 @@ static int MenuSettingsNetwork()
 	backBtn.SetSoundClick(&btnSoundClick);
 	backBtn.SetTrigger(trigA);
 	backBtn.SetTrigger(trig2);
+	backBtn.SetTrigger(&trigB);
+	backBtn.SetTrigger(&trig1);
 	backBtn.SetEffectGrow();
 
 	GuiOptionBrowser optionBrowser(552, 248, &options);
