@@ -6,7 +6,7 @@
  * Michniewski 2008
  * Tantric 2008-2019
  *
- * snes9xgx.cpp
+ * snes9xrx.cpp
  *
  * This file controls overall program flow. Most things start and end here!
  ***************************************************************************/
@@ -30,7 +30,7 @@
 	#include "vmalloc.h"
 #endif
 
-#include "snes9xgx.h"
+#include "snes9xrx.h"
 #include "networkop.h"
 #include "video.h"
 #include "audio.h"

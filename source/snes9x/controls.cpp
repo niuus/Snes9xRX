@@ -22,7 +22,7 @@
 #include "display.h"
 
 #ifdef GEKKO
-#include "../snes9xgx.h"
+#include "../snes9xrx.h"
 #endif
 
 using namespace	std;

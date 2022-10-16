@@ -6,7 +6,7 @@
 
 #include "gettext.h"
 #include "../filelist.h"
-#include "../snes9xgx.h"
+#include "../snes9xrx.h"
 
 typedef struct _MSG
 {

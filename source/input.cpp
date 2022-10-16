@@ -24,7 +24,7 @@
 #include <ogc/lwp_watchdog.h>
 
 #include "snes9x/port.h"
-#include "snes9xgx.h"
+#include "snes9xrx.h"
 #include "button_mapping.h"
 #include "menu.h"
 #include "video.h"

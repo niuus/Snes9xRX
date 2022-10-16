@@ -6,13 +6,13 @@
  * Michniewski 2008
  * Tantric 2008-2019
  *
- * snes9xgx.h
+ * snes9xrx.h
  *
  * This file controls overall program flow. Most things start and end here!
  ***************************************************************************/
 
-#ifndef _SNES9XGX_H_
-#define _SNES9XGX_H_
+#ifndef _SNES9XRX_H_
+#define _SNES9XRX_H_
 
 #include "utils/FreeTypeGX.h"
 #include "snes9x.h"
@@ -21,7 +21,7 @@
 
 #define APPNAME 			"Snes9x RX"
 #define APPVERSION 			"5.3.0"
-#define APPFOLDER 			"snes9xgx"
+#define APPFOLDER 			"Snes9xRX"
 #define PREF_FILE_NAME		"settingsRX.xml"
 
 #define MAXPATHLEN 1024

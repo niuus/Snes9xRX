@@ -14,7 +14,7 @@
 #include <ogc/lwp_watchdog.h>
 #include <smb.h>
 
-#include "snes9xgx.h"
+#include "snes9xrx.h"
 #include "menu.h"
 #include "fileop.h"
 #include "filebrowser.h"

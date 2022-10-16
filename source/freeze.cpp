@@ -13,7 +13,7 @@
 #include <gccore.h>
 #include <stdio.h>
 
-#include "snes9xgx.h"
+#include "snes9xrx.h"
 #include "fileop.h"
 #include "filebrowser.h"
 #include "menu.h"

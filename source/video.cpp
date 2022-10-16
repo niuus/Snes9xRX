@@ -20,7 +20,7 @@
 #include <ogc/texconv.h>
 #include <ogc/machine/processor.h>
 
-#include "snes9xgx.h"
+#include "snes9xrx.h"
 #include "menu.h"
 #include "filter.h"
 #include "filelist.h"

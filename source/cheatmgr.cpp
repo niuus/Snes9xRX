@@ -12,7 +12,7 @@
 #include "snes9x/port.h"
 #include "snes9x/cheats.h"
 
-#include "snes9xgx.h"
+#include "snes9xrx.h"
 #include "fileop.h"
 #include "filebrowser.h"
 

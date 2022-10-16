@@ -25,7 +25,7 @@
 #endif
 
 #include "snes9x/port.h"
-#include "snes9xgx.h"
+#include "snes9xrx.h"
 #include "filebrowser.h"
 #include "menu.h"
 #include "video.h"

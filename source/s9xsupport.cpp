@@ -20,7 +20,7 @@
 #include <ogc/lwp_watchdog.h>
 
 #include "snes9x/port.h"
-#include "snes9xgx.h"
+#include "snes9xrx.h"
 #include "video.h"
 #include "audio.h"
 #include "snes9x/snes9x.h"
