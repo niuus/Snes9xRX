@@ -20,6 +20,7 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 
 * Core based on Snes9x 1.52 for max performance.
 * MSU-1 co-processor support, for full-motion video & CD-quality audio!
+* Satellaview boot support through the use of the add-on's original BIOS.
 * Wiimote, Nunchuk, Wii Classic/Classic Pro, and Gamecube controller support
 * Wii U Pro, Wii U GamePad, NES and SNES Classic controller support
 * Retrode 2 USB adapter support, so you can use the real controllers!
@@ -39,7 +40,7 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 * Audio filtering modes: None, Sinc, Cubic, Linear, Gaussian
 * Remappable Turbo Mode feature - up to 2x the normal speed
 * Enable or disable the Sprite per-scanline original console limit!
-* Overclock the SNES CPU & Super FX chip at will to smooth gameplay!
+* Overclock the SNES CPU & Super FX chip at will, to smooth gameplay!
 * Zoom option to zoom in/out
 * Available in various skins/colors
 * Open Source!
@@ -47,25 +48,23 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 
 ## RECENT CHANGELOG
 
-* Upgraded Satellaview (BS-X) engine to latest Snes9x to date.
-This furthers up the game compatibility, by making use of the Satellaview
-BIOS. Though the file is optional, you'll want to use it for titles that
-make exclusive use of its functions. Some of the titles now playable are:
-- BS Fire Emblem: Akaneia Saga (Episodes 1 to 4)
-- Chou Aniki - Bakuretsu Rantou Hen
-- Konae-chan no Dokidoki Penguin Kazoku Event-ban
+[5.4.0 - October 15, 2022]
+* Map YXBA to Right Stick (thanks InfiniteBlueGX!)
+Right stick can now be configured as YXBA, like what the Xbox 360 wired
+controller is configured by default with this emulator, specially useful
+for shooters like Smash TV and Total Carnage.
 
-And a lot of the digital magazines available that were distributed through
-the Satellite's service can be read in its original language now,
-as the BIOS embedded font is mostly used for these.
+* Add option to choose the Emulator Menu toggle [InfiniteBlueGX]
+Choose between "Default (All Enabled)", "Home / C-Stick Left", or
+the universal button combo "Start+B+A / Start+1+2".
 
-Check the instructions on where to place the BIOS file by reading the new
-Satellaview section down below, here in the readme.
+* UI navigation improvements. [InfiniteBlueGX]
+Pressing B / 1 will now Go Back from all menus and some sub-menus.
 
-* MSU-1 refinements.
-* Fix for compiling error.
-* Updates for the Spanish language.
-* Other tweaks.
+* Satellaview BIOS ON-OFF (thanks Tanooki16!)
+In RX, it was changed and adapted to be intuitive and easy to use.
+Enable or disable BS-X Satellaview BIOS boot through:
+"Settings -> Menu" or "Game Settings -> Emulator Hacks".
 
 [older update history at the bottom]
 
@@ -124,8 +123,10 @@ will load. However, you can configure Snes9x RX to your liking.
 To configure Snes9x RX, press 'A' on the "Settings" box. This will bring
 up the "Settings" screen where you can configure the "Saving & Loading",
 "Menu", and "Network". You can also restore the settings to their initial 
-values by clicking on the "Reset Settings", or you can just return to the ROM 
-selection screen by clicking on "Go Back".
+values by clicking on the "Reset Settings", read the Credits / activate
+supported USB controllers (better explained in the USB Controllers section
+below), or you can just return to the ROM selection screen by clicking
+on "Go Back".
 
 
 ## SETTINGS
@@ -164,11 +165,15 @@ supported battery saving cartridge.
 
 This settings screen will allow you to customize a few aspects on how the 
 Menu works including the Exit Action, Wiimote Orientation (for navigating
-through the menus), Music Volume, Sound Effects Volume, Display Virtual
-Memory (inside the Game Menu), Language, the type of Preview Image you'd
-like on the Choose Game screen, and a toggle to show or hide the "New SRAM"
-button. The Exit Action can be set to "Return to Loader",
-"Return to Wii Menu" and "Power off Wii".
+through the menus), Music Volume, Sound Effects Volume, Satellaview BIOS
+(better explained in the Satellaview section below), Language (all menus),
+the type of Preview Image you would like to see on the Choose Game screen,
+a toggle to show or hide the "New SRAM" button inside the Save/Load/Delete
+menus, and Display Virtual Memory, the latter two shown inside the Game Menu.
+
+The Exit Action can be set to "Return to  Wii Menu", "Power off Wii",
+"Return to Loader" or simply "Auto", which will determine the
+Exit Action based on the context of how you load the emulator.
 
 ### NETWORK
 
@@ -179,44 +184,59 @@ SMB Share Name, SMB Share Username and SMB Share Password. If you do not
 have a password on your SMB share, then set the SMB Share Password to "0".
 
 
-## FILE BROWSER
+## FILE BROWSER (Choose Game)
 
-The File Browser will automatically load when you start the emulator, which
-will list the contents of the "\snes9xgx\roms\" directory on your SD card.
-You can specify a different default directory to load games from (Settings
--> Saving & Loading -> Load Folder), or simply navigate to another one by
-pressing on "Up One Level", going back as far as the Device Selection. It
-will autosave the current directory for you, if you happen to load any ROM
-from it. To launch a game (which can be either uncompressed or inside a
-ZIP archive) simply click on the title and it will load. In the case of
-7z compressed files, you will be presented first with a list of all the
-supported games inside the archive.
+The File Browser will automatically load when you start the emulator,
+listing the contents of the "\snes9xgx\roms\" directory on your SD card
+or USB drive. You can specify a different default directory to load games
+from (Settings -> Saving & Loading -> Load Folder), or simply navigate to
+another one by pressing on "Up One Level", going back as far as the
+Device Selection. It will autosave the current directory for you, if you
+happen to load any ROM from it. To launch a game (which can be either
+uncompressed, or inside a ZIP or 7Z archive) simply click on the title
+and it will load. In the case of 7z compressed files, you will be
+presented first with a list of all the supported games inside the
+compressed archive.
 
 
 ## GAMEPLAY MENU
 
-Once you load a game, you can access a special menu by pressing the 
-Wii/Wii U controller's 'Home' button / Gamecube controller's 'C-stick left'.
+Once you load a game, you can access a special emulator menu by pressing the
+Wii/Wii U controller's 'Home' button / Gamecube controller's 'C-stick Left'.
 If you're using any other input controller on the Wiimote extension that
-doesn't have a 'Home' button, press 'Select + Start + A + B'. If you use an
+doesn't have a 'Home' button, press 'Start + B + A'. If you use an
 special converter to connect other types of controllers on the Gamecube
-ports, simply press the button combination 'Start + A + B' plus 'Select/Z'.
-This will bring up a special Game Menu that contains the "Save", "Load",
-"Delete", "Game Settings" and "Reset" options.
+ports, simply press the button combination 'Start + B + A'. This action
+will bring up a special Game Menu that contains the "Save", "Load",
+"Delete", "Game Settings", "Screenshot" and "Reset" options.
 
-From this menu you can also return to the Choose Game screen by selecting
-"Main Menu". To leave the menu and resume game play, select "Close".
+From this menu, you can also return to the Choose Game screen by selecting
+"Main Menu". To leave the menu and resume gameplay, select "Close" or press
+'Home' (Wii or Wii U Controllers) or 'Start' (Gamecube controllers).
 
-The "Save" option will allow you to save either your SRAM or a Snapshot.
-Once you've selected "Save", two options will appear named "New SRAM" and
-"New Snapshot". Clicking on either of these will create a new save, which
-you can overwrite if you need to by selecting it. The "Load" option will
-allow you to load any saved SRAM or Snapshot. Finally, the "Delete" option
-allows you to delete any of your snapshots or SRAM saves. "Reset" will
-just reset the game, as the real console behavior.
+### SAVE / LOAD / DELETE
+
+The "Save" option will allow you to save either your SRAM (cartridge save
+on the internal battery) or a game Snapshot (frozen game state). Once you've
+selected "Save", two options will appear named "New Snapshot" - "New SRAM".
+Clicking on either of these will create a new save file, which you can
+overwrite if you need to by selecting it. The "Load" option will allow you
+to load any saved SRAM or Snapshot. Finally, the "Delete" option will let
+you select and delete any of your snapshots or SRAM saves.
+
+### SCREENSHOT
+
+This button takes a picture of the screen you're in at the gameplay moment,
+for Preview's use on the File Browser's "Choose a game".
+
+### RESET
+
+"Reset" will just reset the game, as the real console behavior.
+
+### GAME SETTINGS
 
 If you pick "Game Settings", you can adjust other special options, which
-are covered in the following sections.
+are thoroughly covered in the following sections.
 
 
 ## GAME SETTINGS
@@ -225,14 +245,12 @@ are covered in the following sections.
 
 Inside the "Button Mappings" settings menu, you can configure the button
 mappings for SNES peripherals like the SNES Controller, Mouse, Super Scope,
-																		   
 and the Konami's Justifier. You'll have the option to remap almost all the
 controllers already supported by the emulator (except the Retrode 2 USB,
 Xbox 360 controller, Hornet Gamepad, or the DualShock 3).
 
 Once you select a controller to configure, you will be presented with a
 complete list of the SNES Gamepad buttons you can remap. To set any buttons,
-																		 
 simply pick and click. Snes9x RX will prompt you to press the new physical
 button you want to assign to the virtual button you've selected. Below is a
 list of each controller, followed by the input devices and the default values
@@ -410,15 +428,27 @@ for those devices.
 			AIM OFFSCREEN = A
 			START = PLUS
 
-### BUTTON MAPPINGS / OTHER MAPPINGS
+### BUTTON MAPPINGS - OTHER MAPPINGS
 
-This sub-menu offers you two options:
+This sub-menu offers you four options:
 
-"Turbo Mode" allows you to turn ON (Default) or OFF the Turbo Mode feature.
+```
+• Turbo Mode: allows you to turn ON (Default) or OFF the Turbo Mode feature.
 
-"Turbo Mode Button" allows you to remap the feature to any other button, by
+• Turbo Mode Button: allows you to remap the feature to any other button, by
 cycling through the available labeled options represented on the supported
 physical controllers.
+
+• Menu Toggle: allows you to choose which buttons or key combo will be
+available to you to return from the game to the Gameplay Menu.
+
+• Map YXBA to Right Stick: offers you the choice to enable the mapping of the
+Y+X+B+A buttons to the Right Stick on the supported controllers with analog
+joysticks, so shooters like Smash T.V. and Total Carnage are more enjoyable.
+If you're using a Gamecube controller, remember to set the "Menu Toggle" to
+"Start (PLUS)+B+A" so it doesn't activate fast-forward, or just disable it
+by using the "Turbo Mode" toggle.
+```
 
 ### AUDIO
 
@@ -438,7 +468,7 @@ with its own set of pros and cons.
 Audio interpolation is a method of making digital audio sound better than
 it really is, to improve the listening experience.
 
-The audio interpolation options presented in this menu allow you to fine
+The interpolation filter options presented in this menu allow you to fine
 tune the produced sound with other filters, which subtly alter the source,
 so it's up to your preferences to change it. Below is a short explanation
 for each option:
@@ -465,26 +495,34 @@ do in their raw form.
 
 • None: entirely disables interpolation.
 ```
-Last but not least, the Stereo Reverse option will allow you to swap
-the Left/Right audio channels, in case your cables are wired different
-or they've been swapped.
+
+The "Stereo Reverse" option will allow you to swap the Left/Right audio
+channels, for audio tests, in case your cables are wired different,
+or they've been swapped accidentally.
+
+The "Mute" option is self-explanatory. It will completely turn off all
+audio output from the game, in case you don't have an inmediate way to
+mute your TV or sound equipment. This also has the side-effect of giving you
+a couple of extra FPS in-game, due to sound emulation being off the CPU
+workload. Pretty much the only games you would notice this speed difference,
+are the SNES titles that integrate the Super FX chip.
 
 ### VIDEO
 
-The Video settings screen will allow you to configure various video settings
-including the Rendering method, Scaling, Filtering, Screen Zoom and Screen	
-Position. You can toggle the options for the first three selections by 
-clicking on them.
+The "Video" settings screen will allow you to configure various settings,
+including the Rendering method, Aspect Ratio, Filtering, Screen Zoom, Screen	
+Position and Video Mode. You can toggle the options for the first three
+selections by clicking on them.
 
 ```
-• Rendering - Unfiltered
+• Rendering - Unfiltered (Raw pixels)
             - Filtered (Soft)
             - Filtered (Sharp)
-            - Original
+            - Original (240p)
             - Filtered
 
-• Scaling   - Default
-            - 16:9 Correction
+• Aspect Ratio - 4:3 (original)
+               - 16:9 correction
 
 • Filtering - None
             - Scale2x
@@ -492,12 +530,12 @@ clicking on them.
             - hq2x Soft
             - hq2x Bold
             - Scanlines 25%
-	    - Scanlines 50%
+	        - Scanlines 50%
 ```
 
-To use the "Original" rendering, make sure your LCD/LED display supports
-240p, else you will have a black screen upon returning to the game, or
-your display will warn you that there is no signal. This is the most
+To use the "Original (240p)" rendering, make sure your LCD/LED display
+supports 240p, else you will have a black screen upon returning to the game,
+or your display will warn you that there is no signal. This is the most
 accurate rendition for the resolution from the original Super Nintendo,
 and will give you crisp unfiltered pixels, most ideally suited to enjoy
 on CRT TVs / CRT monitors. This rendering mode can even be coupled with
@@ -505,8 +543,8 @@ modern TVs for use with scanline generators or line doublers, like the
 Framemeister, OSSC, or RetroTink.
 
 Something to keep in mind, the Scanlines 25%/50% filters are not meant
-to be used with "Original" rendering, due to the lower resolution that's
-being output. They will make the screen flicker badly.
+to be used with "Original (240p)" rendering, due to the lower resolution
+that's being output. They will make the screen flicker badly.
 
 Also important to note, the Scanlines 25%/50% filtering modes will not
 work on games that utilize the Super Nintendo Hi-Res Mode. It will
@@ -522,19 +560,14 @@ you to move the position of the video output. You'll only need to use this
 option if the screen is not centered. Combining this with the Zoom and
 Scaling you should be able to get a proper display on your television.
 
-• Video mode: manually choose between the supported video standards for
+• Video Mode: manually choose between the supported video standards for
 your display. NTSC (480i), Progressive (480p), PAL (50Hz), PAL (60Hz),
 or Automatic, the latter one being the recommended setting.
 
 • SNES Hi-Res Mode: this will disable the games capacity to use the
 SNES Hi-Res Mode, if you want to use the Scanlines filtering in those
 games. It will of course break games that were intended to use the
-feature (i.e.: texts in Secret of Mana).
-
-• Sprites per-line Limit: when disabled, this will allow the emulated
-console to break the original hardware limitation of 32 sprites per-scanline
-limit, so sprites don't dissappear or flicker. Specially useful for games
-that show lots of sprites on screen (i.e.: Gradius III).
+feature (i.e.: texts in Secret of Mana, Seiken Densetsu 3, etc).
 
 • Crosshair: this will disable the emulator's on-screen crosshair for all
 Super Scope / Justifier games.
@@ -542,49 +575,23 @@ Super Scope / Justifier games.
 • Show Framerate: show the frames per second (FPS) on-screen.
 
 • Show Local Time: show the the local time set on your Wii on-screen.
-
-• Super FX Overclock: this special setting will overclock the speed of
-the GSU-1 & GSU-2 chips -most commonly known as the Super FX chip- on every
-supported title, which improves games with faster or smoother framerates.
-This effect is most notable in heavy games like Star Fox or Doom, for
-example. When playing on the Gamecube, which is understandably slower
-than the succeeding consoles, it can give you better speeds on light FX
-games as Super Mario World 2: Yoshi's Island.
-
-You can have it at the Default chip speed (10.7 MHz), or set it to 20 MHz,
-40 MHz, or 60 MHz. Keep in mind that the majority of the Super FX games and
-overclock don't mix well on the Gamecube, which will slow the games to a
-crawl, as the console's CPU is not powerful enough.
-
-If you use the Snes9x RX Wii U Channel version along with the console's
-"overclocked mode", you can now enjoy Super FX overclock speeds of 80 MHz,
-100 MHz, and up to 120 MHz, which give a very nice boost in framerate for
-these special games. These last three speed options are hidden on the
-Gamecube port, as they are unusable for the reason explained above.
-
-• SNES CPU Overclock: this special setting will overclock the speed of
-the virtual SNES CPU being emulated, which will mostly improve and/or
-smooth framerates in games. Drastic examples of improvement are
-Out of this World, NCAA Basketball, and the Top Gear series.
-Set the setting to Default, Low, Medium, or Max.
 ```
 
 ### CONTROLLER
 
-Toggle between which compatible SNES peripheral you wish to use your game
+Toggle between compatible SNES peripherals that you wish to use your game
 with (wherever it is supported), be it two controllers, Multitap (for up to
 4 players), Mouse, Superscope, or the Konami's Justifier lightgun.
-
-### SCREENSHOT
-
-Take a screenshot of the screen you're in at the moment, for Preview's use
-on the File Browser's "Choose a game".
 
 ### CHEATS
 
 This will allow you to enable/disable your Game Genie cheat codes.
 Check the in-depth section below.
 
+### EMULATOR HACKS
+
+This will allow you to activate different options that will enhance or alter
+the gameplay. Check the in-depth section below.
 
 ## CHEATS
 
@@ -594,6 +601,62 @@ you're playing with the .cht extension. An example would be if you have a
 ROM called "Super Mario World.smc" you would need to name your .cht file to
 "Super Mario World.cht". You can find a link to a massive collection of
 Super Nintendo cheat codes in the Links section below.
+
+
+## EMULATOR HACKS
+
+These hacks could significantly alter or improve the gameplay experience,
+depending on the game.
+
+```
+• Super FX Overclock: this special setting will overclock the speed of
+the GSU-1 & GSU-2 chips -most commonly known as the Super FX chip- on every
+supported title, which improves games with faster or smoother framerates.
+This effect is most notable in games that pushed the original hardware to
+its limits, like the Star Fox saga or Doom, for example.
+
+When playing on the Gamecube, whose CPU is slower than the succeeding
+consoles, it can give you better speeds on light FX games as
+Super Mario World 2: Yoshi's Island.
+
+You can have it at the Default chip speed (10.7 MHz GSU-1 / 21.4 MHz GSU-2),
+or set it to 20 MHz, 40 MHz, or 60 MHz. Keep in mind that the majority of
+the Super FX games and overclock don't mix well on the Gamecube and it
+will slow the games to a crawl, as the console's CPU is not powerful enough.
+The same is true with the Wii console, though you can push it to at least
+60 MHz without too much trouble, the exception being the game Doom with
+anything over 20 MHz, which can leave you with an unresponsive console
+depending on the scene.
+
+If you use the Snes9x RX Wii U Channel version along with the console's
+"overclocked mode" (by opening the sign_c2w_patcher homebrew before running
+the emulator), you can now perfectly enjoy the Super FX Overclock setting
+speeds of 80 MHz, 100 MHz, and up to 120 MHz, which give a very nice boost
+in framerate for these special games. These last three speed options are
+hidden on the Gamecube port, as they are unusable for the reason explained
+above.
+
+• SNES CPU Overclock: this special setting will overclock the speed of
+the virtual SNES CPU being emulated, which will mostly improve and/or
+smooth framerates in games. Drastic examples of improvement are
+Out of this World, NCAA Basketball, and the Top Gear series.
+Set the setting to Default, Low, Medium, or Max. Be warned, there's a
+handful of games that will not boot if the setting is anything but Default.
+In those cases, you can workaround it by changing it after the game starts,
+as most games will react to the setting in real time, others might require
+a virtual Reset.
+
+• Sprites per-line Limit: when disabled, this will allow the emulated
+console to break the original hardware limitation of 32 sprites per-scanline
+limit, so sprites don't dissappear or flicker. Specially useful for games
+that show lots of sprites on screen (i.e.: Gradius III, BioMetal, etc).
+
+• Satellaview BIOS: when disabled, this will boot the BS-X games directly
+through the emulated console. The reason why this is an option, is because
+not every Satellaview game has been correctly dumped yet, and some work
+only by disabling the add-on, as the BIOS doesn't recognize the ROM
+correctly due to the missing bits of data.
+```
 
 
 ## MSU-1 CO-PROCESSOR
@@ -615,9 +678,9 @@ up to 4GB of data, far more than a typical SNES cartridge could ever hold.
 
 ## SATELLAVIEW (BS-X)
 
-To emulate the St. GIGA's satellite service and play its exclusive games,
-you're going to need the BIOS file now. While I recommend you to use the
-english translated (No DRM) version, you're free to use the japanese BIOS.
+To emulate the St. GIGA's satellite service, some of its exclusive games
+require the obligated use of the add-on's BIOS. You're free to use the
+japanese BIOS file, or the recommended english translated (No DRM) version.
 
 The correct values for the file (English+No DRM, version 1.3) are:
 Size: 1.048.576 bytes
@@ -628,8 +691,8 @@ SHA-1: 4891D739A8A8B67923681BAD4FB67EDAB2E90E50
 Rename the file and its extension to "BS-X.BIN", then put it inside
 the "snes9xgx" folder at the root of the device. (SD or USB)
 
-Remember that the BIOS use is optional, though required for a good deal
-of the games and digital magazines.
+Though the BIOS use is optional, it is required for a bunch of the
+titles, but specially, for the digital magazines.
 
 If you need a place to get the correct file, check the Links section
 down below, and visit the BS-X Project website.
@@ -643,8 +706,10 @@ there are two ways available:
 Before loading Snes9x RX, connect your Xbox 360 wired controller. If the
 other USB port is populated (example: USB HDD, flash drive, DualShock 3)
 it should work the moment you start a game. For manual detection, when
-you're at the main screen (Choose a game), click on the emulator logo at
+you're at the main screen (Choose Game), click on the emulator logo at
 the corner and check the status info at the bottom, to confirm detection.
+The same can be achieved by opening the Credits section inside "Settings".
+
 Remember, the controller only works when in-game. You can swap your
 player/port number by simply pressing on the Xbox Guide button.
 
@@ -671,14 +736,15 @@ inside the Game Menu (Game Settings -> Button Mappings -> Other Mappings).
 
 ## IMPORTING AND EXPORTING SRAM
 
-Snes9x RX includes the ability to load SRAM from Snes9x version 1.52 on
-other platforms (Mac/PC/Linux/etc.) and to save back to those platforms.
+Snes9x RX includes the ability to load SRAM save files created with Snes9x
+version 1.52 and onwards on other platforms (Mac/PC/Linux/etc.), and to use
+the save file back to those.
 
-To load a SRAM file on the Wii or Gamecube from another platform, ensure the
-name of the new .SRM file matches the filename of the ROM on your device.
-		   
+To load a SRAM file on the Gamecube / Wii / Wii U from another platform,
+ensure the name of the new .SRM file matches the filename of the ROM on
+your device.
 
-To use a Wii/GameCube SRAM file on another platform just do the opposite: 
+To use a Snes9x RX SRAM file on another platform, just do the opposite: 
 copy the saved SRAM file to the other platform. You may have to rename the 
 file or the extension to be what that version of Snes9x expects it to be,
 like .SRM to .SAV, for example.
@@ -713,6 +779,27 @@ Settings menu at the emulator's Main Menu / Game browser.
 
 ## UPDATE HISTORY
 
+[5.3.0 - September 28, 2022]
+* Upgraded Satellaview (BS-X) engine to latest Snes9x to date.
+This furthers up the game compatibility, by making use of the Satellaview
+BIOS. Though the file is optional, you'll want to use it for titles that
+make exclusive use of its functions. Some of the titles now playable are:
+- BS Fire Emblem: Akaneia Saga (Episodes 1 to 4)
+- Chou Aniki - Bakuretsu Rantou Hen
+- Konae-chan no Dokidoki Penguin Kazoku Event-ban
+
+And a lot of the digital magazines available that were distributed through
+the Satellite's service can be read in its original language now,
+as the BIOS embedded font is mostly used for these.
+
+Check the instructions on where to place the BIOS file by reading the new
+Satellaview section down below, here in the readme.
+
+* MSU-1 refinements.
+* Fix for compiling error.
+* Updates for the Spanish language.
+* Other tweaks.
+
 [5.2.0 - June 18, 2022]
 * SNES CPU overclock setting exposed (thanks Tanooki16!)
 Inside the "Video" section, you can now choose three settings to overclock
@@ -736,7 +823,7 @@ start clean and avoid possible conflicts.
 * apu/dsp: Mark function-scope const arrays as static. [jSTE0]
 * Fix some memory leaks. [jdgleaver]
 * Remove OpenGL options. Not needed here.
-* Remap Turbo Mode and add a submenu. (Thanks InfiniteBlueGX!)
+* Remap Turbo Mode and add a submenu. (thanks InfiniteBlueGX!)
 * Fix an edge case where Turbo Mode could be activated on Dpad Up/Left
 when Nunchuk's Z/C button is mapped. [InfiniteBlueGX]
 * Some renaming for TurboMode. [InfiniteBlueGX]
@@ -750,7 +837,7 @@ in the save menu UI. [InfiniteBlueGX]
 * New audio filters (CUBIC/SINC) taken from Snes9x 1.61.
 * Invert L/R audio channels, save more settings. [Tanooki16]
 You can now swap Left and Right audio channels with a toggle.
-* New speeds for Super FX overclocking, Wii U recommended
+* New speeds for Super FX overclocking, Wii U recommended.
 Added 80 MHz / 100 MHz / 120 MHz. These will stay hidden on the
 Gamecube port's GUI, as the CPU is not powerful enough.
 * SNES Hi-Res Mode ON/OFF and Sprite Limit ON/OFF (thanks Tanooki16!)
@@ -1673,7 +1760,7 @@ changes to the emulator settings again and save them.
                       Menu artwork                      NiuuS, the3seashells
                       Menu sound                                Peter de Man
                       Extra coding   Zopenko, Burnt Lasagna, Askot, emukidid
-                                              NiuuS, bladeoner, libertyernie
+                              NiuuS, Bladeoner, libertyernie, InfiniteBlueGX
 
                       ¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨
                       Snes9x GX GameCube                   SoftDev, crunchy2
@@ -1696,10 +1783,14 @@ changes to the emulator settings again and save them.
                       https://github.com/dborth/snes9xgx
 
                       Wii Homebrew Community
-                      www.wiibrew.org
+                      https://wiibrew.org/
 
                       Free (Public Domain) ROMs
-                      www.pdroms.de
+                      https://pdroms.de/
+					  https://www.retroveteran.com/
 
                       Cheat Codes
                       www.cheatzilla.com
+
+					  BS-X Project
+					  https://project.satellaview.org/

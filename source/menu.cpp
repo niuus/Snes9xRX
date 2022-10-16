@@ -3614,9 +3614,9 @@ static int MenuSettingsOtherMappings()
 				case 0:
 					sprintf (options.value[2], "Default (All Enabled)"); break;
 				case 1:
-					sprintf (options.value[2], "Home / Turbo Mode Button"); break;
+					sprintf (options.value[2], "Home / C-Stick Left"); break;
 				case 2:
-					sprintf (options.value[2], "Start (PLUS)+B+A"); break;
+					sprintf (options.value[2], "Start+B+A / PLUS+1+2"); break;
 			}
 
 			sprintf (options.value[3], "%s", GCSettings.MapABXYRightStick == 1 ? "On" : "Off");
