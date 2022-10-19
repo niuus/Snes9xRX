@@ -130,6 +130,7 @@ preparePrefsData ()
 	createXMLSetting("SaveFolder", "Save Folder", GCSettings.SaveFolder);
 	createXMLSetting("AppendAuto", "Append Auto to .SRM files", toStr(GCSettings.AppendAuto));
 	createXMLSetting("CheatFolder", "Cheats Folder", GCSettings.CheatFolder);
+	createXMLSetting("Satellaview", "Satellaview BIOS", toStr(GCSettings.Satellaview));
 	createXMLSetting("ScreenshotsFolder", "Screenshots Folder", GCSettings.ScreenshotsFolder);
 	createXMLSetting("CoverFolder", "Covers Folder", GCSettings.CoverFolder);
 	createXMLSetting("ArtworkFolder", "Artwork Folder", GCSettings.ArtworkFolder);
@@ -167,7 +168,6 @@ preparePrefsData ()
 	createXMLSetting("sfxOverclock", "Super FX Overclock", toStr(GCSettings.sfxOverclock));
 	createXMLSetting("cpuOverclock", "SNES CPU Overclock", toStr(GCSettings.cpuOverclock));
 	createXMLSetting("SpriteLimit", "Sprites per-line Limit", toStr(GCSettings.SpriteLimit));
-	createXMLSetting("Satellaview", "Satellaview BIOS", toStr(GCSettings.Satellaview));
 
 	createXMLSection("Menu", "Menu Settings");
 
@@ -177,10 +177,10 @@ preparePrefsData ()
 	createXMLSetting("ExitAction", "Exit Action", toStr(GCSettings.ExitAction));
 	createXMLSetting("MusicVolume", "Music Volume", toStr(GCSettings.MusicVolume));
 	createXMLSetting("SFXVolume", "Sound Effects Volume", toStr(GCSettings.SFXVolume));
-	createXMLSetting("DisplayVM", "Display Virtual Memory", toStr(GCSettings.DisplayVM));
 	createXMLSetting("language", "Language", toStr(GCSettings.language));
 	createXMLSetting("PreviewImage", "Preview Image", toStr(GCSettings.PreviewImage));
 	createXMLSetting("HideSRAMSaving", "Hide New SRAM button", toStr(GCSettings.HideSRAMSaving));
+	createXMLSetting("DisplayVM", "Display Virtual Memory", toStr(GCSettings.DisplayVM));
 
 	createXMLSection("Controller", "Controller Settings");
 
@@ -333,6 +333,7 @@ decodePrefsData ()
 			loadXMLSetting(GCSettings.SaveFolder, "SaveFolder", sizeof(GCSettings.SaveFolder));
 			loadXMLSetting(&GCSettings.AppendAuto, "AppendAuto");
 			loadXMLSetting(GCSettings.CheatFolder, "CheatFolder", sizeof(GCSettings.CheatFolder));
+			loadXMLSetting(&GCSettings.Satellaview, "Satellaview");
 			loadXMLSetting(GCSettings.ScreenshotsFolder, "ScreenshotsFolder", sizeof(GCSettings.ScreenshotsFolder));
 			loadXMLSetting(GCSettings.CoverFolder, "CoverFolder", sizeof(GCSettings.CoverFolder));
 			loadXMLSetting(GCSettings.ArtworkFolder, "ArtworkFolder", sizeof(GCSettings.ArtworkFolder));
@@ -370,7 +371,6 @@ decodePrefsData ()
 			loadXMLSetting(&GCSettings.sfxOverclock, "sfxOverclock");
 			loadXMLSetting(&GCSettings.cpuOverclock, "cpuOverclock");
 			loadXMLSetting(&GCSettings.SpriteLimit, "SpriteLimit");
-			loadXMLSetting(&GCSettings.Satellaview, "Satellaview BIOS");
 
 			// Menu Settings
 
@@ -378,10 +378,10 @@ decodePrefsData ()
 			loadXMLSetting(&GCSettings.ExitAction, "ExitAction");
 			loadXMLSetting(&GCSettings.MusicVolume, "MusicVolume");
 			loadXMLSetting(&GCSettings.SFXVolume, "SFXVolume");
-			loadXMLSetting(&GCSettings.DisplayVM, "DisplayVM");
 			loadXMLSetting(&GCSettings.language, "language");
 			loadXMLSetting(&GCSettings.PreviewImage, "PreviewImage");
 			loadXMLSetting(&GCSettings.HideSRAMSaving, "HideSRAMSaving");
+			loadXMLSetting(&GCSettings.DisplayVM, "DisplayVM");
 
 			// Controller Settings
 
