@@ -3619,7 +3619,7 @@ static int MenuSettingsOtherMappings()
 			switch(GCSettings.TurboModeButton)
 			{
 				case 0:
-					sprintf (options.value[1], "Right Stick (Default)"); break;
+					sprintf (options.value[1], "Default (Right Stick)"); break;
 				case 1:
 					sprintf (options.value[1], "A"); break;
 				case 2:
@@ -4008,7 +4008,7 @@ static int MenuSettingsHacks()
 
 	sprintf(options.name[i++], "Super FX Overclock");
 	sprintf(options.name[i++], "SNES CPU Overclock");
-	sprintf(options.name[i++], "Sprites per-line Limit");
+	sprintf(options.name[i++], "Sprites Per-Line Limit");
 	sprintf(options.name[i++], "Satellaview BIOS");
 	options.length = i;
 
@@ -4730,7 +4730,7 @@ static int MenuSettingsMenu()
 			if (GCSettings.ExitAction == 1)
 				sprintf (options.value[0], "Return to Wii Menu");
 			else if (GCSettings.ExitAction == 2)
-				sprintf (options.value[0], "Power off Wii");
+				sprintf (options.value[0], "Power Off Wii");
 			else if (GCSettings.ExitAction == 3)
 				sprintf (options.value[0], "Return to Loader");
 			else
