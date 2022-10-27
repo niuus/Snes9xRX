@@ -2132,7 +2132,6 @@ static int MenuGameSaves(int action)
 static int MenuGameSettings()
 {
 	int menu = MENU_NONE;
-	char filepath[1024];
 
 	GuiText titleTxt("Game Settings", 26, (GXColor){255, 255, 255, 255});
 	titleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
