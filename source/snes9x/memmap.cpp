@@ -1574,7 +1574,7 @@ again:
 	InitROM();
 
 	S9xInitCheatData();
-	S9xApplyCheats();
+	S9xUpdateCheatsInMemory();
 
 	S9xReset();
 
@@ -1648,7 +1648,7 @@ bool8 CMemory::LoadMultiCart (const char *cartA, const char *cartB)
 	InitROM();
 
 	S9xInitCheatData();
-	S9xApplyCheats();
+	S9xUpdateCheatsInMemory();
 
 	S9xReset();
 

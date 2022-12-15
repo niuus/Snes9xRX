@@ -1,7 +1,7 @@
 /****************************************************************************
  * Snes9x Nintendo Wii/Gamecube Port
  *
- * Tantric 2008-2010
+ * Tantric 2008-2022
  *
  * cheatmgr.cpp
  *
@@ -15,6 +15,9 @@
 #include "snes9xrx.h"
 #include "fileop.h"
 #include "filebrowser.h"
+#include "bml.h"
+
+#define MAX_CHEATS      150
 
 extern SCheatData Cheat;
 
@@ -30,24 +33,42 @@ static bool LoadCheatFile (int length)
 	uint8 data [28];
 	int offset = 0;
 
-	while (offset < length)
-	{
-		if(Cheat.num_cheats >= MAX_CHEATS || (length - offset) < 28)
+	while (offset < length) {
+		if(Cheat.g.size() >= MAX_CHEATS || (length - offset) < 28)
 			break;
 
 		memcpy (data, savebuffer+offset, 28);
 		offset += 28;
 
-		Cheat.c [Cheat.num_cheats].enabled = 0; // cheats always off
-		Cheat.c [Cheat.num_cheats].byte = data [1];
-		Cheat.c [Cheat.num_cheats].address = data [2] | (data [3] << 8) | (data [4] << 16);
-		Cheat.c [Cheat.num_cheats].saved_byte = data [5];
-		Cheat.c [Cheat.num_cheats].saved = (data [0] & 8) != 0;
-		memcpy (Cheat.c [Cheat.num_cheats].name, &data[8], 20);
-		Cheat.c [Cheat.num_cheats].name[20] = 0;
-		Cheat.num_cheats++;
+		SCheat c;
+		char name[21];
+		char cheat[10];
+		c.byte = data[1];
+		c.address = data[2] | (data[3] << 8) |  (data[4] << 16);
+		memcpy (name, &data[8], 20);
+		name[20] = 0;
+
+		snprintf (cheat, 10, "%x=%x", c.address, c.byte);
+		S9xAddCheatGroup (name, cheat);
 	}
 	return true;
+}
+
+void ToggleCheat(uint32 num) {
+	if(Cheat.g[num].enabled) {
+		S9xDisableCheatGroup(num);
+	}
+	else {
+		S9xEnableCheatGroup(num);
+	}
+
+	for(int i=0; i < Cheat.g.size(); i++) {
+		if(Cheat.g[i].enabled) {
+			Cheat.enabled = TRUE;
+			return;
+		}
+	}
+	Cheat.enabled = FALSE;
 }
 
 /****************************************************************************
@@ -59,9 +80,6 @@ static bool LoadCheatFile (int length)
 void
 WiiSetupCheats()
 {
-	memset(Cheat.c, 0, sizeof(Cheat.c));
-	Cheat.num_cheats = 0;
-
 	char filepath[1024];
 	int offset = 0;
 
@@ -74,7 +92,25 @@ WiiSetupCheats()
 
 	// load cheat file if present
 	if(offset > 0)
-		LoadCheatFile (offset);
+	{
+		bml_node bml;
+		if (!bml.parse_file(filepath))
+		{
+			LoadCheatFile (offset);
+		}
+
+		bml_node *n = bml.find_subnode("cheat");
+		if (n)
+		{
+			S9xLoadCheatsFromBMLNode (&bml);
+		}
+
+		if (!n)
+		{
+			LoadCheatFile (offset);
+		}
+	}
+		
 
 	FreeSaveBuffer ();
 }
