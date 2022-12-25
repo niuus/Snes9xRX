@@ -696,6 +696,8 @@ bool LoadPrefs()
 	bool prefFound = false;
 	char filepath[5][MAXPATHLEN];
 	int numDevices;
+	bool sdMounted = false;
+	bool usbMounted = false;
 
 #ifdef HW_RVL
 	numDevices = 5;
@@ -727,12 +729,14 @@ bool LoadPrefs()
 	// rename snes9x to Snes9xRX
 	if(GCSettings.LoadMethod == DEVICE_SD)
 	{
-		if(ChangeInterface(DEVICE_SD, NOTSILENT) && opendir("sd:/snes9x"))
+		sdMounted = ChangeInterface(DEVICE_SD, NOTSILENT);
+		if(sdMounted && opendir("sd:/snes9x"))
 			rename("sd:/snes9x", "sd:/Snes9xRX");
 	}
 	else if(GCSettings.LoadMethod == DEVICE_USB)
 	{
-		if(ChangeInterface(DEVICE_USB, NOTSILENT) && opendir("usb:/snes9x"))
+		usbMounted = ChangeInterface(DEVICE_USB, NOTSILENT);
+		if(usbMounted && opendir("usb:/snes9x"))
 			rename("usb:/snes9x", "usb:/Snes9xRX");
 	}
 	else if(GCSettings.LoadMethod == DEVICE_SMB)
@@ -761,7 +765,7 @@ bool LoadPrefs()
 		sprintf(GCSettings.ArtworkFolder, "Snes9xRX/artwork");
 	
 	// attempt to create directories if they don't exist
-	if(GCSettings.LoadMethod == DEVICE_SD || GCSettings.LoadMethod == DEVICE_USB) {
+	if((GCSettings.LoadMethod == DEVICE_SD && sdMounted) || (GCSettings.LoadMethod == DEVICE_USB && usbMounted)) {
 		char dirPath[MAXPATHLEN];
 		sprintf(dirPath, "%s%s", pathPrefix[GCSettings.LoadMethod], GCSettings.LoadFolder);
 		CreateDirectory(dirPath);

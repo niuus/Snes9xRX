@@ -100,6 +100,7 @@ static char progressMsg[201];
 static int progressDone = 0;
 static int progressTotal = 0;
 static bool showCredits = false;
+static bool buttonMappingCancelled = false;
 
 u8 * bg_music;
 u32 bg_music_size;
@@ -2148,7 +2149,6 @@ static int MenuGameSaves(int action)
 static int MenuGameSettings()
 {
 	int menu = MENU_NONE;
-	char filepath[1024];
 
 	GuiText titleTxt("Game Settings", 26, (GXColor){255, 255, 255, 255});
 	titleTxt.SetAlignment(ALIGN_LEFT, ALIGN_TOP);
@@ -2971,7 +2971,8 @@ ButtonMappingWindow()
 
 	u32 pressed = 0;
 
-	while(pressed == 0)
+	buttonMappingCancelled = false;
+	while(pressed == 0 && !buttonMappingCancelled)
 	{
 		usleep(THREAD_SLEEP);
 
@@ -2987,10 +2988,22 @@ ButtonMappingWindow()
 
 			if(userInput[0].wpad->btns_d == WPAD_BUTTON_HOME)
 				pressed = WPAD_BUTTON_HOME;
+
+			if(userInput[0].wpad->btns_d & WPAD_CLASSIC_BUTTON_B ||
+					userInput[0].wpad->btns_d & WPAD_BUTTON_B ||
+					userInput[0].wpad->btns_d & WPAD_BUTTON_1 ||
+					userInput[0].wiidrcdata.btns_d & WIIDRC_BUTTON_B)
+				buttonMappingCancelled = true; 
 		}
 		else if(mapMenuCtrl == CTRLR_WIIDRC)
 		{
 			pressed = userInput[0].wiidrcdata.btns_d;
+
+			if(userInput[0].wpad->btns_d & WPAD_CLASSIC_BUTTON_B ||
+					userInput[0].wpad->btns_d & WPAD_BUTTON_B ||
+					userInput[0].wpad->btns_d & WPAD_BUTTON_1 ||
+					userInput[0].pad.btns_d & PAD_BUTTON_B)
+				buttonMappingCancelled = true; 
 		}
 		else
 		{
@@ -3004,6 +3017,10 @@ ButtonMappingWindow()
 					case CTRLR_WIIMOTE:
 						if(pressed > 0x1000)
 							pressed = 0; // not a valid input
+						if(userInput[0].pad.btns_d & PAD_BUTTON_B || 
+								userInput[0].wiidrcdata.btns_d & WIIDRC_BUTTON_B ||
+								userInput[0].wpad->btns_d & WPAD_CLASSIC_BUTTON_B)
+							buttonMappingCancelled = true;
 						break;
 
 					case CTRLR_CLASSIC:
@@ -3011,17 +3028,36 @@ ButtonMappingWindow()
 							pressed = 0; // not a valid input
 						else if(pressed <= 0x1000)
 							pressed = 0;
+						else if(userInput[0].wpad->exp.type == WPAD_EXP_NUNCHUK)
+							pressed = 0; // not a valid input (Nunchuk Z/C is assigned as Classic Controller Up/Left for some reason)
+						if(userInput[0].pad.btns_d & PAD_BUTTON_B || 
+								userInput[0].wiidrcdata.btns_d & WIIDRC_BUTTON_B ||
+								userInput[0].wpad->btns_d & WPAD_BUTTON_B ||
+								userInput[0].wpad->btns_d & WPAD_BUTTON_1)
+							buttonMappingCancelled = true;
 						break;
+
 					case CTRLR_WUPC:
 						if(userInput[0].wpad->exp.type != WPAD_EXP_CLASSIC && userInput[0].wpad->exp.classic.type == 2)
 							pressed = 0; // not a valid input
 						else if(pressed <= 0x1000)
 							pressed = 0;
+						if(userInput[0].pad.btns_d & PAD_BUTTON_B || 
+								userInput[0].wiidrcdata.btns_d & WIIDRC_BUTTON_B ||
+								userInput[0].wpad->btns_d & WPAD_BUTTON_B ||
+								userInput[0].wpad->btns_d & WPAD_BUTTON_1)
+							buttonMappingCancelled = true;
 						break;
 
 					case CTRLR_NUNCHUK:
 						if(userInput[0].wpad->exp.type != WPAD_EXP_NUNCHUK)
 							pressed = 0; // not a valid input
+						if((userInput[0].wpad->exp.type != WPAD_EXP_NUNCHUK && userInput[0].wpad->btns_d & WPAD_BUTTON_B) ||
+								(userInput[0].wpad->exp.type != WPAD_EXP_NUNCHUK && userInput[0].wpad->btns_d & WPAD_BUTTON_1) ||
+								userInput[0].pad.btns_d & PAD_BUTTON_B || 
+								userInput[0].wiidrcdata.btns_d & WIIDRC_BUTTON_B ||
+								userInput[0].wpad->btns_d & WPAD_CLASSIC_BUTTON_B)
+							buttonMappingCancelled = true;
 						break;
 				}
 			}
@@ -3190,8 +3226,13 @@ static int MenuSettingsMappingsMap()
 
 		if(ret >= 0)
 		{
-			// get a button selection from user
-			btnmap[mapMenuCtrlSNES][mapMenuCtrl][ret] = ButtonMappingWindow();
+			int buttonPressed = ButtonMappingWindow();
+
+			if (!buttonMappingCancelled)
+			{
+				// get a button selection from user if the remap wasn't cancelled
+				btnmap[mapMenuCtrlSNES][mapMenuCtrl][ret] = buttonPressed;
+			}
 		}
 
 		if(ret >= 0 || firstRun)
@@ -3595,7 +3636,7 @@ static int MenuSettingsOtherMappings()
 			switch(GCSettings.TurboModeButton)
 			{
 				case 0:
-					sprintf (options.value[1], "Right Stick (Default)"); break;
+					sprintf (options.value[1], "Default (Right Stick)"); break;
 				case 1:
 					sprintf (options.value[1], "A"); break;
 				case 2:
@@ -3984,7 +4025,7 @@ static int MenuSettingsHacks()
 
 	sprintf(options.name[i++], "Super FX Overclock");
 	sprintf(options.name[i++], "SNES CPU Overclock");
-	sprintf(options.name[i++], "Sprites per-line Limit");
+	sprintf(options.name[i++], "Sprites Per-Line Limit");
 	sprintf(options.name[i++], "Satellaview BIOS");
 	options.length = i;
 
@@ -4706,7 +4747,7 @@ static int MenuSettingsMenu()
 			if (GCSettings.ExitAction == 1)
 				sprintf (options.value[0], "Return to Wii Menu");
 			else if (GCSettings.ExitAction == 2)
-				sprintf (options.value[0], "Power off Wii");
+				sprintf (options.value[0], "Power Off Wii");
 			else if (GCSettings.ExitAction == 3)
 				sprintf (options.value[0], "Return to Loader");
 			else
