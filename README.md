@@ -48,23 +48,24 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 
 ## RECENT CHANGELOG
 
-[5.4.0 - October 15, 2022]
-* Map YXBA to Right Stick (thanks InfiniteBlueGX!)
-Right stick can now be configured as YXBA, like what the Xbox 360 wired
-controller is configured by default with this emulator, specially useful
-for shooters like Smash TV and Total Carnage.
+[5.5.0 - December 25, 2022]
+* Add B/1 cancel trigger to WindowPrompts. [InfiniteBlueGX]
 
-* Add option to choose the Emulator Menu toggle [InfiniteBlueGX]
-Choose between "Default (All Enabled)", "Home / C-Stick Left", or
-the universal button combo "Start+B+A / Start+1+2".
+* Fix initial game selection menu "jump" when using Wii Classic Controller
+or Wii U Pro Classic Controller. [InfiniteBlueGX]
 
-* UI navigation improvements. [InfiniteBlueGX]
-Pressing B / 1 will now Go Back from all menus and some sub-menus.
+* Fix a crash when selecting Cancel after removing a SD/USB device and 
+re-opening the app. [InfiniteBlueGX]
 
-* Satellaview BIOS ON-OFF (thanks Tanooki16!)
-In RX, it was changed and adapted to be intuitive and easy to use.
-Enable or disable BS-X Satellaview BIOS boot through:
-"Settings -> Menu" or "Game Settings -> Emulator Hacks".
+* Add B/1 button press to cancel button remapping. [InfiniteBlueGX]
+
+* Remove an unused variable since screenshot button
+was moved. [InfiniteBlueGX]
+
+* Upgraded the Cheat engine to newer version. [InfiniteBlueGX]
+Previous one still works.
+
+* Languages update: korean, spanish.
 
 [older update history at the bottom]
 
@@ -778,6 +779,24 @@ Settings menu at the emulator's Main Menu / Game browser.
 
 
 ## UPDATE HISTORY
+
+[5.4.0 - October 15, 2022]
+* Map YXBA to Right Stick (thanks InfiniteBlueGX!)
+Right stick can now be configured as YXBA, like what the Xbox 360 wired
+controller is configured by default with this emulator, specially useful
+for shooters like Smash TV and Total Carnage.
+
+* Add option to choose the Emulator Menu toggle [InfiniteBlueGX]
+Choose between "Default (All Enabled)", "Home / C-Stick Left", or
+the universal button combo "Start+B+A / Start+1+2".
+
+* UI navigation improvements. [InfiniteBlueGX]
+Pressing B / 1 will now Go Back from all menus and some sub-menus.
+
+* Satellaview BIOS ON-OFF (thanks Tanooki16!)
+In RX, it was changed and adapted to be intuitive and easy to use.
+Enable or disable BS-X Satellaview BIOS boot through:
+"Settings -> Menu" or "Game Settings -> Emulator Hacks".
 
 [5.3.0 - September 28, 2022]
 * Upgraded Satellaview (BS-X) engine to latest Snes9x to date.

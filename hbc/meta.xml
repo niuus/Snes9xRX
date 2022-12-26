@@ -2,28 +2,29 @@
  <app version="2">
    <name>Snes9x RX</name>
    <coder>NiuuS</coder>
-   <version>5.4.0</version>
-   <release_date>20221015195222</release_date>
+   <version>5.5.0</version>
+   <release_date>20221225155222</release_date>
    <short_description>Super Nintendo Emulator</short_description>
    <long_description>
 
 Featuring:
 - MSU-1 audio enhancement chip support.
-- Classic Controllers support (NES / SNES).
+- Classic Controllers support (NES / SNES)
 - Mayflash 2-port SNES USB adapter.
 - Experimental DualShock 3 (wired) support.
 - Wii U Pro Controller support.
 - Wii U Gamepad controller support through VC injects.
 - Retrode 2 USB adapter support.
-- Broadcast Satellaview-X support (BIOS optional).
+- Expanded 3rd party Classic Controller support.
+- Broadcast Satellaview-X support (BIOS optional)
 - Turbo Mode/Fast-Forward button feature.
 - Screenshot / Cover / Artwork display.
 Cycle between them with the +/Z button!
 
 - Video filters: Sharp / Soft / HQ2X / Scale2x / Scanlines
 - Audio filters: Gaussian / Linear / Cubic / Sinc
-- SNES CPU overclock. (Low/Medium/Max)
-- Super FX overclock (20/40/60/80/100/120 MHz).
+- SNES CPU overclock (Low/Medium/Max)
+- Super FX overclock (20/40/60/80/100/120 MHz)
 - Wiiflow plugin mode.
    </long_description>
    <ahb_access/>

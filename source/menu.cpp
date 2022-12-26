@@ -2447,6 +2447,7 @@ static int MenuGameCheats()
 	GuiOptionBrowser optionBrowser(552, 248, &options);
 	optionBrowser.SetPosition(0, 108);
 	optionBrowser.SetAlignment(ALIGN_CENTRE, ALIGN_TOP);
+	optionBrowser.SetCol2Position(380);
 
 	HaltGui();
 	GuiWindow w(screenwidth, screenheight);
