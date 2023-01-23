@@ -2,6 +2,7 @@
  * libwiigui
  *
  * Tantric 2009
+ * InfiniteBlueGX May 2022
  *
  * gui_savebrowser.cpp
  *
@@ -22,9 +23,9 @@ GuiSaveBrowser::GuiSaveBrowser(int w, int h, SaveList * s, int a)
 	action = a;
 	selectable = true;
 
-	if(action == 0) // load
+	if(action == 0) // Load
 		listOffset = 0;
-	else if(action == 2) // delete SRAM / Snapshot
+	else if(action == 2) // Delete SRAM / Snapshot
 		listOffset = 0;
 	else
 		listOffset = -2; // save - reserve -2 & -1 for new slots

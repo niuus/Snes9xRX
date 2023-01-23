@@ -1,8 +1,8 @@
 /****************************************************************************
- * Snes9x Nintendo Wii/Gamecube Port
+ * Snes9x Nintendo Wii/GameCube Port
  *
  * softdev July 2006
- * Tantric 2008-2010
+ * Tantric 2008-2023
  *
  * audio.h
  *

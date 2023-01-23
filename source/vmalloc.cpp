@@ -1,5 +1,5 @@
 /****************************************************************************
- * Snes9x Nintendo Wii/Gamecube Port
+ * Snes9x Nintendo Wii/GameCube Port
  *
  * emu_kidid 2015-2018
  *

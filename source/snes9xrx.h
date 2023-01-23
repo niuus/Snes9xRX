@@ -1,10 +1,12 @@
 /****************************************************************************
- * Snes9x Nintendo Wii/Gamecube Port
+ * Snes9x Nintendo Wii/GameCube Port
  *
  * softdev July 2006
  * crunchy2 May 2007-July 2007
  * Michniewski 2008
- * Tantric 2008-2019
+ * Tantric 2008-2023
+ * InfiniteBlueGX May-December 2022
+ * NiuuS 2017-2023
  *
  * snes9xrx.h
  *
@@ -14,6 +16,7 @@
 #ifndef _SNES9XRX_H_
 #define _SNES9XRX_H_
 
+#define MAXPATHLEN 1024
 #include "utils/FreeTypeGX.h"
 #include "snes9x.h"
 #include "filter.h"

@@ -2,6 +2,7 @@
  * libwiigui
  *
  * Tantric 2009
+ * InfiniteBlueGX October 2022
  *
  * gui_trigger.cpp
  *

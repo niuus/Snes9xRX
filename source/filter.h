@@ -1,7 +1,8 @@
 /****************************************************************************
- * Snes9x 1.51 Nintendo Wii/Gamecube Port
+ * Snes9x 1.52 Nintendo Wii/GameCube Port
  *
  * Michniewski 2008
+ * NiuuS 2017-2023
  *
  * filter.h
  *

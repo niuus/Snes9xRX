@@ -1,7 +1,9 @@
 /****************************************************************************
- * Snes9x Nintendo Wii/Gamecube Port
+ * Snes9x Nintendo Wii/GameCube Port
  *
- * Tantric 2008-2019
+ * Tantric 2008-2023
+ * InfiniteBlueGX May-December 2022
+ * NiuuS 2017-2023
  *
  * menu.cpp
  *
@@ -909,7 +911,7 @@ static void WindowCredits(void * ptr)
 
 	GuiText::SetPresets(12, (GXColor){0, 0, 0, 255}, 0, FTGX_JUSTIFY_CENTER | FTGX_ALIGN_TOP, ALIGN_CENTRE, ALIGN_BOTTOM);
 
-	txt[i] = new GuiText("Snes9x - Copyright (c) Snes9x Team 1996 - 2022");
+	txt[i] = new GuiText("Snes9x - Copyright (c) Snes9x Team 1996 - 2023");
 	txt[i]->SetPosition(0,-44); i++;
 	txt[i] = new GuiText("This software is open source and may be copied, distributed, or modified");
 	txt[i]->SetPosition(0,-32); i++;

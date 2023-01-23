@@ -1,10 +1,10 @@
 /****************************************************************************
- * Snes9x Nintendo Wii/Gamecube Port
+ * Snes9x Nintendo Wii/GameCube Port
  *
  * softdev July 2006
  * crunchy2 May 2007-July 2007
  * Michniewski 2008
- * Tantric 2008-2010
+ * Tantric 2008-2023
  *
  * freeze.h
  ***************************************************************************/

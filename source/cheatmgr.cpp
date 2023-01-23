@@ -1,13 +1,13 @@
 /****************************************************************************
- * Snes9x Nintendo Wii/Gamecube Port
+ * Snes9x Nintendo Wii/GameCube Port
  *
- * Tantric 2008-2022
+ * Tantric 2008-2023
+ * InfiniteBlueGX December 2022
  *
  * cheatmgr.cpp
  *
  * Cheat handling
  ***************************************************************************/
-
 
 #include "snes9x/port.h"
 #include "snes9x/cheats.h"
@@ -27,7 +27,6 @@ extern SCheatData Cheat;
  * Loads cheat file from save buffer
  * Custom version of S9xLoadCheatFile()
  ***************************************************************************/
-
 static bool LoadCheatFile (int length)
 {
 	uint8 data [28];
@@ -110,7 +109,7 @@ WiiSetupCheats()
 			LoadCheatFile (offset);
 		}
 	}
-		
+
 
 	FreeSaveBuffer ();
 }

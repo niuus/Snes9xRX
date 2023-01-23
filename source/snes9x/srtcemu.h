@@ -3,7 +3,6 @@
  * Copyright (c) byuu
  *****/
 
-
 #ifndef _SRTCEMU_H_
 #define _SRTCEMU_H_
 

@@ -1,7 +1,9 @@
 /****************************************************************************
- * Snes9x Nintendo Wii/Gamecube Port
+ * Snes9x Nintendo Wii/GameCube Port
  *
- * Tantric 2008-2019
+ * Tantric 2008-2023
+ * InfiniteBlueGX May-December 2022
+ * NiuuS 2017-2023
  *
  * preferences.cpp
  *

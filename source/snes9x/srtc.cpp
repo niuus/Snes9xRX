@@ -9,7 +9,6 @@
  * Copyright (c) byuu
  *****/
 
-
 #include <limits>
 
 #include "snes9x.h"

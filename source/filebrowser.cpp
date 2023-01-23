@@ -1,11 +1,12 @@
 /****************************************************************************
- * Snes9x Nintendo Wii/Gamecube Port
+ * Snes9x Nintendo Wii/GameCube Port
  *
  * softdev July 2006
  * svpe June 2007
  * crunchy2 May-July 2007
  * Michniewski 2008
- * Tantric 2008-2010
+ * Tantric 2008-2023
+ * NiuuS 2017-2023
  *
  * filebrowser.cpp
  *
@@ -495,7 +496,8 @@ int WiiFileLoader()
 		else
 			sprintf (filepath, "%s%s/", pathPrefix[GCSettings.LoadMethod], APPFOLDER);
 
-		if(LoadFile ((char *)Memory.BIOSROM, filepath, 0, 0x100000, SILENT) == 0) {
+		if(LoadFile ((char *)Memory.BIOSROM, filepath, 0, 0x100000, SILENT) == 0)
+		{
 			bsxBiosLoadFailed = true;
 		}
 	}

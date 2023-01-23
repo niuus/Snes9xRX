@@ -4,7 +4,6 @@
    For further information, consult the LICENSE file in the root directory.
 \*****************************************************************************/
 
-
 #ifndef _READER_H_
 #define _READER_H_
 

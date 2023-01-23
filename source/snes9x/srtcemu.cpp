@@ -3,7 +3,6 @@
  * Copyright (c) byuu
  *****/
 
-
 #ifdef _SRTCEMU_CPP_
 
 const unsigned SRTC::months[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };

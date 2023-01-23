@@ -432,7 +432,7 @@ void S9xSetController (int port, enum controllers controller, int8 id1, int8 id2
 		case CTL_SUPERSCOPE:
 			if (!Settings.SuperScopeMaster)
 			{
-				S9xMessage(S9X_CONFIG_INFO, S9X_ERROR, "Cannot select SNES Superscope: SuperScopeMaster disabled");
+				S9xMessage(S9X_CONFIG_INFO, S9X_ERROR, "Cannot select SNES Super Scope: SuperScopeMaster disabled");
 				break;
 			}
 
@@ -516,7 +516,7 @@ bool S9xVerifyControllers (void)
 			case SUPERSCOPE:
 				if (!Settings.SuperScopeMaster)
 				{
-					S9xMessage(S9X_CONFIG_INFO, S9X_ERROR, "Cannot select SNES Superscope: SuperScopeMaster disabled");
+					S9xMessage(S9X_CONFIG_INFO, S9X_ERROR, "Cannot select SNES Super Scope: SuperScopeMaster disabled");
 					newcontrollers[port] = NONE;
 					ret = true;
 					break;
@@ -524,7 +524,7 @@ bool S9xVerifyControllers (void)
 
 				if (used[i]++ > 0)
 				{
-					snprintf(buf, sizeof(buf), "Superscope used more than once! Disabling extra instances");
+					snprintf(buf, sizeof(buf), "Super Scope used more than once! Disabling extra instances");
 					S9xMessage(S9X_CONFIG_INFO, S9X_ERROR, buf);
 					newcontrollers[port] = NONE;
 					ret = true;

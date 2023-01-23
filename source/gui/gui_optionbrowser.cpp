@@ -2,6 +2,7 @@
  * libwiigui
  *
  * Tantric 2009
+ * InfiniteBlueGX December 2022
  *
  * gui_optionbrowser.cpp
  *

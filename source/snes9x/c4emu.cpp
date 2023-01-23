@@ -4,7 +4,6 @@
    For further information, consult the LICENSE file in the root directory.
 \*****************************************************************************/
 
-
 #include <math.h>
 #include "snes9x.h"
 #include "memmap.h"
@@ -759,7 +758,7 @@ static void C4ProcessSprites (void)
 
 void S9xInitC4 (void)
 {
-	// Stupid zsnes code, we can't do the logical thing without breaking savestates
+	// Due to the ZSNES code, we can't do the logical thing without breaking savestates
 	// Memory.C4RAM = &Memory.FillRAM [0x6000];
 	memset(Memory.C4RAM, 0, 0x2000);
 }
