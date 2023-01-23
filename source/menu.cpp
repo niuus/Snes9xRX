@@ -1612,7 +1612,7 @@ static int MenuGame()
 	w.Append(&resetBtn);
 	w.Append(&screenshotBtn);
 	w.Append(&gameSettingsBtn);
-	
+
 	if(GCSettings.DisplayVM == 1) //show memory usage
 	{
 		w.Append(&memTxt);
@@ -2593,7 +2593,7 @@ static int MenuSettingsMappings()
 	otherBtn.SetTrigger(trigA);
 	otherBtn.SetTrigger(trig2);
 	otherBtn.SetEffectGrow();
-	
+
 	GuiTrigger trigB;
 	GuiTrigger trig1;
 	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
@@ -2697,7 +2697,7 @@ static int MenuSettingsMappingsController()
 	GuiImageData iconNunchuk(icon_settings_nunchuk_png);
 	GuiImageData iconWiiupro(icon_settings_wiiupro_png);
 	GuiImageData iconDrc(icon_settings_drc_png);
-	
+
 	GuiText gamecubeBtnTxt("GameCube Controller", 22, (GXColor){0, 0, 0, 255});
 	gamecubeBtnTxt.SetWrap(true, btnLargeOutline.GetWidth()-30);
 	GuiImage gamecubeBtnImg(&btnLargeOutline);
@@ -3565,7 +3565,7 @@ static int MenuSettingsOtherMappings()
 	GuiSound btnSoundClick(button_click_pcm, button_click_pcm_size, SOUND_PCM);
 	GuiImageData btnOutline(button_png);
 	GuiImageData btnOutlineOver(button_over_png);
-	
+
 	GuiTrigger trigB;
 	GuiTrigger trig1;
 	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
@@ -3709,6 +3709,7 @@ static int MenuSettingsVideo()
 	sprintf(options.name[i++], "Screen Position");
 	sprintf(options.name[i++], "Video Mode");
 	sprintf(options.name[i++], "SNES Hi-Res Mode");
+	sprintf(options.name[i++], "Frame Skipping");
 	sprintf(options.name[i++], "Crosshair");
 	sprintf(options.name[i++], "Show Framerate");
 	sprintf(options.name[i++], "Show Local Time");
@@ -3799,7 +3800,7 @@ static int MenuSettingsVideo()
 
 			case 5:
 				GCSettings.videomode++;
-				if(GCSettings.videomode > 4)
+				if(GCSettings.videomode > 5)
 					GCSettings.videomode = 0;
 				break;
 
@@ -3808,14 +3809,18 @@ static int MenuSettingsVideo()
 				break;
 
 			case 7:
-				GCSettings.crosshair ^= 1;
+				GCSettings.FrameSkip ^= 1;
 				break;
 
 			case 8:
-				GCSettings.ShowFrameRate ^= 1;
+				GCSettings.crosshair ^= 1;
 				break;
 
 			case 9:
+				GCSettings.ShowFrameRate ^= 1;
+				break;
+
+			case 10:
 				GCSettings.ShowLocalTime ^= 1;
 				break;
 		}
@@ -3854,14 +3859,17 @@ static int MenuSettingsVideo()
 				case 2:
 					sprintf (options.value[5], "Progressive (480p)"); break;
 				case 3:
-					sprintf (options.value[5], "PAL (50Hz)"); break;
+					sprintf (options.value[5], "Progressive (576p)"); break;
 				case 4:
+					sprintf (options.value[5], "PAL (50Hz)"); break;
+				case 5:
 					sprintf (options.value[5], "PAL (60Hz)"); break;
 			}
 			sprintf (options.value[6], "%s", GCSettings.HiResolution == 1 ? "On" : "Off");
-			sprintf (options.value[7], "%s", GCSettings.crosshair == 1 ? "On" : "Off");
-			sprintf (options.value[8], "%s", GCSettings.ShowFrameRate ? "On" : "Off");
-			sprintf (options.value[9], "%s", GCSettings.ShowLocalTime ? "On" : "Off");
+			sprintf (options.value[7], "%s", GCSettings.FrameSkip == 1 ? "On" : "Off");
+			sprintf (options.value[8], "%s", GCSettings.crosshair == 1 ? "On" : "Off");
+			sprintf (options.value[9], "%s", GCSettings.ShowFrameRate ? "On" : "Off");
+			sprintf (options.value[10], "%s", GCSettings.ShowLocalTime ? "On" : "Off");
 
 			optionBrowser.TriggerUpdate();
 		}

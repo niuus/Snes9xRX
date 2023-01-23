@@ -545,6 +545,7 @@ int main(int argc, char *argv[])
 		Settings.ReverseStereo = (GCSettings.ReverseStereo == 1);
 		Settings.Mute = (GCSettings.MuteAudio == 1);
 		Settings.SupportHiRes = (GCSettings.HiResolution == 1);
+		Settings.SkipFrames = (GCSettings.FrameSkip ? AUTO_FRAMERATE : 0);
 		Settings.DisplayFrameRate = (GCSettings.ShowFrameRate == 1);
 		Settings.DisplayTime = (GCSettings.ShowLocalTime == 1);
 		Settings.AutoDisplayMessages = (Settings.DisplayFrameRate || Settings.DisplayTime ? true : false);

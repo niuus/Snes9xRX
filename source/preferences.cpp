@@ -152,6 +152,7 @@ preparePrefsData ()
 	createXMLSetting("crosshair", "Crosshair", toStr(GCSettings.crosshair));
 	createXMLSetting("FilterMethod", "Filter Method", toStr(GCSettings.FilterMethod));
 	createXMLSetting("HiResolution", "SNES Hi-Res Mode", toStr(GCSettings.HiResolution));
+	createXMLSetting("FrameSkip", "Frame Skipping", toStr(GCSettings.FrameSkip));
 	createXMLSetting("ShowFrameRate", "Show Framerate", toStr(GCSettings.ShowFrameRate));
 	createXMLSetting("ShowLocalTime", "Show Local Time", toStr(GCSettings.ShowLocalTime));
 	createXMLSetting("xshift", "Horizontal Video Shift", toStr(GCSettings.xshift));
@@ -337,7 +338,7 @@ decodePrefsData ()
 			loadXMLSetting(GCSettings.ScreenshotsFolder, "ScreenshotsFolder", sizeof(GCSettings.ScreenshotsFolder));
 			loadXMLSetting(GCSettings.CoverFolder, "CoverFolder", sizeof(GCSettings.CoverFolder));
 			loadXMLSetting(GCSettings.ArtworkFolder, "ArtworkFolder", sizeof(GCSettings.ArtworkFolder));
-			
+
 			// Network Settings
 
 			loadXMLSetting(GCSettings.smbip, "smbip", sizeof(GCSettings.smbip));
@@ -355,6 +356,7 @@ decodePrefsData ()
 			loadXMLSetting(&GCSettings.crosshair, "crosshair");
 			loadXMLSetting(&GCSettings.FilterMethod, "FilterMethod");
 			loadXMLSetting(&GCSettings.HiResolution, "HiResolution");
+			loadXMLSetting(&GCSettings.FrameSkip, "FrameSkip");
 			loadXMLSetting(&GCSettings.ShowFrameRate, "ShowFrameRate");
 			loadXMLSetting(&GCSettings.ShowLocalTime, "ShowLocalTime");
 			loadXMLSetting(&GCSettings.xshift, "xshift");
@@ -440,7 +442,7 @@ void FixInvalidSettings()
 		GCSettings.Controller = CTRL_PAD2;
 	if(!(GCSettings.render >= 0 && GCSettings.render < 5))
 		GCSettings.render = 4;
-	if(!(GCSettings.videomode >= 0 && GCSettings.videomode < 5))
+	if(!(GCSettings.videomode >= 0 && GCSettings.videomode < 6))
 		GCSettings.videomode = 0;
 }
 
@@ -550,6 +552,7 @@ DefaultSettings ()
 	Settings.AutoDisplayMessages = false;
 	Settings.InitialInfoStringTimeout = 200; // # of frames to display messages for
 	GCSettings.HiResolution = 1; // Enabled by default
+	GCSettings.FrameSkip = 1; // Enabled by default
 	GCSettings.ShowFrameRate = 0; // Disabled by default
 	GCSettings.ShowLocalTime = 0; // Disabled by default
 
@@ -561,7 +564,7 @@ DefaultSettings ()
 	Settings.BlockInvalidVRAMAccessMaster = true;
 
 	GCSettings.sfxOverclock = 0;
-	/* Initialize SuperFX chip to normal speed by default */
+	/* Initialize Super FX chip to normal speed by default */
 	Settings.SuperFXSpeedPerLine = 0.417 * 10.5e6;
 
 	GCSettings.cpuOverclock = 0;

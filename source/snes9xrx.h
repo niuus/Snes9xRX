@@ -133,7 +133,7 @@ struct SGCSettings{
 
 	float	zoomHor; // Horizontal zoom amount
 	float	zoomVert; // Vertical zoom amount
-	int		videomode; // 0 - Automatic, 1 - NTSC (480i), 2 - Progressive (480p), 3 - PAL (50Hz), 4 - PAL (60Hz)
+	int		videomode; // 0 - Automatic, 1 - NTSC (480i), 2 - Progressive (480p), 3 - Progressive (576p), 4 - PAL (50Hz), 5 - PAL (60Hz)
 	int		render;		// 0 - Original, 1 - Filtered, 2 - Unfiltered
 	int		widescreen;	// 0 - 4:3 aspect, 1 - 16:9 aspect
 	int		FilterMethod; // Convert to rendering filter
@@ -141,6 +141,7 @@ struct SGCSettings{
 	int		xshift; // Video output shift
 	int		yshift;
 	int		HiResolution;
+	int		FrameSkip;
 	int		crosshair;
 	int		ShowFrameRate;
 	int		ShowLocalTime;
