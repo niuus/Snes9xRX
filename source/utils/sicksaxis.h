@@ -30,8 +30,7 @@
 #define SS_VENDOR_ID       0x054C //Sony Corp.
 #define SS_PRODUCT_ID      0x0268 //Sixaxis and DS3
 #define	SS_HEAP_SIZE       4096
-#define SS_MAX_DEV         8 //Was 7
-#define SS_PAYLOAD_SIZE 49 //New
+#define SS_MAX_DEV         7 //Was 8
 #define SS_SLEEP_USECONDS  1000
 #define SS_THREAD_PRIORITY 20
 

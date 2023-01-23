@@ -314,8 +314,6 @@ static ss_instance_t * _ss_instance_list[SS_MAX_DEV];
 	}
 
 //Callback functions
-
-
 	int32_t _ss_disconnect_cb(s32 result, void *usrdata)
 	{
 		ss_instance_t *ss = (ss_instance_t *)usrdata;

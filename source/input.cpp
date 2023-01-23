@@ -5,6 +5,7 @@
  * crunchy2 May-June 2007
  * Michniewski 2008
  * Tantric 2008-2019
+ * NiuuS 2017-2023
  *
  * input.cpp
  *
@@ -45,6 +46,7 @@ extern "C"{
 }
 /* sicksaxis lib (by xerpi) */
 	static ss_instance_t sicksaxis;
+	int ds3chan = 0;
 #define SICKSAXIS_DEADZONE 115
 #endif
 
@@ -346,6 +348,8 @@ UpdatePads()
 	WPAD_ScanPads();
 	#endif
 
+	PAD_ScanPads();
+
 	#ifdef HW_RVL
 	/* SickSaxis lib 1.0 (by xerpi) */
 	u16 buttonsHeld = WPAD_ButtonsHeld(0);
@@ -358,18 +362,13 @@ UpdatePads()
 	}
 	else
 	{
-		if(buttonsHeld & WPAD_BUTTON_MINUS  && buttonsHeld & WPAD_BUTTON_PLUS)
+		if(ss_open(&sicksaxis) > 0)
 		{
-			if(ss_open(&sicksaxis) > 0)
-			{
-				ss_set_led(&sicksaxis, 1);
-				ss_start_reading(&sicksaxis);
-			}
+			ss_set_led(&sicksaxis, 1);
+			ss_start_reading(&sicksaxis);
 		}
 	}
 	#endif
-
-	PAD_ScanPads();
 
 	for(int i=3; i >= 0; i--)
 	{
@@ -540,33 +539,46 @@ static void decodepad (int chan, int emuChan)
 	/* Sicksaxis lib 1.0 (by xerpi) */
 	if(sicksaxis.connected)
 	{
-		int8_t aX = sicksaxis.gamepad.leftAnalog.x - 128;
-		int8_t aY = sicksaxis.gamepad.leftAnalog.y - 128;
-		
-		uint8_t up    = sicksaxis.gamepad.buttons.up    ||  (aY < -SICKSAXIS_DEADZONE);
-		uint8_t down  = sicksaxis.gamepad.buttons.down  ||  (aY > SICKSAXIS_DEADZONE);
-		uint8_t right = sicksaxis.gamepad.buttons.right ||  (aX > SICKSAXIS_DEADZONE);
-		uint8_t left  = sicksaxis.gamepad.buttons.left  ||  (aX < -SICKSAXIS_DEADZONE);
+		if(sicksaxis.gamepad.buttons.PS &&  sicksaxis.gamepad.buttons.R1 && sicksaxis.gamepad.buttons.triangle) ds3chan = 0;
+		if(sicksaxis.gamepad.buttons.PS &&  sicksaxis.gamepad.buttons.R1 && sicksaxis.gamepad.buttons.circle) ds3chan = 1;
+		if(sicksaxis.gamepad.buttons.PS &&  sicksaxis.gamepad.buttons.R1 && sicksaxis.gamepad.buttons.cross) ds3chan = 2;
+		if(sicksaxis.gamepad.buttons.PS &&  sicksaxis.gamepad.buttons.R1 && sicksaxis.gamepad.buttons.square) ds3chan = 3;
 
-		jp |= up    ? PAD_BUTTON_UP    : 0;
-		jp |= down  ? PAD_BUTTON_DOWN  : 0;
-		jp |= right ? PAD_BUTTON_RIGHT : 0;
-		jp |= left  ? PAD_BUTTON_LEFT  : 0;
+		if(chan == ds3chan){
+			int8_t alX = sicksaxis.gamepad.leftAnalog.x - 128;
+			int8_t alY = sicksaxis.gamepad.leftAnalog.y - 128;
 
-		jp |= sicksaxis.gamepad.buttons.circle   ? PAD_BUTTON_A : 0;
-		jp |= sicksaxis.gamepad.buttons.cross    ? PAD_BUTTON_B : 0;
-		jp |= sicksaxis.gamepad.buttons.triangle ? PAD_BUTTON_X : 0;
-		jp |= sicksaxis.gamepad.buttons.square   ? PAD_BUTTON_Y : 0;
+			int8_t arX = sicksaxis.gamepad.rightAnalog.x - 128;
+			int8_t arY = sicksaxis.gamepad.rightAnalog.y - 128;
 
-		jp |= sicksaxis.gamepad.buttons.L1 ? PAD_TRIGGER_L : 0;
-		jp |= sicksaxis.gamepad.buttons.R1 ? PAD_TRIGGER_R : 0;
-		
-		jp |= sicksaxis.gamepad.buttons.select ? PAD_TRIGGER_Z : 0;
-		jp |= sicksaxis.gamepad.buttons.start ? PAD_BUTTON_START : 0;
+			uint8_t up    = sicksaxis.gamepad.buttons.up    ||  (alY < -SICKSAXIS_DEADZONE);
+			uint8_t down  = sicksaxis.gamepad.buttons.down  ||  (alY > SICKSAXIS_DEADZONE);
+			uint8_t right = sicksaxis.gamepad.buttons.right ||  (alX > SICKSAXIS_DEADZONE);
+			uint8_t left  = sicksaxis.gamepad.buttons.left  ||  (alX < -SICKSAXIS_DEADZONE);
 
-		jp |= sicksaxis.gamepad.buttons.L2 ? PAD_TRIGGER_L : 0;
-		jp |= sicksaxis.gamepad.buttons.R2 ? PAD_TRIGGER_R : 0;
-		
+			uint8_t triangle    = sicksaxis.gamepad.buttons.triangle	||  (arY < -SICKSAXIS_DEADZONE);
+			uint8_t cross  = sicksaxis.gamepad.buttons.cross  			||  (arY > SICKSAXIS_DEADZONE);
+			uint8_t circle = sicksaxis.gamepad.buttons.circle 			||  (arX > SICKSAXIS_DEADZONE);
+			uint8_t square  = sicksaxis.gamepad.buttons.square  		||  (arX < -SICKSAXIS_DEADZONE);
+
+			jp |= up    ? PAD_BUTTON_UP    : 0;
+			jp |= down  ? PAD_BUTTON_DOWN  : 0;
+			jp |= right ? PAD_BUTTON_RIGHT : 0;
+			jp |= left  ? PAD_BUTTON_LEFT  : 0;
+
+			jp |= circle   ? PAD_BUTTON_A : 0;
+			jp |= cross    ? PAD_BUTTON_B : 0;
+			jp |= triangle ? PAD_BUTTON_X : 0;
+			jp |= square   ? PAD_BUTTON_Y : 0;
+
+			jp |= sicksaxis.gamepad.buttons.L1 ? PAD_TRIGGER_L : 0;
+			jp |= sicksaxis.gamepad.buttons.R1 ? PAD_TRIGGER_R : 0;
+			jp |= sicksaxis.gamepad.buttons.L2 ? PAD_TRIGGER_L : 0;
+			jp |= sicksaxis.gamepad.buttons.R2 ? PAD_TRIGGER_R : 0;
+
+			jp |= sicksaxis.gamepad.buttons.select ? PAD_TRIGGER_Z : 0;
+			jp |= sicksaxis.gamepad.buttons.start ? PAD_BUTTON_START : 0;
+		}
 	}
 #endif
 
