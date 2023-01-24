@@ -620,7 +620,7 @@ void InfoPrompt(const char *msg)
 /****************************************************************************
  * AutoSave
  *
- * Automatically saves SRAM/snapshot when returning from in-game to the menu
+ * Automatically saves SRAM/Snapshot when returning from in-game to the menu
  ***************************************************************************/
 void AutoSave()
 {
@@ -845,25 +845,25 @@ static void WindowCredits(void * ptr)
 	txt[i]->SetAlignment(ALIGN_CENTRE, ALIGN_TOP); txt[i]->SetPosition(0,y); i++; y+=40;
 
 	GuiText::SetPresets(18, (GXColor){0, 0, 0, 255}, 0, FTGX_JUSTIFY_LEFT | FTGX_ALIGN_TOP, ALIGN_LEFT, ALIGN_TOP);
-	txt[i] = new GuiText("Coding & menu design");
+	txt[i] = new GuiText("Coding & artwork");
 	txt[i]->SetPosition(50,y); i++;
-	txt[i] = new GuiText("Tantric");
+	txt[i] = new GuiText("NiuuS");
 	txt[i]->SetPosition(330,y); i++; y+=24;
 	txt[i] = new GuiText("Additional improvements");
 	txt[i]->SetPosition(50,y); i++;
-	txt[i] = new GuiText("NiuuS, bladeoner,");
+	txt[i] = new GuiText("bladeoner, Zopenko");
 	txt[i]->SetPosition(330,y); i++; y+=24;
-	txt[i] = new GuiText("Zopenko, InfiniteBlue");
-	txt[i]->SetPosition(330,y); i++; y+=24;
-	txt[i] = new GuiText("Menu artwork");
-	txt[i]->SetPosition(50,y); i++;
-	txt[i] = new GuiText("NiuuS, the3seashells");
+	txt[i] = new GuiText("askotx, InfiniteBlueGX, others");
 	txt[i]->SetPosition(330,y); i++; y+=24;
 	txt[i] = new GuiText("Logotype");
 	txt[i]->SetPosition(50,y); i++;
 	txt[i] = new GuiText("NiuuS");
 	txt[i]->SetPosition(330,y); i++; y+=48;
 
+	txt[i] = new GuiText("Snes9x GX Wii");
+	txt[i]->SetPosition(50,y); i++;
+	txt[i] = new GuiText("Tantric (art by the3seashells)");
+	txt[i]->SetPosition(330,y); i++; y+=24;
 	txt[i] = new GuiText("Snes9x GX GameCube");
 	txt[i]->SetPosition(50,y); i++;
 	txt[i] = new GuiText("SoftDev, crunchy2,");
@@ -1052,7 +1052,7 @@ static int MenuGameSelection()
 	ResetBrowser();
 
 	GuiTrigger trigPlusMinus;
-	trigPlusMinus.SetButtonOnlyTrigger(-1, WPAD_BUTTON_PLUS | WPAD_CLASSIC_BUTTON_PLUS, PAD_TRIGGER_Z, WIIDRC_BUTTON_PLUS);
+	trigPlusMinus.SetButtonOnlyTrigger(-1, WPAD_BUTTON_MINUS | WPAD_CLASSIC_BUTTON_MINUS, PAD_TRIGGER_Z, WIIDRC_BUTTON_MINUS);
 
 	GuiImage bgPreview(&bgPreviewImg);
 	GuiButton bgPreviewBtn(bgPreview.GetWidth(), bgPreview.GetHeight());
@@ -1615,7 +1615,7 @@ static int MenuGame()
 	w.Append(&screenshotBtn);
 	w.Append(&gameSettingsBtn);
 
-	if(GCSettings.DisplayVM == 1) //show memory usage
+	if(GCSettings.DisplayVM == 1) // show memory usage
 	{
 		w.Append(&memTxt);
 	}
@@ -1894,8 +1894,10 @@ static int MenuGameSaves(int action)
 	GuiImageData btnCloseOutline(button_small_png);
 	GuiImageData btnCloseOutlineOver(button_small_over_png);
 
+	GuiTrigger trigHome;
 	GuiTrigger trigB;
 	GuiTrigger trig1;
+	trigHome.SetButtonOnlyTrigger(-1, WPAD_BUTTON_HOME | WPAD_CLASSIC_BUTTON_HOME, PAD_BUTTON_START, WIIDRC_BUTTON_HOME);
 	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
 	trig1.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
 
@@ -1915,9 +1917,6 @@ static int MenuGameSaves(int action)
 	backBtn.SetTrigger(&trigB);
 	backBtn.SetTrigger(&trig1);
 	backBtn.SetEffectGrow();
-
-	GuiTrigger trigHome;
-	trigHome.SetButtonOnlyTrigger(-1, WPAD_BUTTON_HOME | WPAD_CLASSIC_BUTTON_HOME, PAD_BUTTON_START, WIIDRC_BUTTON_HOME);
 
 	GuiText closeBtnTxt("Close", 20, (GXColor){0, 0, 0, 255});
 	GuiImage closeBtnImg(&btnCloseOutline);
@@ -2173,7 +2172,11 @@ static int MenuGameSettings()
 	GuiImageData btnCloseOutlineOver(button_small_over_png);
 
 	GuiTrigger trigHome;
+	GuiTrigger trigB;
+	GuiTrigger trig1;
 	trigHome.SetButtonOnlyTrigger(-1, WPAD_BUTTON_HOME | WPAD_CLASSIC_BUTTON_HOME, PAD_BUTTON_START, WIIDRC_BUTTON_HOME);
+	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
+	trig1.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
 
 	GuiText mappingBtnTxt("Button Mappings", 22, (GXColor){0, 0, 0, 255});
 	mappingBtnTxt.SetWrap(true, btnLargeOutline.GetWidth()-30);
@@ -2296,11 +2299,6 @@ static int MenuGameSettings()
 	closeBtn.SetTrigger(trig2);
 	closeBtn.SetTrigger(&trigHome);
 	closeBtn.SetEffectGrow();
-
-	GuiTrigger trigB;
-	GuiTrigger trig1;
-	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
-	trig1.SetButtonOnlyTrigger(-1, WPAD_BUTTON_1, 0, 0);
 
 	GuiText backBtnTxt("Go Back", 22, (GXColor){0, 0, 0, 255});
 	GuiImage backBtnImg(&btnOutline);
@@ -2811,7 +2809,7 @@ static int MenuSettingsMappingsController()
 	wiiuproBtn.SetTrigger(trigA);
 	wiiuproBtn.SetTrigger(trig2);
 	wiiuproBtn.SetEffectGrow();
-	
+
 	GuiTrigger trigB;
 	GuiTrigger trig1;
 	trigB.SetButtonOnlyTrigger(-1, WPAD_BUTTON_B | WPAD_CLASSIC_BUTTON_B, PAD_BUTTON_B, WIIDRC_BUTTON_B);
@@ -4729,11 +4727,10 @@ static int MenuSettingsMenu()
 			case 5:
 				GCSettings.language++;
 				
-				if(GCSettings.language >= LANG_LENGTH)
-					GCSettings.language = LANG_JAPANESE;
-
-				if(GCSettings.language == LANG_SIMP_CHINESE)
+				if(GCSettings.language == LANG_TRAD_CHINESE) // skip (not supported)
 					GCSettings.language = LANG_KOREAN;
+				else if(GCSettings.language >= LANG_LENGTH)
+					GCSettings.language = LANG_JAPANESE;
 				break;
 			case 6:
 				GCSettings.PreviewImage++;

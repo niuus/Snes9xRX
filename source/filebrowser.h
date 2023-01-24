@@ -1,10 +1,10 @@
 /****************************************************************************
- * Snes9x Nintendo Wii/GameCube Port
+ * Snes9x Nintendo Wii/Gamecube Port
  *
  * softdev July 2006
  * crunchy2 May 2007
  * Michniewski 2008
- * Tantric 2008-2023
+ * Tantric 2008-2010
  *
  * filebrowser.h
  *
@@ -16,7 +16,7 @@
 
 #include <unistd.h>
 #include <gccore.h>
-#include <snes9xrx.h>
+#include "snes9xrx.h"
 
 #define MAXJOLIET 255
 #ifdef HW_DOL
