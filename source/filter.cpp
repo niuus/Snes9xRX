@@ -42,10 +42,12 @@ static uint16 RGBtoBright[1<<NUMBITS];
 
 TFilterMethod FilterMethod;
 
-template<int GuiScale> void RenderScale2X (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height);
+template<int GuiScale> void RenderEPXA (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height);
+template<int GuiScale> void RenderEPXB (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height);
 template<int GuiScale> void RenderHQ2X (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height);
 template<int GuiScale> void ScanlinesA (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height);
 template<int GuiScale> void ScanlinesB (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height);
+template<int GuiScale> void DotMatrix (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height);
 
 const char* GetFilterName (RenderFilter filterID)
 {
@@ -53,12 +55,14 @@ const char* GetFilterName (RenderFilter filterID)
 	{
 		default: return "Unknown";
 		case FILTER_NONE: return "None";
-		case FILTER_SCALE2X: return "Scale2x";
+		case FILTER_EPXA: return "EPX A";
+		case FILTER_EPXB: return "EPX B";
 		case FILTER_HQ2X: return "hq2x";
 		case FILTER_HQ2XS: return "hq2x Soft";
 		case FILTER_HQ2XBOLD: return "hq2x Bold";
 		case FILTER_SCANLINESA: return "Scanlines 25%";
 		case FILTER_SCANLINESB: return "Scanlines 50%";
+		case FILTER_DOTMATRIX: return "Dot Matrix";
 	}
 }
 
@@ -67,12 +71,14 @@ static TFilterMethod FilterToMethod (RenderFilter filterID)
 {
 	switch(filterID)
 	{
-		case FILTER_SCALE2X:    return RenderScale2X<FILTER_SCALE2X>;
+		case FILTER_EPXA:    return RenderEPXA<FILTER_EPXA>;
+		case FILTER_EPXB:    return RenderEPXB<FILTER_EPXB>;
 		case FILTER_HQ2X:       return RenderHQ2X<FILTER_HQ2X>;
 		case FILTER_HQ2XS:      return RenderHQ2X<FILTER_HQ2XS>;
 		case FILTER_HQ2XBOLD:   return RenderHQ2X<FILTER_HQ2XBOLD>;
 		case FILTER_SCANLINESA:  return ScanlinesA<FILTER_SCANLINESA>;
 		case FILTER_SCANLINESB:  return ScanlinesB<FILTER_SCANLINESB>;
+		case FILTER_DOTMATRIX:  return DotMatrix<FILTER_DOTMATRIX>;
 		default: return 0;
 	}
 }
@@ -84,12 +90,14 @@ int GetFilterScale(RenderFilter filterID)
 		case FILTER_NONE:
 			return 1;
 		default:
-		case FILTER_SCALE2X:
+		case FILTER_EPXA:
+		case FILTER_EPXB:
 		case FILTER_HQ2X:
 		case FILTER_HQ2XS:
 		case FILTER_HQ2XBOLD:
 		case FILTER_SCANLINESA:
 		case FILTER_SCANLINESB:
+		case FILTER_DOTMATRIX:
 			return 2;
 	}
 }
@@ -389,29 +397,178 @@ void InitLUTs(void)
 	case 255: if (Diff(RGBtoYUVtable[w4], RGBtoYUVtable[w2])) PIXEL00_0; else PIXEL00_100; if (Diff(RGBtoYUVtable[w2], RGBtoYUVtable[w6])) PIXEL01_0; else PIXEL01_100; if (Diff(RGBtoYUVtable[w8], RGBtoYUVtable[w4])) PIXEL10_0; else PIXEL10_100; if (Diff(RGBtoYUVtable[w6], RGBtoYUVtable[w8])) PIXEL11_0; else PIXEL11_100; break;
 
 template<int GuiScale>
-void RenderScale2X (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height)
+void RenderEPXA (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height)
 {
-	unsigned int nextlineSrc = srcPitch / sizeof(uint16);
-	uint16 *p = (uint16 *)srcPtr;
+	uint16  colorX, colorA, colorB, colorC, colorD;
+	uint16  *sP, *uP, *lP;
+	uint32  *dP1, *dP2;
+	int		w;
 
-	unsigned int nextlineDst = dstPitch / sizeof(uint16);
-	uint16 *q = (uint16 *)dstPtr;
+	for (; height; height--)
+	{
+		sP  = (uint16 *) srcPtr;
+		uP  = (uint16 *) (srcPtr - srcPitch);
+		lP  = (uint16 *) (srcPtr + srcPitch);
+		dP1 = (uint32 *) dstPtr;
+		dP2 = (uint32 *) (dstPtr + dstPitch);
 
-	while (height--) {
-		for (int i = 0; i < width; ++i) {
-			uint16 B = *(p + i - nextlineSrc);
-			uint16 D = *(p + i - 1);
-			uint16 E = *(p + i);
-			uint16 F = *(p + i + 1);
-			uint16 H = *(p + i + nextlineSrc);
+		// left edge
+		colorX = *sP;
+		colorC = *++sP;
+		colorB = *lP++;
+		colorD = *uP++;
 
-			*(q + (i << 1)) = D == B && B != F && D != H ? D : E;
-			*(q + (i << 1) + 1) = B == F && B != D && F != H ? F : E;
-			*(q + (i << 1) + nextlineDst) = D == H && D != B && H != F ? D : E;
-			*(q + (i << 1) + nextlineDst + 1) = H == F && D != H && B != F ? F : E;
+		if ((colorX != colorC) && (colorB != colorD))
+		{
+        #ifdef __BIG_ENDIAN__
+            *dP1 = (colorX << 16) + ((colorC == colorD) ? colorC : colorX);
+            *dP2 = (colorX << 16) + ((colorB == colorC) ? colorB : colorX);
+        #else
+            *dP1 = colorX + (((colorC == colorD) ? colorC : colorX) << 16);
+            *dP2 = colorX + (((colorB == colorC) ? colorB : colorX) << 16);
+        #endif
+		}		
+		else
+			*dP1 = *dP2 = (colorX << 16) + colorX;
+
+		dP1++;
+		dP2++;
+
+		for (w = width - 2; w; w--)
+		{
+			colorA = colorX;
+			colorX = colorC;
+			colorC = *++sP;
+			colorB = *lP++;
+			colorD = *uP++;
+
+			if ((colorA != colorC) && (colorB != colorD))
+			{
+            #ifdef __BIG_ENDIAN__
+                *dP1 = (((colorD == colorA) ? colorD : colorX) << 16) + ((colorC == colorD) ? colorC : colorX);
+                *dP2 = (((colorA == colorB) ? colorA : colorX) << 16) + ((colorB == colorC) ? colorB : colorX);
+            #else
+                *dP1 = ((colorD == colorA) ? colorD : colorX) + (((colorC == colorD) ? colorC : colorX) << 16);
+                *dP2 = ((colorA == colorB) ? colorA : colorX) + (((colorB == colorC) ? colorB : colorX) << 16);
+            #endif
+			}
+			else
+				*dP1 = *dP2 = (colorX << 16) + colorX;
+
+			dP1++;
+			dP2++;
 		}
-		p += nextlineSrc;
-		q += nextlineDst << 1;
+
+		// right edge
+		colorA = colorX;
+		colorX = colorC;
+		colorB = *lP;
+		colorD = *uP;
+
+		if ((colorA != colorX) && (colorB != colorD))
+		{
+        #ifdef __BIG_ENDIAN__
+            *dP1 = (((colorD == colorA) ? colorD : colorX) << 16) + colorX;
+            *dP2 = (((colorA == colorB) ? colorA : colorX) << 16) + colorX;
+        #else
+            *dP1 = ((colorD == colorA) ? colorD : colorX) + (colorX << 16);
+            *dP2 = ((colorA == colorB) ? colorA : colorX) + (colorX << 16);
+        #endif
+		}
+		else
+			*dP1 = *dP2 = (colorX << 16) + colorX;
+
+		srcPtr += srcPitch;
+		dstPtr += dstPitch << 1;
+	}
+}
+
+#define AVERAGE_565(el0, el1) (((el0) & (el1)) + ((((el0) ^ (el1)) & 0xF7DE) >> 1))
+
+template<int GuiScale>
+void RenderEPXB (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height)
+{
+	uint16  colorX, colorA, colorB, colorC, colorD;
+	uint16  *sP, *uP, *lP;
+	uint32  *dP1, *dP2;
+	int		w;
+
+	for (; height; height--)
+	{
+		sP  = (uint16 *) srcPtr;
+		uP  = (uint16 *) (srcPtr - srcPitch);
+		lP  = (uint16 *) (srcPtr + srcPitch);
+		dP1 = (uint32 *) dstPtr;
+		dP2 = (uint32 *) (dstPtr + dstPitch);
+
+		// left edge
+		colorX = *sP;
+		colorC = *++sP;
+		colorB = *lP++;
+		colorD = *uP++;
+
+		if ((colorX != colorC) && (colorB != colorD))
+		{
+        #ifdef __BIG_ENDIAN__
+            *dP1 = (colorX << 16) + ((colorC == colorD) ? AVERAGE_565 (colorC, colorX) : colorX);
+            *dP2 = (colorX << 16) + ((colorB == colorC) ? AVERAGE_565 (colorB, colorX) : colorX);
+        #else
+            *dP1 = colorX + (((colorC == colorD) ? AVERAGE_565 (colorC, colorX) : colorX) << 16);
+            *dP2 = colorX + (((colorB == colorC) ? AVERAGE_565 (colorB, colorX) : colorX) << 16);
+        #endif
+		}
+		else
+			*dP1 = *dP2 = (colorX << 16) + colorX;
+
+		dP1++;
+		dP2++;
+
+		for (w = width - 2; w; w--)
+		{
+			colorA = colorX;
+			colorX = colorC;
+			colorC = *++sP;
+			colorB = *lP++;
+			colorD = *uP++;
+
+			if ((colorA != colorC) && (colorB != colorD))
+			{
+            #ifdef __BIG_ENDIAN__
+                *dP1 = (((colorD == colorA) ? AVERAGE_565 (colorD, colorX) : colorX) << 16) + ((colorC == colorD) ? AVERAGE_565 (colorC, colorX) : colorX);
+                *dP2 = (((colorA == colorB) ? AVERAGE_565 (colorA, colorX) : colorX) << 16) + ((colorB == colorC) ? AVERAGE_565 (colorB, colorX) : colorX);
+            #else
+                *dP1 = ((colorD == colorA) ? AVERAGE_565 (colorD, colorX) : colorX) + (((colorC == colorD) ? AVERAGE_565 (colorC, colorX) : colorX) << 16);
+                *dP2 = ((colorA == colorB) ? AVERAGE_565 (colorA, colorX) : colorX) + (((colorB == colorC) ? AVERAGE_565 (colorB, colorX) : colorX) << 16);
+            #endif
+			}
+			else
+				*dP1 = *dP2 = (colorX << 16) + colorX;
+
+			dP1++;
+			dP2++;
+		}
+
+		// right edge
+		colorA = colorX;
+		colorX = colorC;
+		colorB = *lP;
+		colorD = *uP;
+
+		if ((colorA != colorX) && (colorB != colorD))
+		{
+        #ifdef __BIG_ENDIAN__
+            *dP1 = (((colorD == colorA) ? AVERAGE_565 (colorD, colorX) : colorX) << 16) + colorX;
+            *dP2 = (((colorA == colorB) ? AVERAGE_565 (colorA, colorX) : colorX) << 16) + colorX;
+        #else
+            *dP1 = ((colorD == colorA) ? AVERAGE_565 (colorD, colorX) : colorX) + (colorX << 16);
+            *dP2 = ((colorA == colorB) ? AVERAGE_565 (colorA, colorX) : colorX) + (colorX << 16);
+        #endif
+		}
+		else
+			*dP1 = *dP2 = (colorX << 16) + colorX;
+
+		srcPtr += srcPitch;
+		dstPtr += dstPitch << 1;
 	}
 }
 
@@ -539,13 +696,13 @@ void RenderHQ2X (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch,
 template<int GuiScale>
 void ScanlinesA (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height)
 {
-	unsigned int nextlineSrc = srcPitch / sizeof(uint16);
+	uint32 nextlineSrc = srcPitch / sizeof(uint16);
 	uint16 *p = (uint16 *)srcPtr;
 
-	unsigned int nextlineDst = dstPitch / sizeof(uint16);
+	uint32 nextlineDst = dstPitch / sizeof(uint16);
 	uint16 *q = (uint16 *)dstPtr;
 
-	while(height--) {
+	while (height--) {
 		for (int i = 0, j = 0; i < width; ++i, j += 2) {
 			uint16 p1 = *(p + i);
 			uint32 pi;
@@ -555,8 +712,8 @@ void ScanlinesA (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch,
 
 			*(q + j) = p1;
 			*(q + j + 1) = p1;
-			*(q + j + nextlineDst) = (uint16)pi;
-			*(q + j + nextlineDst + 1) = (uint16)pi;
+			*(q + j + nextlineDst) = pi;
+			*(q + j + nextlineDst + 1) = pi;
 		}
 		p += nextlineSrc;
 		q += nextlineDst << 1;
@@ -577,5 +734,38 @@ void ScanlinesB (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch,
 		}
 		dstPtr += dstPitch<<1;
 		srcPtr += srcPitch;
+	}
+}
+
+static uint16 dotmatrix[16] = {
+	0x01E0, 0x0007, 0x3800, 0x0000,
+	0x39E7, 0x0000, 0x39E7, 0x0000,
+	0x3800, 0x0000, 0x01E0, 0x0007,
+	0x39E7, 0x0000, 0x39E7, 0x0000
+};
+
+static uint16 DOT_16(uint16 c, int j, int i) {
+	return c - ((c >> 2) & *(dotmatrix + ((j & 3) << 2) + (i & 3)));
+}
+
+template<int GuiScale>
+void DotMatrix (uint8 *srcPtr, uint32 srcPitch, uint8 *dstPtr, uint32 dstPitch, int width, int height)
+{
+	uint32 nextlineSrc = srcPitch / sizeof(uint16);
+	uint16 *p = (uint16 *)srcPtr;
+
+	uint32 nextlineDst = dstPitch / sizeof(uint16);
+	uint16 *q = (uint16 *)dstPtr;
+
+	for (int j = 0, jj = 0; j < height; ++j, jj += 2) {
+		for (int i = 0, ii = 0; i < width; ++i, ii += 2) {
+			uint16 c = *(p + i);
+			*(q + ii) = DOT_16(c, jj, ii);
+			*(q + ii + 1) = DOT_16(c, jj, ii + 1);
+			*(q + ii + nextlineDst) = DOT_16(c, jj + 1, ii);
+			*(q + ii + nextlineDst + 1) = DOT_16(c, jj + 1, ii + 1);
+		}
+		p += nextlineSrc;
+		q += nextlineDst << 1;
 	}
 }
