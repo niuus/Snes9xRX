@@ -2,7 +2,7 @@
  * Snes9x 1.52 Nintendo Wii/GameCube Port
  *
  * Michniewski 2008
- * NiuuS 2017-2023
+ * NiuuS 2016-2023
  *
  * HQ2x, HQ3x, HQ4x filters
  * (c) Copyright 2003         Maxim Stepin (maxim@hiend3d.com)

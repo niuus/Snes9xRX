@@ -3,7 +3,7 @@
  *
  * Tantric 2008-2023
  * InfiniteBlueGX May-December 2022
- * NiuuS 2017-2023
+ * NiuuS 2016-2023
  *
  * preferences.cpp
  *
@@ -178,8 +178,8 @@ preparePrefsData ()
 	createXMLSetting("WiimoteOrientation", "Wiimote Orientation", toStr(GCSettings.WiimoteOrientation));
 #endif
 	createXMLSetting("ExitAction", "Exit Action", toStr(GCSettings.ExitAction));
-	createXMLSetting("MusicVolume", "Music Volume", toStr(GCSettings.MusicVolume));
-	createXMLSetting("SFXVolume", "Sound Effects Volume", toStr(GCSettings.SFXVolume));
+	createXMLSetting("MusicVolume", "Menu Music Volume", toStr(GCSettings.MusicVolume));
+	createXMLSetting("SFXVolume", "Menu Effects Volume", toStr(GCSettings.SFXVolume));
 	createXMLSetting("language", "Language", toStr(GCSettings.language));
 	createXMLSetting("PreviewImage", "Preview Image", toStr(GCSettings.PreviewImage));
 	createXMLSetting("HideSRAMSaving", "Hide New SRAM button", toStr(GCSettings.HideSRAMSaving));
@@ -549,6 +549,7 @@ DefaultSettings ()
 
 	// Graphics
 	Settings.Transparency = true;
+	Settings.SupportHiRes = true;
 	Settings.SkipFrames = AUTO_FRAMERATE;
 	Settings.TurboSkipFrames = 19;
 	Settings.AutoDisplayMessages = false;
@@ -793,6 +794,5 @@ bool LoadPrefs()
 	bg_music_size = bg_music_ogg_size;
 	LoadBgMusic();
 #endif
-
 	return prefFound;
 }

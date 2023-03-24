@@ -6,7 +6,7 @@
  * Michniewski 2008
  * Tantric 2008-2023
  * InfiniteBlueGX May-December 2022
- * NiuuS 2017-2023
+ * NiuuS 2016-2023
  *
  * snes9xrx.cpp
  *

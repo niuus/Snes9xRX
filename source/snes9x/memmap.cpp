@@ -959,11 +959,11 @@ bool8 CMemory::Init (void)
 	ZeroMemory(IPPU.TileCached[TILE_4BIT_ODD],  MAX_4BIT_TILES);
 
 	// FillRAM uses first 32K of ROM image area, otherwise space just
-	// wasted. Might be read by the SuperFX code.
+	// wasted. Might be read by the Super FX code.
 
 	FillRAM = ROM;
 
-	// Add 0x8000 to ROM image pointer to stop SuperFX code accessing
+	// Add 0x8000 to ROM image pointer to stop Super FX code accessing
 	// unallocated memory (can cause crash on some ports).
 
 	ROM += 0x8000;
@@ -2234,12 +2234,12 @@ void CMemory::InitROM (void)
 			Settings.SA1 = TRUE;
 			break;
 
-		// SuperFX
+		// Super FX
 		case 0x1320:
 		case 0x1420:
 		case 0x1520:
 		case 0x1A20:
-		// SuperFX FastROM for ROM hacks
+		// Super FX FastROM for ROM hacks
 		case 0x1330:
 		case 0x1430:
 		case 0x1530:

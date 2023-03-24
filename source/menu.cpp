@@ -3,7 +3,7 @@
  *
  * Tantric 2008-2023
  * InfiniteBlueGX May-December 2022
- * NiuuS 2017-2023
+ * NiuuS 2016-2023
  *
  * menu.cpp
  *
@@ -2077,7 +2077,7 @@ static int MenuGameSaves(int action)
 					if(i < 100)
 					{
 						MakeFilePath(filepath, FILE_SNAPSHOT, Memory.ROMFilename, i);
-						SaveSnapshot (filepath, NOTSILENT);
+						SaveSnapshot(filepath, NOTSILENT);
 						menu = MENU_GAME_SAVE;
 					}
 				}
@@ -2094,7 +2094,7 @@ static int MenuGameSaves(int action)
 						menu = MENU_GAME_SAVE;
 					}
 				}
-				else // overwrite SRAM/Snapshot
+				else // Overwrite SRAM/Snapshot
 				{
 					MakeFilePath(filepath, saves.type[ret], saves.filename[ret]);
 					switch(saves.type[ret])
@@ -2103,7 +2103,7 @@ static int MenuGameSaves(int action)
 							SaveSRAM(filepath, NOTSILENT);
 							break;
 						case FILE_SNAPSHOT:
-							SaveSnapshot (filepath, NOTSILENT);
+							SaveSnapshot(filepath, NOTSILENT);
 							break;
 					}
 					menu = MENU_GAME_SAVE;
@@ -4538,10 +4538,10 @@ static int MenuSettingsFile()
 		{
 			firstRun = false;
 
-			// some load/save methods are not implemented - here's where we skip them
-			// they need to be skipped in the order they were enumerated
+			// Some load/save methods are not implemented - here's where we skip them.
+			// They need to be skipped in the order they were enumerated.
 
-			// no SD/USB ports on GameCube
+			// No SD/USB ports on GameCube
 			#ifdef HW_DOL
 			if(GCSettings.LoadMethod == DEVICE_SD)
 				GCSettings.LoadMethod++;
@@ -4553,11 +4553,11 @@ static int MenuSettingsFile()
 				GCSettings.SaveMethod++;
 			#endif
 
-			// saving to DVD is impossible
+			// Saving to DVD is impossible
 			if(GCSettings.SaveMethod == DEVICE_DVD)
 				GCSettings.SaveMethod++;
 
-			// don't allow SD Gecko on Wii
+			// Don't allow SD Gecko on Wii
 			#ifdef HW_RVL
 			if(GCSettings.LoadMethod == DEVICE_SD_SLOTA)
 				GCSettings.LoadMethod++;
@@ -4638,8 +4638,8 @@ static int MenuSettingsMenu()
 
 	sprintf(options.name[i++], "Exit Action");
 	sprintf(options.name[i++], "Wiimote Orientation");
-	sprintf(options.name[i++], "Music Volume");
-	sprintf(options.name[i++], "Sound Effects Volume");
+	sprintf(options.name[i++], "Menu Music Volume");
+	sprintf(options.name[i++], "Menu Effects Volume");
 	sprintf(options.name[i++], "Satellaview BIOS");
 	sprintf(options.name[i++], "Language");
 	sprintf(options.name[i++], "Preview Image");
@@ -4729,6 +4729,7 @@ static int MenuSettingsMenu()
 				
 				if(GCSettings.language == LANG_TRAD_CHINESE) // skip (not supported)
 					GCSettings.language = LANG_KOREAN;
+
 				else if(GCSettings.language >= LANG_LENGTH)
 					GCSettings.language = LANG_JAPANESE;
 				break;
