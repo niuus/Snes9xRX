@@ -422,9 +422,9 @@ decodePrefsData ()
  ***************************************************************************/
 void FixInvalidSettings()
 {
-	if(GCSettings.LoadMethod > 6)
+	if(GCSettings.LoadMethod > 7)
 		GCSettings.LoadMethod = DEVICE_AUTO;
-	if(GCSettings.SaveMethod > 6)
+	if(GCSettings.SaveMethod > 7)
 		GCSettings.SaveMethod = DEVICE_AUTO;	
 	if(!(GCSettings.zoomHor > 0.5 && GCSettings.zoomHor < 1.5))
 		GCSettings.zoomHor = 1.0;
@@ -712,19 +712,28 @@ bool LoadPrefs()
 	sprintf(filepath[2], "usb:/apps/%s", APPFOLDER);
 	sprintf(filepath[3], "sd:/%s", APPFOLDER);
 	sprintf(filepath[4], "usb:/%s", APPFOLDER);
-#else
-	numDevices = 2;
-	sprintf(filepath[0], "carda:/%s", APPFOLDER);
-	sprintf(filepath[1], "cardb:/%s", APPFOLDER);
-#endif
 
 	for(int i=0; i<numDevices; i++)
 	{
 		prefFound = LoadPrefsFromMethod(filepath[i]);
-		
+
 		if(prefFound)
 			break;
 	}
+#else
+	if(ChangeInterface(DEVICE_SD_SLOTA, SILENT)) {
+		sprintf(filepath[0], "carda:/%s", APPFOLDER);
+		prefFound = LoadPrefsFromMethod(filepath[0]);
+	}
+	else if(ChangeInterface(DEVICE_SD_SLOTB, SILENT)) {
+		sprintf(filepath[0], "cardb:/%s", APPFOLDER);
+		prefFound = LoadPrefsFromMethod(filepath[0]);
+	}
+	else if(ChangeInterface(DEVICE_SD_PORT2, SILENT)) {
+		sprintf(filepath[0], "port2:/%s", APPFOLDER);
+		prefFound = LoadPrefsFromMethod(filepath[0]);
+	}
+#endif
 
 	prefLoaded = true; // attempted to load preferences
 
