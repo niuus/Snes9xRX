@@ -240,7 +240,7 @@ int UpdateDirName()
 		if ((strlen(browser.dir)+1+strlen(browserList[browser.selIndex].filename)) < MAXPATHLEN)
 		{
 			/* update current directory name */
-			sprintf(browser.dir, "%s%s/",browser.dir, browserList[browser.selIndex].filename);
+			sprintf(browser.dir+strlen(browser.dir), "%s/", browserList[browser.selIndex].filename);
 			return 1;
 		}
 		else
@@ -615,7 +615,7 @@ int BrowserChangeFolder()
 		browserList[i].isdir = 1;
 		browserList[i].icon = ICON_SD;
 		i++;
-		
+
 		AddBrowserEntry();
 		sprintf(browserList[i].filename, "cardb:/");
 		sprintf(browserList[i].displayname, "SD Gecko Slot B");
@@ -631,7 +631,7 @@ int BrowserChangeFolder()
 		browserList[i].isdir = 1;
 		browserList[i].icon = ICON_SMB;
 		i++;
-		
+
 		AddBrowserEntry();
 		sprintf(browserList[i].filename, "dvd:/");
 		sprintf(browserList[i].displayname, "Data DVD");
@@ -639,10 +639,10 @@ int BrowserChangeFolder()
 		browserList[i].isdir = 1;
 		browserList[i].icon = ICON_DVD;
 		i++;
-		
+
 		browser.numEntries += i;
 	}
-	
+
 	if(browser.dir[0] == 0)
 	{
 		GCSettings.LoadFolder[0] = 0;
