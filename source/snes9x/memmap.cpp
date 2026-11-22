@@ -1806,7 +1806,7 @@ void CMemory::ClearSRAM (bool8 onlyNonSavedSRAM)
 			return;
 
 	// TODO: If SRAM size changes change this value as well
-	memset(SRAM, SNESGameFixes.SRAMInitialValue, (32,0x80000));
+	memset(SRAM, SNESGameFixes.SRAMInitialValue, 0x80000);
 }
 
 bool8 CMemory::LoadSRAM (const char *filename)
