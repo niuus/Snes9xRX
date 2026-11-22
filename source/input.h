@@ -28,6 +28,7 @@ extern int playerMapping[4];
 
 void ResetControls(int cc = -1, int wc = -1);
 void ReportButtons ();
+void ClearButtonsReported ();
 void SetControllers ();
 void SetDefaultButtonMap ();
 bool MenuRequested();

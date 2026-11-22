@@ -23,6 +23,7 @@
 #include "snes9xrx.h"
 #include "video.h"
 #include "audio.h"
+#include "input.h"
 #include "snes9x/snes9x.h"
 #include "snes9x/memmap.h"
 #include "snes9x/display.h"
@@ -176,16 +177,19 @@ void S9xHandlePortCommand(s9xcommand_t cmd, int16 data1, int16 data2)
 
 bool S9xPollButton(uint32 id, bool * pressed)
 {
+	ReportButtons();
 	return 0;
 }
 
 bool S9xPollAxis(uint32 id, int16 * value)
 {
+	ReportButtons();
 	return 0;
 }
 
 bool S9xPollPointer(uint32 id, int16 * x, int16 * y)
 {
+	ReportButtons();
 	return 0;
 }
 

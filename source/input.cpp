@@ -4,9 +4,9 @@
  * softdev July 2006
  * crunchy2 May-June 2007
  * Michniewski 2008
- * Tantric 2008-2023
+ * Tantric 2008-2026
  * InfiniteBlueGX May-December 2022
- * NiuuS 2016-2023
+ * NiuuS 2016-2026
  *
  * input.cpp
  *
@@ -336,6 +336,7 @@ void ResetControls(int consoleCtrl, int wiiCtrl)
  *
  * Scans pad and wpad
  ***************************************************************************/
+
 void
 UpdatePads()
 {
@@ -931,6 +932,12 @@ bool IsTurboModeInputPressed()
 	}
 }
 
+static bool buttonsReported = false;
+
+void ClearButtonsReported () {
+	buttonsReported = false;
+}
+
 /****************************************************************************
  * ReportButtons
  *
@@ -939,6 +946,11 @@ bool IsTurboModeInputPressed()
  ***************************************************************************/
 void ReportButtons ()
 {
+	if(buttonsReported)
+		return;
+
+	buttonsReported = true;
+
 	int i;
 
 	UpdatePads();

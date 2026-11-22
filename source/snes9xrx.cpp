@@ -579,6 +579,7 @@ int main(int argc, char *argv[])
 		{
 			S9xMainLoop();
 			ReportButtons();
+			ClearButtonsReported ();
 
 			if(ResetRequested)
 			{
