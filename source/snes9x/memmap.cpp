@@ -1089,7 +1089,7 @@ int CMemory::ScoreHiROM (bool8 skip_header, int32 romoff)
 	// Check for extended HiROM expansion used in Mother 2 Deluxe et al.
 	// Looks for size byte 13 (8MB) and an actual ROM size greater than 4MB
 	if (buf[0xd7] == 13 && CalculatedSize > 1024 * 1024 * 4)
-		score += 5;
+		score += 3;
 
 	if (buf[0xd5] & 0x1)
 		score += 2;
@@ -2127,6 +2127,24 @@ void CMemory::InitROM (void)
 	S9xInitBSX(); // Set BS header before parsing
 
 	ParseSNESHeader(RomHeader);
+
+	// NFL Football (Europe) (Proto) - Sculptured Software, board SHVC-4PV5B-01
+	// (LoROM, 256Kbit battery SRAM, PAL-only). The proto ships a junk internal
+	// header, so auto-detection maps it LoROM with a garbage SRAM size; the game
+	// reads open bus / wrapped save RAM and runs off the rails - glitched menus,
+	// black in-game, crashes. Pin the real board: 32KB SRAM + PAL region.
+	static const uint8	nfl_boot[16] =
+		{ 0x5C, 0x92, 0x81, 0x81, 0x78, 0x18, 0xFB, 0xD8, 0x5C, 0x0C, 0x80, 0x80, 0xC2, 0x30, 0x5C, 0x78 };
+	if (CalculatedSize == 0x200000 &&
+		memcmp(ROM, nfl_boot, sizeof(nfl_boot)) == 0 &&
+		memcmp(ROM + 0x7FC0, "SDEBUG1", 7) == 0)
+	{
+		ROMType   = 0x00;
+		ROMSpeed  = 0x20;
+		ROMSize   = 0x0B;
+		SRAMSize  = 5;
+		ROMRegion = 2;
+	}
 
 	//// Detect and initialize chips
 	//// detection codes are compatible with NSRT
@@ -3381,34 +3399,34 @@ void CMemory::ApplyROMFixes (void)
 
 	if (!Settings.DisableGameSpecificHacks)
 	{
-		if (match_id("AVCJ"))                                      // Rendering Ranger R2
+		if (match_id("AVCJ"))                                      // Rendering Ranger R2 (J)
 			Timings.APUSpeedup = 4;
 		if (match_na("TARGA"))                                     // TARGA (Prototype)
 			Timings.APUSpeedup = 4;
-		if (match_id("AANJ"))                                      // Chou Aniki
-			Timings.APUSpeedup = -3;
+		if (match_id("AANJ"))                                      // Chou Aniki - Bakuretsu Rantou Hen (J)
+			Timings.APUSpeedup = 5;
 		if (match_na("CIRCUIT USA"))
 			Timings.APUSpeedup = 2;
-		if (match_na("\xC3\xDD\xBC\xC9\xB3\xC0"))                  // Tenshi no Uta
+		if (match_na("\xC3\xDD\xBC\xC9\xB3\xC0"))                  // Tenshi no Uta - Shiroki Tsubasa no Inori (J)
 			Timings.APUSpeedup = 2;
 		
-		if (match_na("GAIA GENSOUKI 1 JPN")                     || // Gaia Gensouki
-			match_id("JG  ")                                    || // Illusion of Gaia
-			match_id("CQ  ")                                    || // Stunt Race FX
-			match_na("SOULBLADER - 1")                          || // Soul Blader
-			match_na("SOULBLAZER - 1 USA")                      || // Soul Blazer
-			match_na("SLAP STICK 1 JPN")                        || // Slap Stick
-			match_id("E9 ")                                     || // Robotrek
+		if (match_na("GAIA GENSOUKI 1 JPN")                     || // Gaia Gensouki (J)
+			match_id("JG  ")                                    || // Illusion of Gaia (U)
+			match_id("CQ  ")                                    || // Stunt Race FX (U) (E)
+			match_na("SOULBLADER - 1")                          || // Soul Blader (J)
+			match_na("SOULBLAZER - 1 USA")                      || // Soul Blazer (U)
+			match_na("SLAP STICK 1 JPN")                        || // Slap Stick (J)
+			match_id("E9 ")                                     || // Robotrek (U)
 			match_nn("ACTRAISER")                               || // Actraiser
 			match_nn("ActRaiser-2")                             || // Actraiser 2
 			match_id("AQT")                                     || // Tenchi Souzou, Terranigma
 			match_id("ATV")                                     || // Tales of Phantasia
 			match_id("ARF")                                     || // Star Ocean
 			match_id("APR")                                     || // Zen-Nippon Pro Wrestling 2 - 3-4 Budoukan
-			match_id("A4B")                                     || // Super Bomberman 4
+			match_id("A4B")                                     || // Super Bomberman 4 (J)
 			match_id("Y7 ")                                     || // U.F.O. Kamen Yakisoban - Present Ban
 			match_id("Y9 ")                                     || // U.F.O. Kamen Yakisoban - Shihan Ban
-			match_id("APB")                                     || // Super Bomberman - Panic Bomber W
+			match_id("APB")                                     || // Super Bomberman - Panic Bomber W (J)
 			match_na("DARK KINGDOM")                            || // Dark Kingdom
 			match_na("ZAN3 SFC")                                || // Zan III Spirits
 			match_na("HIOUDEN")                                 || // Hiouden - Mamono-tachi Tono Chikai
@@ -3427,11 +3445,12 @@ void CMemory::ApplyROMFixes (void)
 			match_nn("SANKYO Fever! \xCC\xA8\xB0\xCA\xDE\xB0!"))   // SANKYO Fever! Fever!
 			Timings.APUSpeedup = 1;
 
-		if (match_na ("EARTHWORM JIM 2")						|| // Earthworm Jim 2
+		if (match_na ("EARTHWORM JIM 2")						|| // Earthworm Jim 2 (U) (E)
+			match_na ("Madden NFL 96")							|| // Madden NFL 96 (U)
 			match_na ("NBA Hangtime")							|| // NBA Hang Time
-			match_na ("MSPACMAN")								|| // Ms Pacman
+			match_na ("MSPACMAN")								|| // Ms. Pacman
 			match_na ("THE MASK")								|| // The Mask
-			match_na ("PRIMAL RAGE")							|| // Primal Rage
+			match_na ("PRIMAL RAGE")							|| // Primal Rage (U) (E)
 			match_na ("PORKY PIGS HAUNTED")						|| // Porky Pig's Haunted Holiday
 			match_na ("Big Sky Trooper")						|| // Big Sky Trooper
 			match_id ("A35")									|| // Mechwarrior 3050 / Battle Tech 3050
@@ -3504,9 +3523,9 @@ void CMemory::ApplyROMFixes (void)
 	if (!Settings.DisableGameSpecificHacks)
 	{
 		// XXX: What's happening?
-		if (match_na("X-MEN") || // Spider-Man and the X-Men
-			match_na("KICK OFF") ||
-			match_na("SUPER FAMICOM JOJO"))
+		if (match_na("X-MEN") || // Spider-Man - X-Men - Arcade's Revenge (U) (E)
+			match_na("KICK OFF") || // Kick-Off (E)
+			match_na("SUPER FAMICOM JOJO")) // JoJo no Kimyou na Bouken (J)
 		{
 			Settings.BlockInvalidVRAMAccess = FALSE;
 			printf("Invalid VRAM access hack\n");
@@ -3518,14 +3537,16 @@ void CMemory::ApplyROMFixes (void)
 	// Force disabling a speed-up hack
     // Games which spool sound samples between the SNES and sound CPU using
     // H-DMA as the sample is playing.
-	if (match_na("EARTHWORM JIM 2") || // Earth Worm Jim 2
-		match_na("PRIMAL RAGE")     || // Primal Rage
-		match_na("CLAY FIGHTER")    || // Clay Fighter
-		match_na("ClayFighter 2")   || // Clay Fighter 2
-		match_na("WeaponLord")      || // Weapon Lord
-		match_nn("WAR 2410")        || // War 2410
-		match_id("ARF")             || // Star Ocean
-		match_id("A4WJ")            || // Mini Yonku Shining Scorpion - Let's & Go!!
+	if (match_na("EARTHWORM JIM 2") || // Earthworm Jim 2 (U) (E)
+		match_na("PRIMAL RAGE")     || // Primal Rage (U) (E)
+		match_na("CLAY FIGHTER")    || // Clay Fighter (U)
+		match_na("CLAYFIGHTER")     || // Clay Fighter (E)
+		match_na("CLAYFIGHTER TE")  || // Ultra Clay Fighter - Tournament Edition (U)
+		match_na("ClayFighter 2")   || // Clay Fighter 2 (U) (E)
+		match_na("WeaponLord")      || // WeaponLord (U) (E)
+		match_nn("WAR 2410")        || // War 2410 (U)
+		match_id("ARF")             || // Star Ocean (J)
+		match_id("A4WJ")            || // Mini Yonku Shining Scorpion - Let's & Go!! (J)
 		match_nn("NHL")             ||
 		match_nc("MADDEN"))
 	{
@@ -3760,14 +3781,17 @@ void CMemory::ApplyROMFixes (void)
 		}
 
 		// SRAM value fixes
-		if (match_na("SUPER DRIFT OUT")      || // Super Drift Out
+		if (match_na("SUPER DRIFT OUT")      || // Super Drift Out (J)
 			match_na("SATAN IS OUR FATHER!") ||
-			match_na("goemon 4"))               // Ganbare Goemon Kirakira Douchuu
+			match_na("S.F.S.95 della SerieA") || // Super Formation Soccer 95 - della Serie A (J)
+			match_na("S.F.S.95 SerieA 4 UCC") || // Super Formation Soccer 95 - della Serie A - UCC Xaqua Version (J)
+			match_id("AACJ") || // Nichibutsu Arcade Classics (J)
+			match_na("goemon 4")) // Ganbare Goemon Kirakira Douchuu (J)
 			SNESGameFixes.SRAMInitialValue = 0x00;
 
 		// Additional game fixes by sanmaiwashi ...
 		// XXX: unnecessary?
-		if (match_na("SFX \xC5\xB2\xC4\xB6\xDE\xDD\xC0\xDE\xD1\xD3\xC9\xB6\xDE\xC0\xD8 1")) // SD Gundam Gaiden - Knight Gundam Monogatari
+		if (match_na("SFX \xC5\xB2\xC4\xB6\xDE\xDD\xC0\xDE\xD1\xD3\xC9\xB6\xDE\xC0\xD8 1")) // SD Gundam Gaiden - Knight Gundam Monogatari (J)
 			SNESGameFixes.SRAMInitialValue = 0x6b;
 
 		// others: BS and ST-01x games are 0x00.
