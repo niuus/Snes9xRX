@@ -24,6 +24,7 @@
 enum RenderFilter{
 	FILTER_NONE = 0,
 
+	FILTER_SCALE2X,
 	FILTER_EPXA,
 	FILTER_EPXB,
 	FILTER_HQ2X,
@@ -32,6 +33,9 @@ enum RenderFilter{
 	FILTER_SCANLINESA,
 	FILTER_SCANLINESB,
 	FILTER_DOTMATRIX,
+	FILTER_2XBR,
+	FILTER_2XBRLV1,
+	FILTER_DDT,
 
 	NUM_FILTERS
 };
@@ -54,6 +58,7 @@ void SelectFilterMethod ();
 const char* GetFilterName (RenderFilter filterID);
 int GetFilterScale(RenderFilter filterID);
 void InitLUTs();
+void SetupFormat();
 
 #endif
 
