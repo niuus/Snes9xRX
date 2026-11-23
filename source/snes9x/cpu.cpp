@@ -98,7 +98,7 @@ void S9xReset (void)
 {
 	S9xResetSaveTimer(FALSE);
 
-	memset(Memory.RAM, 0x55, 0x20000);
+	memset(Memory.RAM, SNESGameFixes.RAMInitialValue, 0x20000);
 	memset(Memory.VRAM, 0x00, 0x10000);
 	ZeroMemory(Memory.FillRAM, 0x8000);
 

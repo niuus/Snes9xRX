@@ -1566,6 +1566,7 @@ again:
 
 	ZeroMemory(&SNESGameFixes, sizeof(SNESGameFixes));
 	SNESGameFixes.SRAMInitialValue = 0x60;
+	SNESGameFixes.RAMInitialValue  = 0x55;
 #ifdef GEKKO
 	WiiSetupCheats();
 #else
@@ -1642,6 +1643,7 @@ bool8 CMemory::LoadMultiCart (const char *cartA, const char *cartB)
 
 	ZeroMemory(&SNESGameFixes, sizeof(SNESGameFixes));
 	SNESGameFixes.SRAMInitialValue = 0x60;
+	SNESGameFixes.RAMInitialValue  = 0x55;
 
 	S9xLoadCheatFile(S9xGetFilename(".cht", CHEAT_DIR));
 
@@ -3426,6 +3428,16 @@ void CMemory::ApplyROMFixes (void)
 	// Not gated on DisableGameSpecificHacks: this stands in for cart hardware
 	// we don't emulate, without which the game never boots at all.
 	S9xSimulateSFEXProtection(ROM, CalculatedSize);
+
+	// Astrohawk (Beta): enables NMI before clearing WRAM, so the NMI handler
+	// runs on power-on garbage; only boots if WRAM starts zeroed. CRC match —
+	// its internal header is blank. Cute Angela (Unl): its NMI DMA queue end
+	// ($1175) is never cleared, and $5555 fires thousands of garbage DMAs.
+	if (ROMCRC32 == 0x41D59381 || ROMCRC32 == 0x30A73CE4)
+	{
+		SNESGameFixes.RAMInitialValue = 0x00;
+		printf("Applied zeroed-WRAM hack.\n");
+	}
 
 	// Games that upload graphics to VRAM with the screen still on. Blocking
 	// those writes is right in general, so it stays on for everything else
