@@ -24,7 +24,7 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 * Wiimote, Nunchuk, Wii Classic/Classic Pro, and Gamecube controller support
 * Wii U Pro, Wii U GamePad, NES and SNES Classic controller support
 * Retrode 2 USB adapter support, so you can use the real controllers!
-* Mayflash 2-port SNES USB adapter support!
+* Mayflash PC044 and MF105 SNES to USB adapter support
 * Wired Xbox 360 Controller support (autodetected when in-game)
 * Speedlink Hornet Gamepad USB
 * Experimental DualShock 3 support
@@ -882,7 +882,7 @@ intermediary buffer. [Daryl]
 connected (Wireless) controller. [Tantric]
 * Change max game image dimensions to 640x480, fix bug
 in png loading. [Tantric]
-* Add support for Mayflash 2-port SNES USB adapter. [EthanArmbrust]
+* Add support for Mayflash 2-port PC044 SNES USB adapter. [EthanArmbrust]
 * New scanlines filter setting. (thanks Tanooki16!)
 Now nicknamed 50% and 25% for RX, I added the option to select between both,
 so you can choose whether you like darker scanlines (old method)
