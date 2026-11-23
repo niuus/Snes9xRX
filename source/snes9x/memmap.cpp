@@ -3404,6 +3404,20 @@ static void S9xSimulateSFEXProtection (uint8 *rom, uint32 size)
 	printf("Street Fighter EX Plus Alpha: cart protection simulated\n");
 }
 
+// Titles that need invalid VRAM access allowed to render correctly. Keyed on
+// ROMCRC32; the effective setting is per-game
+static const struct
+{
+	uint32		crc32;
+	const char	*title;
+} allow_invalid_vram[] =
+{
+	// DMAs the ASK Kodansha logo into VRAM with the screen still on: blocked,
+	// the title screen is a blank white BG1 and a soft reset comes back
+	// garbled. Verified both fixed with the transfer allowed.
+	{ 0xB56EC084, "Rin Kaihou Kudan no Igo Taidou (J)" },
+};
+
 void CMemory::ApplyROMFixes (void)
 {
 	Settings.Shutdown = Settings.ShutdownMaster;
@@ -3412,6 +3426,20 @@ void CMemory::ApplyROMFixes (void)
 	// Not gated on DisableGameSpecificHacks: this stands in for cart hardware
 	// we don't emulate, without which the game never boots at all.
 	S9xSimulateSFEXProtection(ROM, CalculatedSize);
+
+	// Games that upload graphics to VRAM with the screen still on. Blocking
+	// those writes is right in general, so it stays on for everything else
+	// and the Hacks dialog checkbox keeps whatever the user chose; these
+	// titles just turn it off for themselves.
+	for (unsigned i = 0; i < sizeof(allow_invalid_vram) / sizeof(allow_invalid_vram[0]); i++)
+	{
+		if (ROMCRC32 == allow_invalid_vram[i].crc32)
+		{
+			Settings.BlockInvalidVRAMAccess = FALSE;
+			printf("Allowing invalid VRAM access for %s.\n", allow_invalid_vram[i].title);
+			break;
+		}
+	}
 
 	//// Warnings
 
