@@ -4,9 +4,9 @@
  * softdev July 2006
  * crunchy2 May 2007-July 2007
  * Michniewski 2008
- * Tantric 2008-2023
+ * Tantric 2008-2026
  * InfiniteBlueGX May-December 2022
- * NiuuS 2017-2023
+ * NiuuS 2016-2026
  *
  * snes9xrx.h
  *
@@ -23,7 +23,7 @@
 #include "filelist.h"
 
 #define APPNAME 			"Snes9x RX"
-#define APPVERSION 			"5.5.0"
+#define APPVERSION 			"5.6.0"
 #define APPFOLDER 			"Snes9xRX"
 #define PREF_FILE_NAME		"settingsRX.xml"
 

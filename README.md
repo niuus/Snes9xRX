@@ -48,24 +48,44 @@ Wii homebrew is WiiBrew (www.wiibrew.org).
 
 ## RECENT CHANGELOG
 
-[5.5.0 - December 25, 2022]
-* Add B/1 cancel trigger to WindowPrompts. [InfiniteBlueGX]
+[5.6.0 - November 22, 2026]
+* Added support for Mayflash MF105 dual port SNES to USB adapter. [pianomanty]
 
-* Fix initial game selection menu "jump" when using Wii Classic Controller
-or Wii U Pro Classic Controller. [InfiniteBlueGX]
+* Make S9xSetInfoString own its string [bearoso]
+* Warnings fixes [bearoso]
+* Silence NULL pointer subtraction warning [bearoso]
 
-* Fix a crash when selecting Cancel after removing a SD/USB device and 
-re-opening the app. [InfiniteBlueGX]
+* Remove deprecated register [bladeoner]
+* Optimize code [bladeoner]
 
-* Add B/1 button press to cancel button remapping. [InfiniteBlueGX]
+* Significantly reduce input lag [Tantric]
 
-* Remove an unused variable since screenshot button
-was moved. [InfiniteBlueGX]
+* MSU1- revert to start for invalid loop positions [OV2]
 
-* Upgraded the Cheat engine to newer version. [InfiniteBlueGX]
-Previous one still works.
+* New filters: 2xBR / DDT [Hyllian]
 
-* Languages update: korean, spanish.
+* Game fixes:
+Fixes and adjustments for:
+
+- Chou Aniki - Bakuretsu Rantou Hen (Japan) (1º)
+- Mother 2 Deluxe (USA) (Hack) (2º)
+- Nichibutsu Arcade Classics (Japan) (2º)
+- Rin Kaihou Kudan no Igo Taidou (Japan) (3º)
+- Super Formation Soccer 95 - della Serie A (Japan) (UCC Xaqua Version) (2º)
+- Super Formation Soccer 95 - della Serie A (Japan) (2º)
+
+New games working:
+- Astrohawk (Beta) (3º)
+- Cute Angela (World) (Unl) (3º)
+- Gamars Puzzle (Taiwan) (Unl) (3º)
+- Marko's Magic Football (Europe) (2º)
+- Power Slide (Europe) (Proto) (3º)
+- Seiken Densetsu 3 (Japan) (Italian translation hack) (2º)
+- Street Fighter EX Plus Alpha (3º)
+
+(1º) [NiuuS]
+(2º) [bearoso]
+(3º) [shanytc]
 
 [older update history at the bottom]
 
@@ -779,6 +799,25 @@ Settings menu at the emulator's Main Menu / Game browser.
 
 
 ## UPDATE HISTORY
+
+[5.5.0 - December 25, 2022]
+* Add B/1 cancel trigger to WindowPrompts. [InfiniteBlueGX]
+
+* Fix initial game selection menu "jump" when using Wii Classic Controller
+or Wii U Pro Classic Controller. [InfiniteBlueGX]
+
+* Fix a crash when selecting Cancel after removing a SD/USB device and 
+re-opening the app. [InfiniteBlueGX]
+
+* Add B/1 button press to cancel button remapping. [InfiniteBlueGX]
+
+* Remove an unused variable since screenshot button
+was moved. [InfiniteBlueGX]
+
+* Upgraded the Cheat engine to newer version. [InfiniteBlueGX]
+Previous one still works.
+
+* Languages update: korean, spanish.
 
 [5.4.0 - October 15, 2022]
 * Map YXBA to Right Stick (thanks InfiniteBlueGX!)
@@ -1806,7 +1845,7 @@ changes to the emulator settings again and save them.
 
                       Free (Public Domain) ROMs
                       https://pdroms.de/
-					  https://www.retroveteran.com/
+					  https://www.zophar.net/pdroms/snes.html
 
                       Cheat Codes
                       www.cheatzilla.com
