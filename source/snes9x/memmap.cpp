@@ -3871,7 +3871,8 @@ void CMemory::ApplyROMFixes (void)
 			match_na("S.F.S.95 della SerieA") || // Super Formation Soccer 95 - della Serie A (J)
 			match_na("S.F.S.95 SerieA 4 UCC") || // Super Formation Soccer 95 - della Serie A - UCC Xaqua Version (J)
 			match_id("AACJ") || // Nichibutsu Arcade Classics (J)
-			match_na("goemon 4")) // Ganbare Goemon Kirakira Douchuu (J)
+			match_na("goemon 4") || // Ganbare Goemon Kirakira Douchuu (J)
+			ROMCRC32 == 0x65CE3729) // Power Slide (Europe) (Proto): reads GSU RAM before writing it
 			SNESGameFixes.SRAMInitialValue = 0x00;
 
 		// Additional game fixes by sanmaiwashi ...
